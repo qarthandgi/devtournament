@@ -1,0 +1,66 @@
+@import vars
+
+html, body
+  margin: 0
+  padding: 0
+  //background-color: white
+  height: 100%
+
+body
+  background-image: url('./assets/img/white_bg_texture_uncompressed.jpg')
+
+.bg
+  margin: 0
+  padding: 0
+  height: 100%
+  width: 100%
+  position: absolute
+  background-image: url('./assets/img/bg_compressed_full.jpg')
+  background-position: center
+  background-attachment: fixed
+  background-size: cover
+  background-repeat: no-repeat
+  transition: all 170ms linear
+  &.select
+    height: 350px
+    background-attachment: scroll
+    background-position: 50% 96%
+    transition: all 170ms linear
+  &.code
+    height: 103px
+    background-attachment: scroll
+    background-position: 50% 82%
+    transition: all 170ms linear
+
+
+.top-panel, .bottom-panel
+  height: $border-panel-height
+  background-color: $light-border
+  opacity: 0.9
+  position: absolute
+  left: 0
+  right: 0
+  width: 100%
+  &.success
+    background-color: $success-green
+  &.darker
+    background-color: $dark-border
+
+.top-panel
+  top: 0
+  border-top-left-radius: $border-panel-radius
+  border-top-right-radius: $border-panel-radius
+
+.bottom-panel
+  bottom: 0
+  border-bottom-left-radius: $border-panel-radius
+  border-bottom-right-radius: $border-panel-radius
+
+
+
+
+
+
+// ---documentation --
+
+// -- the blue top and bottom headers are controlled by the .top-panel and .bottom-panel div classes
