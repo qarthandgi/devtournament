@@ -7,7 +7,8 @@
       @keyup="keyPressed",
       @keyup.enter.prevent="$emit('enter')",
       :key="reuseKey",
-      :placeholder="placeholder"
+      :placeholder="placeholder",
+      :style="{'font-size': fontSize}"
     )
     label(:for="id", v-if="!hideLabel") {{name}}
 </template>
@@ -20,7 +21,8 @@
       password: {required: false, default: false},
       reuseKey: {required: false, default: null},
       hideLabel: {required: false, default: false},
-      placeholder: {required: false, default: ''}
+      placeholder: {required: false, default: ''},
+      fontSize: {required: false}
     },
     data () {
       return {

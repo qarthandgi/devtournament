@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from .models import User, Database, CompanyExercise, UserExercise
+from .serializers import CustomExerciseSerializer
 
 from pprint import pprint
 import pickle
@@ -53,14 +54,22 @@ def profile_data(request):
 @permission_classes((AllowAny,))
 def load_postgres(request):
     dbs = Database.objects.all_for_user(request.user)
-    return Response({'databases': dbs})
+    custom_exercises = load_custom_exercises(request.user) if request.user.is_authenticated else None
+
+    resp = {
+        'databases': dbs,
+    }
+    if custom_exercises is not None:
+        resp['custom_exercises'] = custom_exercises
+    return Response(resp)
 
 
-@api_view()
 @permission_classes((IsAuthenticated,))
-def load_custom_exercises(request):
-    exercises = UserExercise.objects.filter(author=request.user)
-    return Response()
+def load_custom_exercises(user):
+    exercises = UserExercise.objects.filter(author=user)
+    serializer = CustomExerciseSerializer(exercises, many=True)
+
+    return serializer.data
 
 
 @api_view(['POST'])

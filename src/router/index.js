@@ -23,7 +23,6 @@ const router = new Router({
     },
     {
       path: '/postgres',
-      name: 'postgres',
       component: PostgresShell,
       children: [
         {
@@ -36,6 +35,12 @@ const router = new Router({
           name: 'postgres-sandbox',
           component: CodingShell,
           meta: {mode: 'sandbox'}
+        },
+        {
+          path: 'exercise/:id/custom',
+          name: 'postgres-custom',
+          component: CodingShell,
+          meta: {mode: 'exercise', type: 'custom'}
         },
         {
           path: 'exercise/:id',

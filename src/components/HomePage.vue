@@ -28,7 +28,7 @@
         setLayoutState: 'app/setLayoutState'
       }),
       async fetch () {
-        const response = await this.$axios.get('profile-data/')
+        const response = await this.$axios.get('load-custom-exercises/')
         console.log('response from load data')
         console.log(response)
       }

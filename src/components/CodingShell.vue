@@ -7,11 +7,16 @@
           @db-change="setDb",
           :headers="tableData.headers",
           @headers-match="headersMatch = arguments[0]",
-          @create="createExercise"
+          @create="createExercise",
+          :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
         )
     .code__io
       .code__io__input
-        coding-input(@update="updateInput")
+        coding-input(
+          @update="updateInput",
+          :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
+          :sql="sessionInfo.working_query"
+        )
       .code__io__status
         coding-status
       .code__io__output
@@ -56,7 +61,8 @@
     },
     computed: {
       ...mapState({
-        databases: state => state.pg.databases
+        databases: state => state.pg.databases,
+        customExercises: state => state.pg.customExercises
       })
     },
     watch: {
@@ -69,9 +75,14 @@
             this.dbId = db.id
             this.sessionInfo = sandboxInit(db.full_name)
             this.shiftChangeVisibility = false
-          } else if (mode === 'exercise' && id === 'new') {
-            this.mode = 'edit'
-            this.$set(this, 'tableData', tableData())
+          } else if (mode === 'exercise') {
+            if (id === 'new') {
+              this.mode = 'edit'
+              this.$set(this, 'tableData', tableData())
+            } else if (val.meta.type && val.meta.type === 'custom') {
+              this.mode = 'view'
+              this.setCustomExercise(id)
+            }
           }
         },
         deep: true,
@@ -79,6 +90,14 @@
       }
     },
     methods: {
+      setCustomExercise (id) {
+        const ce = this.customExercises.findIndex(x => x.id === id)
+        if (ce !== -1) {
+          const dbIdx = this.databases.findIndex(x => x.id === this.customExercises[ce].db)
+          this.dbId = this.databases[dbIdx].id
+          this.$set(this, 'sessionInfo', {...this.customExercises[ce]})
+        }
+      },
       async createExercise (exercise) {
         const {data} = await this.$axios.post('create-exercise/', {
           ...exercise,

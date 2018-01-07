@@ -31,6 +31,13 @@
         .pg__row__section__category Custom
         .pg__row__section__content
           large-clip(
+            v-for="item in customExercises",
+            :key="item.id",
+            :item="item",
+            :custom="true",
+            @select="selectExercise(arguments[0], 'custom')"
+          )
+          large-clip(
             :create="true",
             @select="selectExercise"
           )
@@ -60,16 +67,19 @@
     },
     computed: {
       ...mapState({
-        'databases': state => state.pg.databases
+        'databases': state => state.pg.databases,
+        'customExercises': state => state.pg.customExercises
       })
     },
     methods: {
       selectDb (item) {
         this.$router.push({name: 'postgres-sandbox', params: {id: item.id}})
       },
-      selectExercise (item) {
+      selectExercise (item, custom = false) {
         if (item === 'create') {
           this.$router.push({name: 'postgres-exercise', params: {id: 'new'}})
+        } else if (custom) {
+          this.$router.push({name: 'postgres-custom', params: {id: item.id}})
         }
       }
     }
@@ -108,8 +118,8 @@
         margin-bottom: 8px
       &__content
         margin-bottom: 20px
-        display: flex
-        justify-content: space-between
+        display: grid
+        grid-template-columns: 1fr 1fr 1fr
         &__exercise
           width: 315px
           height: 132px

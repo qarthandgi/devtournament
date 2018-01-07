@@ -4,19 +4,29 @@
     .clip__number(v-if="!create") {{ seq }}
     .clip__body
       .clip__body__title(:class="{create}")
-        span.clip__body__title__text(v-if="!create") Main Title
+        span.clip__body__title__text(v-if="!create") {{ item.name }}
         span.clip__body__title__text(v-else) Create a Custom Exercise
       .clip__body__sub-title
-        span.clip__body__sub-title__text Invite Others to Complete It
-    .clip__last-completed(v-if="!create") Last Completed
+        span.clip__body__sub-title__text(v-if="!create") {{ databases.find(x => x.id === item.db).full_name }}
+        span.clip__body__sub-title__text(v-else) Invite Others to Complete It
+    .clip__footer(v-if="custom") Invites
+    .clip__footer(v-else-if="!create") Last Completed
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
     props: {
       seq: {required: false},
       item: {required: false},
-      create: {required: false, default: false}
+      create: {required: false, default: false},
+      custom: {required: false, default: false}
+    },
+    computed: {
+      ...mapState({
+        'databases': state => state.pg.databases
+      })
     },
     methods: {
       selectClip () {

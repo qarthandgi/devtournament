@@ -28,6 +28,13 @@ DIFFICULTY_CHOICES = (
 )
 
 
+POSTGRES = 'postgres'
+
+SUBJECT_CHOICES = (
+  (POSTGRES, 'Postgres'),
+)
+
+
 # Managers
 
 class UserManager(BaseUserManager):
@@ -134,6 +141,7 @@ class Exercise(models.Model):
     expected_headers = models.BinaryField()
     expected_rows = models.BinaryField()
     column_descriptions = JSONField()
+    subject = models.CharField(max_length=20, choices=SUBJECT_CHOICES, default=POSTGRES)
     added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -143,6 +151,8 @@ class Exercise(models.Model):
 class CompanyExercise(Exercise):
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default=NOVICE)
     new = models.BooleanField(default=False)
+    needed_subscription = models.CharField(max_length=15, choices=SUBSCRIPTION_CHOICES,
+                                           default=BASIC, null=True, blank=True)
 
 
 class UserExercise(Exercise):

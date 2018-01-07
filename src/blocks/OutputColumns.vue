@@ -3,7 +3,11 @@
     .od__row
       .od__row__item.header COLUMN
       .od__row__item.header DESCRIPTION
-    draggable(v-model="columns", :options="{handle: '.od__row__handle'}", @update="updateList")
+    template(v-if="customView")
+      .od__row(v-for="(col, $index) in columns")
+        .od__row__item {{ col.column }}
+        .od__row__item {{ col.description }}
+    draggable(v-else, v-model="columns", :options="{handle: '.od__row__handle'}", @update="updateList")
       .od__row(v-for="(col, $index) in columns")
         .od__row__item
           input(placeholder="", v-model="col.column")
@@ -13,7 +17,7 @@
           span.fas.fa-th-large
         .od__row__remove(@click="removeRow($index)")
           span.fal.fa-times
-    .od__add(@click="addRow")
+    .od__add(@click="addRow", v-if="!customView")
       span.fa-style
         span.far.fa-plus
       span &nbsp;&nbsp;add row
@@ -32,6 +36,10 @@
       draggable,
       InputField
     },
+    props: {
+      customView: {required: false, default: false},
+      jsonColumns: {required: false, default: ''}
+    },
     data () {
       return {
         columns: []
@@ -44,6 +52,15 @@
           this.$emit('columns', [...this.columns])
         },
         deep: true,
+        immediate: true
+      },
+      jsonColumns: {
+        handler (val) {
+          if (!this.customView) {
+            return
+          }
+          this.columns = JSON.parse(val)
+        },
         immediate: true
       }
     },

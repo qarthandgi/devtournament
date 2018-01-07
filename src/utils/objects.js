@@ -1,6 +1,6 @@
 export function sandboxInit (db) {
   return {
-    session: 'SANDBOX',
+    name: 'SANDBOX',
     database: db.toUpperCase(),
     objective: 'Hone your skills to prepare for the exercises.',
     requirements: []

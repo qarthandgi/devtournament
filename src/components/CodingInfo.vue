@@ -4,7 +4,7 @@
       .info__details__item.idi-session
         .info__details__item__label EXERCISE
         .info__details__item__content
-          span(v-if="mode === 'view'") {{ sessionInfo.session }}
+          span(v-if="mode === 'view'") {{ sessionInfo.name }}
           span(v-else)
             input-field(
               :id="'session-create'",
@@ -16,7 +16,8 @@
       .info__details__item.idi-db
         .info__details__item__label DATABASE
         .info__details__item__content(:class="{edit: mode === 'edit'}", style="overflow: hidden")
-          span(v-if="mode === 'view'") {{ sessionInfo.database }}
+          span(v-if="mode === 'view' && sessionInfo.hasOwnProperty('database')") {{ sessionInfo.database }}
+          span(v-else-if="mode === 'view' && sessionInfo.hasOwnProperty('db')") {{ databases.find(x => x.id === sessionInfo.db)['full_name'] }}
           template(v-else)
             .info__details__item__content__db(
               v-for="db in databases",
@@ -29,10 +30,21 @@
         .info__details__item__content
           span(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
-      .info__details__item.idi-requirements(v-if="mode === 'edit'")
+      .info__details__item.idi-requirements(v-if="mode === 'edit' || custom")
         .info__details__item__label OUTPUT REQUIREMENTS
         .info__details__item__content
-          output-columns(@defined-headers="definedHeaders = arguments[0]", @columns="definedColumns = arguments[0]")
+          .info__details__item__content__toggle(v-if="custom", @click="outputColumnsVisibility = !outputColumnsVisibility") Toggle Output Requirements
+          output-columns(
+            v-if="outputColumnsVisibility",
+            @defined-headers="definedHeaders = arguments[0]",
+            @columns="definedColumns = arguments[0]",
+            :json-columns="sessionInfo.column_descriptions || ''",
+            :custom-view="mode === 'view' && custom"
+          )
+      .info__details__item.idi-invites(v-if="custom && mode === 'view'")
+        .info__details__item__label INVITATIONS
+        .info__details__item__content
+          invite-clip(:create="true")
     .info__shift
       .info__shift__content(v-if="mode === 'view'") {{ doubleShiftMessage }}
       .info__shift__content(v-else, @click="createExercise") Create Exercise
@@ -41,18 +53,21 @@
 <script>
   import InputField from '@/blocks/InputField'
   import OutputColumns from '@/blocks/OutputColumns'
+  import InviteClip from '@/units/InviteClip'
 
   import {mapState} from 'vuex'
 
   export default {
     components: {
       InputField,
-      OutputColumns
+      OutputColumns,
+      InviteClip
     },
     props: {
       sessionInfo: {required: true, default: () => { return {} }},
       mode: {required: false, default: 'view'},
-      headers: {required: false, default: []}
+      headers: {required: false, default: []},
+      custom: {required: false, default: false}
     },
     data () {
       return {
@@ -65,7 +80,8 @@
           objective: ''
         },
         definedHeaders: [],
-        definedColumns: []
+        definedColumns: [],
+        outputColumnsVisibility: false
       }
     },
     computed: {
@@ -134,6 +150,16 @@
           border-radius: 5px
           /*overflow: hidden*/
           /*border: 1px red solid*/
+          &__toggle
+            color: $dev-blue
+            font-size: 12px
+            cursor: pointer
+            position: relative
+            top: -3px
+            &:hover
+              color: darken($dev-blue, 9%)
+            &:active
+              color: darken($dev-blue, 14%)
           &.edit
             display: grid
             grid-template-columns: 1fr 1fr 1fr

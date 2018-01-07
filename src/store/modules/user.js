@@ -57,7 +57,7 @@ export default {
         if (response.status === 200) {
           const {data} = response
           console.log(data)
-          VueCookies.set('tokenKey', data.key)
+          VueCookies.set('tokenKey', data.key, '5d', '/')
           commit('setTokenKey', data)
           dispatch('getUser')
           resolve(true)
@@ -72,7 +72,7 @@ export default {
       return new Promise(async (resolve, reject) => {
         const response = await axios.post('rest-auth/logout/')
         console.log(response)
-        VueCookies.remove('tokenKey')
+        VueCookies.remove('tokenKey', '/')
         commit('clearData')
       })
     },
