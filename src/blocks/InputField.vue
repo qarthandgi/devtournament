@@ -8,7 +8,7 @@
       @keyup.enter.prevent="$emit('enter')",
       :key="reuseKey",
       :placeholder="placeholder",
-      :style="{'font-size': fontSize}"
+      :style="{'font-size': fontSize}",
     )
     label(:for="id", v-if="!hideLabel") {{name}}
 </template>
@@ -29,6 +29,9 @@
       }
     },
     methods: {
+      enterPressed (e) {
+        this.$emit('enter')
+      },
       keyPressed (e) {
         // console.log('ok', e.target.value)
         this.$emit('update', e.target.value)

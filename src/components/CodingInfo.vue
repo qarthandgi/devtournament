@@ -35,7 +35,7 @@
         .info__details__item__content
           .info__details__item__content__toggle(v-if="custom", @click="outputColumnsVisibility = !outputColumnsVisibility") Toggle Output Requirements
           output-columns(
-            v-if="outputColumnsVisibility",
+            v-if="outputColumnsVisibility || mode === 'edit'",
             @defined-headers="definedHeaders = arguments[0]",
             @columns="definedColumns = arguments[0]",
             :json-columns="sessionInfo.column_descriptions || ''",
@@ -44,6 +44,11 @@
       .info__details__item.idi-invites(v-if="custom && mode === 'view'")
         .info__details__item__label INVITATIONS
         .info__details__item__content
+          invite-clip(
+            v-for="item in invitations",
+            :item="item",
+            :key="item.id"
+          )
           invite-clip(:create="true")
     .info__shift
       .info__shift__content(v-if="mode === 'view'") {{ doubleShiftMessage }}
@@ -85,6 +90,9 @@
       }
     },
     computed: {
+      invitations () {
+        return this.sessionInfo.invitation_set
+      },
       ...mapState({
         databases: state => state.pg.databases
       }),
@@ -132,6 +140,7 @@
     height: 100%
     padding: 20px
     box-sizing: border-box
+    overflow: scroll
     &__details
       position: relative
       top: 0

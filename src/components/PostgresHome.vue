@@ -28,13 +28,24 @@
         .pg__row__section__title Exercises
         .pg__row__section__description
           span Exercises are provided for you to incrementally increase and perfect your skills. Exercises grow in complexity as you go through them, boosting your programming speed and knowledge quickly. Go through these to build your confidence for the Tournaments to prove your worth.
+        template(v-if="invitations.length > 0")
+          .pg__row__section__category Invitations
+          .pg__row__section__content
+            large-clip(
+              v-for="(item, $index) in invitations",
+              :item="item",
+              :key="item.id",
+              :seq="$index + 1",
+              :invite="true"
+            )
         .pg__row__section__category Custom
         .pg__row__section__content
           large-clip(
-            v-for="item in customExercises",
+            v-for="(item, $index) in customExercises",
             :key="item.id",
             :item="item",
             :custom="true",
+            :seq="$index + 1",
             @select="selectExercise(arguments[0], 'custom')"
           )
           large-clip(
@@ -68,7 +79,8 @@
     computed: {
       ...mapState({
         'databases': state => state.pg.databases,
-        'customExercises': state => state.pg.customExercises
+        'customExercises': state => state.pg.customExercises,
+        'invitations': state => state.pg.invitations
       })
     },
     methods: {

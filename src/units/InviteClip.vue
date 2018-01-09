@@ -1,5 +1,5 @@
 <template lang="pug">
-  .invite(:class="[create ? 'create' : 'view']")
+  .invite(:class="[create ? 'create' : 'view']", @click="select")
     .invite__left-border
     .invite__create(v-if="create")
       .invite__create__label INVITE USER
@@ -10,25 +10,23 @@
           :hide-label="true",
           placeholder="Enter Email of User to Invite",
           @update="emailToInvite = arguments[0]",
-          :font-size="'14px'"
+          :font-size="'14px'",
+          @enter="inviteUser"
         )
-        .invite__create__email__invite
+        .invite__create__email__invite(@click="inviteUser")
           span.text Invite&nbsp;
           span.far.fa-angle-right
     .invite__content(v-else)
       .invite__content__option
         .invite__content__option__label EMAIL
-        .invite__content__option__body greghennesey@devtournament.com
+        .invite__content__option__body {{ item.invitee_s }}
       .invite__content__option
         .invite__content__option__label PROGRESS
-        .invite__content__option__body Exercise Completed
+        .invite__content__option__body {{ item.status }}
       .invite__content__option
         .invite__content__option__label INVITATION SENT
-        .invite__content__option__body Jan. 3, '18 10:08am
+        .invite__content__option__body {{ item.created }}
       .invite__content__option.center
-        button.invite__content__option__button.gray Disable Invitation
-      .invite__content__option.center
-        button.invite__content__option__button.danger Delete Invitation
 </template>
 
 <script>
@@ -39,11 +37,32 @@
       InputField
     },
     props: {
-      create: {required: false, default: false}
+      create: {required: false, default: false},
+      item: {required: false}
     },
     data () {
       return {
         emailToInvite: ''
+      }
+    },
+    methods: {
+      select () {
+        this.$router.push({
+          name: 'postgres-custom-invitation',
+          params: {
+            id: this.$route.params.id,
+            inviteId: this.item.id
+          }
+        })
+      },
+      async inviteUser () {
+        const customExerciseId = parseInt(this.$route.params.id)
+        const response = await this.$axios.post('invite-user/', {
+          email: this.emailToInvite,
+          customExerciseId: customExerciseId
+        })
+        console.log(response)
+        // todo: do something
       }
     }
   }
@@ -60,6 +79,7 @@
     border-radius: 4px
     position: relative
     overflow: hidden
+    margin-bottom: 18px
     &.view
       height: 70px
       border: 1px rgba(220,220,220,0.7) solid
@@ -77,8 +97,6 @@
       &__email
         width: 80%
         position: relative
-        /deep/ .input-c
-          font-size: 15px
         &__invite
           /*border: 1px red solid*/
           position: absolute
@@ -100,6 +118,7 @@
       background-color: rgba(220,220,220,0.2)
     &:hover
       border: 1px $dev-blue solid
+      cursor: pointer
     &.create:hover
       border: 1px transparentize($dev-blue, 0.8) solid
     &:hover &__left-border
@@ -149,26 +168,5 @@
           font-size: 13px
           text-overflow: ellipsis
           overflow: hidden
-        button
-          margin: 3px auto
-          background-color: rgba(255,255,255,0.05)
-          +averia-font()
-          font-size: 10px
-          width: 97px
-          height: 24px
-          position: relative
-          top: -3px
-          outline: none
-          &:hover
-            background-color: rgba(255,255,255,0.10)
-            cursor: pointer
-          &:active
-            background-color: rgba(200,200,200,0.10)
-          &.gray
-            border: 1px gray solid
-            color: gray
-          &.danger
-            border: 1px rgba(220,80,80,0.9) solid
-            color: rgba(220,80,80,0.9)
 
 </style>

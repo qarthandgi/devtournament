@@ -1,6 +1,6 @@
 <template lang="pug">
   .code(@keyup="testKey")
-    .code__info
+    .code__info(:class="{'hide-overflow': $route.name === 'postgres-custom-invitation'}")
         coding-info(
           :session-info="sessionInfo",
           :mode="mode",
@@ -10,6 +10,8 @@
           @create="createExercise",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
         )
+        transition(appear)
+          router-view
     .code__io
       .code__io__input
         coding-input(
@@ -140,6 +142,12 @@
 </script>
 
 <style lang="sass" scoped>
+  .v-enter, .v-leave-to
+    transform: translateY(-100%)
+  .v-enter-active
+    transition: transform 470ms cubic-bezier(0.55, 0.055, 0.675, 0.19)
+  .v-leave-active
+    transition: transform 310ms cubic-bezier(0.55, 0.055, 0.675, 0.19)
   .code
     /*border: 1px red solid*/
     position: absolute
@@ -161,7 +169,8 @@
       width: 35%
       background-color: #12161e
       /*border: 1px green solid*/
-      overflow: scroll
+      overflow: hidden
+      position: relative
     &__io
       width: 65%
       /*border: 1px blue solid*/

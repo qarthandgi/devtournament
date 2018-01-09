@@ -8,6 +8,7 @@ import HomePage from '@/components/HomePage'
 import PostgresShell from '@/components/PostgresShell'
 import PostgresHome from '@/components/PostgresHome'
 import CodingShell from '@/components/CodingShell'
+import InvitationInfo from '@/components/InvitationInfo'
 
 import {store} from '../store/index'
 
@@ -38,9 +39,17 @@ const router = new Router({
         },
         {
           path: 'exercise/:id/custom',
-          name: 'postgres-custom',
           component: CodingShell,
-          meta: {mode: 'exercise', type: 'custom'}
+          name: 'postgres-custom',
+          meta: {mode: 'exercise', type: 'custom'},
+          children: [
+            {
+              path: ':inviteId/invitation',
+              name: 'postgres-custom-invitation',
+              component: InvitationInfo,
+              meta: {mode: 'exercise', type: 'custom'}
+            }
+          ]
         },
         {
           path: 'exercise/:id',

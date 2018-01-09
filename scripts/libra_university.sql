@@ -2,16 +2,17 @@ CREATE DATABASE libra_university OWNER nilesbrandon;
 \c libra_university;
 
 CREATE TABLE auth_user (
-  id          serial PRIMARY KEY,
-  email       varchar(40) UNIQUE,
-  first_name  varchar(20),
-  last_name   varchar(20)
+  id            serial PRIMARY KEY,
+  email         varchar(40) UNIQUE,
+  first_name    varchar(20),
+  last_name     varchar(20)
 );
 
 CREATE TABLE professor (
-  id          SERIAL PRIMARY KEY,
-  auth_user_id     INTEGER REFERENCES auth_user (id),
-  tenure      BOOLEAN
+  id            SERIAL PRIMARY KEY,
+  auth_user_id  INTEGER REFERENCES auth_user (id),
+  tenure        BOOLEAN,
+  score         NUMERIC(10, 2)
 );
 
 INSERT INTO auth_user (email, first_name, last_name) VALUES ('gregl@libra.com', 'Greg', 'Landolm');

@@ -29,6 +29,11 @@ urlpatterns = [
 
     url(r'^test-query/', views.test_query),
     url(r'^create-exercise/', views.create_exercise),
+    url(r'^invite-user/', views.invite_user),
+    url(r'^enable-invitation', views.enable_invitation),
+    url(r'^disable-invitation', views.disable_invitation),
+    url(r'^delete-invitation', views.delete_invitation),
+    url(r'^rsvp-invitation', views.rsvp_invitation),
 
     # url(r'^rest-auth/login/$', LoginViewCustom.as_view(), name='rest_login'),
     url(r'^rest-auth/', include('rest_auth.urls')),

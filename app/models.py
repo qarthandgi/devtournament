@@ -2,8 +2,10 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.forms.models import model_to_dict
+from django.utils import timezone
 
 from allauth.account.models import EmailAddress
+
 
 
 NONE = None
@@ -32,6 +34,21 @@ POSTGRES = 'postgres'
 
 SUBJECT_CHOICES = (
   (POSTGRES, 'Postgres'),
+)
+
+
+PENDING = 'pending'
+ACCEPTED = 'accepted'
+DECLINED = 'declined'
+IN_PROGRESS = 'in progress'
+SUCCESSFULLY_COMPLETED = 'successfully completed'
+
+INVITATION_STATUS_CHOICES = (
+  (PENDING, 'Pending'),
+  (ACCEPTED, 'Accepted'),
+  (DECLINED, 'Declined'),
+  (IN_PROGRESS, 'In Progress'),
+  (SUCCESSFULLY_COMPLETED, 'Successfully Completed')
 )
 
 
@@ -113,6 +130,18 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    def save(self, *args, **kwargs):
+        invitations = []
+        if self.pk is None:
+            invitations = Invitation.objects.filter(invitee_s=self.email, assigned_to_invitee=False)
+
+        super().save(*args, **kwargs)
+
+        for inv in invitations:
+            inv.invitee = self
+            inv.invitee_registered = True
+            inv.enabled = True
+
     @property
     def is_verified(self):
         return getattr(EmailAddress.objects.get_primary(self), 'verified', False)
@@ -158,3 +187,16 @@ class CompanyExercise(Exercise):
 class UserExercise(Exercise):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     shareable = models.BooleanField(default=True)
+
+
+class Invitation(models.Model):
+    inviter = models.ForeignKey(User, related_name='invites_sent', on_delete=models.CASCADE)
+    invitee = models.ForeignKey(User, related_name='invites', on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_to_invitee = models.BooleanField(default=True)
+    invitee_s = models.CharField(max_length=50, null=True, blank=True)
+    created = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=30, choices=INVITATION_STATUS_CHOICES, default=PENDING)
+    enabled = models.BooleanField(default=True)
+    # TODO: Make sure to warn users that when deleting a custom exercise, it will also delete any invitations associated with it
+    exercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)
+    archived = models.BooleanField(default=False)

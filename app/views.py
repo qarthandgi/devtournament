@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-from .models import User, Database, CompanyExercise, UserExercise
-from .serializers import CustomExerciseSerializer
+from .models import User, Database, CompanyExercise, UserExercise, Invitation
+from .serializers import CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
 import pickle
@@ -55,12 +55,15 @@ def profile_data(request):
 def load_postgres(request):
     dbs = Database.objects.all_for_user(request.user)
     custom_exercises = load_custom_exercises(request.user) if request.user.is_authenticated else None
+    invitations = load_invitations(request.user) if request.user.is_authenticated else None
 
     resp = {
         'databases': dbs,
     }
     if custom_exercises is not None:
         resp['custom_exercises'] = custom_exercises
+    if invitations is not None:
+        resp['invitations'] = invitations
     return Response(resp)
 
 
@@ -68,6 +71,16 @@ def load_postgres(request):
 def load_custom_exercises(user):
     exercises = UserExercise.objects.filter(author=user)
     serializer = CustomExerciseSerializer(exercises, many=True)
+
+    return serializer.data
+
+
+@permission_classes((IsAuthenticated,))
+def load_invitations(user):
+    invitations = Invitation.objects.filter(invitee=user, archived=False).exclude(status='declined')
+    serializer = InvitationSerializer(invitations, many=True)
+
+    pprint(serializer.data)
 
     return serializer.data
 
@@ -89,7 +102,7 @@ def test_query(request):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated, IsAdminUser))
+@permission_classes((IsAuthenticated,))
 def create_exercise(request):
     name = request.data['name']
     db_id = request.data['database']
@@ -115,3 +128,86 @@ def create_exercise(request):
     ue.save()
 
     return Response(status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def invite_user(request):
+    custom_exercise_id = request.data['customExerciseId']
+    email = request.data['email']
+
+    custom_exercise = UserExercise.objects.get(pk=custom_exercise_id)
+
+    inv = Invitation(
+      inviter=request.user,
+      exercise=custom_exercise,
+      invitee_s=email
+    )
+
+    try:
+        u = User.objects.get(email=email)
+        inv.invitee = u
+    except User.DoesNotExist:
+        inv.assigned_to_invitee = False
+
+    inv.save()
+
+    return Response(status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def enable_invitation(request):
+    invitation_id = request.data['invitationId']
+
+    inv = Invitation.objects.get(pk=invitation_id)
+    inv.enabled = True
+    inv.save()
+
+    serializer = InvitationForExerciseSerializer(inv)
+
+    return Response(data=serializer.data, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def disable_invitation(request):
+    invitation_id = request.data['invitationId']
+
+    inv = Invitation.objects.get(pk=invitation_id)
+    inv.enabled = False
+    inv.save()
+
+    serializer = InvitationForExerciseSerializer(inv)
+
+    return Response(data=serializer.data, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def delete_invitation(request):
+    invitation_id = request.data['invitationId']
+
+    inv = Invitation.objects.get(pk=invitation_id)
+    inv.archived = True
+    inv.save()
+
+    return Response(status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def rsvp_invitation(request):
+    accepted = request.data['accepted']
+    invitation_id = request.data['invitationId']
+
+    inv = Invitation.objects.get(pk=invitation_id)
+    if accepted:
+        inv.status = 'accepted'
+        inv.save()
+        serializer = InvitationSerializer(inv)
+        return Response(data=serializer.data, status=200)
+    else:
+        inv.status = 'declined'
+        inv.save()
+        return Response(status=200)
