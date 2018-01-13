@@ -30,16 +30,16 @@
         .info__details__item__content
           span(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
-      .info__details__item.idi-requirements(v-if="mode === 'edit' || custom")
+      .info__details__item.idi-requirements(v-if="mode === 'edit' || custom || invitation")
         .info__details__item__label OUTPUT REQUIREMENTS
         .info__details__item__content
           .info__details__item__content__toggle(v-if="custom", @click="outputColumnsVisibility = !outputColumnsVisibility") Toggle Output Requirements
           output-columns(
-            v-if="outputColumnsVisibility || mode === 'edit'",
+            v-show="outputColumnsVisibility || mode === 'edit'",
             @defined-headers="definedHeaders = arguments[0]",
             @columns="definedColumns = arguments[0]",
             :json-columns="sessionInfo.column_descriptions || ''",
-            :custom-view="mode === 'view' && custom"
+            :custom-view="mode === 'view' && (custom || invitation)"
           )
       .info__details__item.idi-invites(v-if="custom && mode === 'view'")
         .info__details__item__label INVITATIONS
@@ -50,7 +50,7 @@
             :key="item.id"
           )
           invite-clip(:create="true")
-    .info__shift
+    .info__shift(v-if="false")
       .info__shift__content(v-if="mode === 'view'") {{ doubleShiftMessage }}
       .info__shift__content(v-else, @click="createExercise") Create Exercise
 </template>
@@ -72,7 +72,8 @@
       sessionInfo: {required: true, default: () => { return {} }},
       mode: {required: false, default: 'view'},
       headers: {required: false, default: []},
-      custom: {required: false, default: false}
+      custom: {required: false, default: false},
+      invitation: {required: false, default: false}
     },
     data () {
       return {
@@ -107,6 +108,12 @@
       }
     },
     watch: {
+      invitation: {
+        handler (val) {
+          this.outputColumnsVisibility = true
+        },
+        immediate: true
+      },
       'newExercise.database': {
         handler (val) {
           this.$emit('db-change', val)
@@ -136,8 +143,11 @@
   $double-tap-height: 45px
 
   .info
-    position: relative
-    height: 100%
+    position: absolute
+    top: 0
+    bottom: 40px
+    left: 0
+    right: 0
     padding: 20px
     box-sizing: border-box
     overflow: scroll
@@ -216,6 +226,7 @@
       left: 0
       right: 0
       height: $double-tap-height
+      border: 1px red solid
       &__content
         width: 150px
         position: absolute

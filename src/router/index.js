@@ -38,6 +38,12 @@ const router = new Router({
           meta: {mode: 'sandbox'}
         },
         {
+          path: 'exercise/:id/invitation',
+          component: CodingShell,
+          name: 'postgres-invitation',
+          meta: {mode: 'exercise', type: 'invitation'}
+        },
+        {
           path: 'exercise/:id/custom',
           component: CodingShell,
           name: 'postgres-custom',

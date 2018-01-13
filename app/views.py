@@ -38,6 +38,51 @@ def execute_sql(db, sql):
     return data
 
 
+def compare_1d(stored, attempt):
+    if len(stored) != len(attempt):
+        return False
+
+    for i, item in enumerate(stored):
+        if attempt[i] != item:
+            return False
+
+    return True
+
+
+def compare_2d(stored, attempt):
+    if len(stored) != len(attempt):
+        return False
+
+    for i, arr in enumerate(stored):
+        if len(arr) != len(attempt[i]):
+            return False
+        for j, item in enumerate(arr):
+            if attempt[i][j] != item:
+                return False
+
+    return True
+
+
+def compare_query_results(data, session_id, dt_session):
+    if dt_session:
+        pass
+    else:
+        exercise = UserExercise.objects.get(pk=session_id)
+
+    expected_headers = pickle.loads(exercise.expected_headers)
+    expected_rows = pickle.loads(exercise.expected_rows)
+
+    queried_headers = data['headers']
+    queried_rows = data['rows']
+
+    headers_match = compare_1d(expected_headers, queried_headers)
+    rows_match = compare_2d(expected_rows, queried_rows)
+
+    all_match = headers_match and rows_match
+
+    return all_match
+
+
 # TODO: this shouldn't be AllowAny
 # @permission_classes((AllowAny,))
 @api_view()
@@ -89,14 +134,19 @@ def load_invitations(user):
 @permission_classes((AllowAny,))
 def test_query(request):
     db_id = request.data['db']
+    session_id = request.data['sessionId']
+    dt_session = request.data['dtSession']
+
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, request.data['sql'])
+    match = compare_query_results(data, session_id, dt_session)
 
     resp = {
       'rows': data['rows'],
       'headers': data['headers'],
       'db_id': db_id,
-      'duplicates': data['duplicates']
+      'duplicates': data['duplicates'],
+      'match': match
     }
     return Response(data=resp, status=200)
 

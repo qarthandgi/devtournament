@@ -9,7 +9,9 @@
           @headers-match="headersMatch = arguments[0]",
           @create="createExercise",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
+          :invitation="$route.meta.hasOwnProperty('type') && $route.meta.type === 'invitation'",
         )
+        info-action
         transition(appear)
           router-view
     .code__io
@@ -17,14 +19,15 @@
         coding-input(
           @update="updateInput",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
-          :sql="sessionInfo.working_query"
+          :sql="sessionInfo.working_query",
+
         )
       .code__io__status
         coding-status
       .code__io__output
         coding-output(
           :headers="tableData.headers",
-          :rows="tableData.rows"
+          :rows="tableData.rows",
         )
 </template>
 
@@ -33,6 +36,7 @@
   import CodingOutput from '@/components/CodingOutput'
   import CodingStatus from '@/units/CodingStatus'
   import CodingInfo from '@/components/CodingInfo'
+  import InfoAction from '@/units/InfoAction'
 
   import {mapState} from 'vuex'
   import {sandboxInit, tableData} from '@/utils/objects'
@@ -42,7 +46,8 @@
       CodingInput,
       CodingOutput,
       CodingStatus,
-      CodingInfo
+      CodingInfo,
+      InfoAction
     },
     data () {
       return {
@@ -58,13 +63,16 @@
         dbId: -1,
         lastDbId: -1, // records the db that was used for last sql execution. When they create db, make sure current db id matches db that was used on last sql execution
         headersMatch: false,
-        duplicateColumns: false
+        duplicateColumns: false,
+        columnDescriptionVisibility: false,
+        dtSession: false
       }
     },
     computed: {
       ...mapState({
         databases: state => state.pg.databases,
-        customExercises: state => state.pg.customExercises
+        customExercises: state => state.pg.customExercises,
+        invitations: state => state.pg.invitations
       })
     },
     watch: {
@@ -84,6 +92,10 @@
             } else if (val.meta.type && val.meta.type === 'custom') {
               this.mode = 'view'
               this.setCustomExercise(id)
+            } else if (val.meta.type && val.meta.type === 'invitation') {
+              this.mode = 'view'
+              this.columnDescriptionVisibility = true
+              this.setInvitation(id)
             }
           }
         },
@@ -92,6 +104,17 @@
       }
     },
     methods: {
+      setInvitation (id) {
+        console.log('set invitation')
+        const invIdx = this.invitations.findIndex(x => x.id === id)
+        if (invIdx !== -1) {
+          console.log('not -1')
+          const dbIdx = this.databases.findIndex(x => x.id === this.invitations[invIdx].exercise.db)
+          this.dbId = this.databases[dbIdx].id
+          this.$set(this, 'sessionInfo', {...this.invitations[invIdx].exercise})
+          console.log({...this.invitations[invIdx].exercise})
+        }
+      },
       setCustomExercise (id) {
         const ce = this.customExercises.findIndex(x => x.id === id)
         if (ce !== -1) {
@@ -124,7 +147,9 @@
         // TODO: check duplicateColumns set from response before saving created exercise
         const {data} = await this.$axios.post('test-query/', {
           sql: this.sql,
-          db: this.dbId
+          db: this.dbId,
+          sessionId: this.sessionInfo.id,
+          dtSession: this.dtSession
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)

@@ -47,6 +47,9 @@
     },
     methods: {
       select () {
+        if (this.create) {
+          return
+        }
         this.$router.push({
           name: 'postgres-custom-invitation',
           params: {

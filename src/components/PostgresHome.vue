@@ -36,7 +36,8 @@
               :item="item",
               :key="item.id",
               :seq="$index + 1",
-              :invite="true"
+              :invite="true",
+              @select="selectExercise(arguments[0], 'invitation')"
             )
         .pg__row__section__category Custom
         .pg__row__section__content
@@ -87,11 +88,13 @@
       selectDb (item) {
         this.$router.push({name: 'postgres-sandbox', params: {id: item.id}})
       },
-      selectExercise (item, custom = false) {
+      selectExercise (item, type) {
         if (item === 'create') {
           this.$router.push({name: 'postgres-exercise', params: {id: 'new'}})
-        } else if (custom) {
+        } else if (type === 'custom') {
           this.$router.push({name: 'postgres-custom', params: {id: item.id}})
+        } else if (type === 'invitation') {
+          this.$router.push({name: 'postgres-invitation', params: {id: item.id}})
         }
       }
     }
