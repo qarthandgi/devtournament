@@ -14,7 +14,7 @@ import {store} from './store/index'
 
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
-  axios.defaults.baseURL = 'http://localhost/'
+  axios.defaults.baseURL = 'http://104.131.20.153/'
 } else {
   axios.defaults.baseURL = 'http://localhost:8000/'
 }
