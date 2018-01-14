@@ -13,7 +13,11 @@ import VueConfetti from 'vue-confetti'
 import {store} from './store/index'
 
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://localhost:8000/'
+if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
+  axios.defaults.baseURL = 'http://localhost/'
+} else {
+  axios.defaults.baseURL = 'http://localhost:8000/'
+}
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
 axios.defaults.xsrfCookieName = 'csrftoken'
