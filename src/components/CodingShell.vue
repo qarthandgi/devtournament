@@ -10,8 +10,9 @@
           @create="createExercise",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
           :invitation="$route.meta.hasOwnProperty('type') && $route.meta.type === 'invitation'",
+          :success-status="successStatus"
         )
-        info-action
+        info-action(@select="toggleTable", :user-table-visibility="showingUserTable", :success-status="successStatus")
         transition(appear)
           router-view
     .code__io
@@ -26,8 +27,8 @@
         coding-status
       .code__io__output
         coding-output(
-          :headers="tableData.headers",
-          :rows="tableData.rows",
+          :headers="outputHeaders",
+          :rows="outputRows",
         )
 </template>
 
@@ -38,7 +39,7 @@
   import CodingInfo from '@/components/CodingInfo'
   import InfoAction from '@/units/InfoAction'
 
-  import {mapState} from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
   import {sandboxInit, tableData} from '@/utils/objects'
 
   export default {
@@ -65,7 +66,10 @@
         headersMatch: false,
         duplicateColumns: false,
         columnDescriptionVisibility: false,
-        dtSession: false
+        dtSession: false,
+        firstShiftActivated: false,
+        exerciseType: null,
+        aQuerySent: false // so that confetti doesn't fall on load, only after a query has been sent
       }
     },
     computed: {
@@ -73,11 +77,43 @@
         databases: state => state.pg.databases,
         customExercises: state => state.pg.customExercises,
         invitations: state => state.pg.invitations
-      })
+      }),
+      outputHeaders () {
+        if (this.showingUserTable) {
+          return this.tableData.headers
+        } else {
+          return this.sessionInfo.expected_output.headers
+        }
+      },
+      outputRows () {
+        if (this.showingUserTable) {
+          return this.tableData.rows
+        } else {
+          return this.sessionInfo.expected_output.rows
+        }
+      },
+      successStatus () {
+        if (this.exerciseType === 'invitation') {
+          const invitationIdx = this.invitations.findIndex(x => x.id === parseInt(this.$route.params.id))
+          const completed = this.invitations[invitationIdx].status === 'successfully completed'
+          if (completed) {
+            return true
+          }
+          return false
+        } else {
+          return false
+        }
+      }
     },
     watch: {
+      successStatus: {
+        handler (val) {
+          console.log('OK 33333')
+        }
+      },
       '$route': {
         async handler (val) {
+          this.exerciseType = null
           const mode = val.meta.mode
           const id = val.params.id === 'new' ? 'new' : parseInt(val.params.id)
           if (mode === 'sandbox') {
@@ -94,6 +130,7 @@
               this.setCustomExercise(id)
             } else if (val.meta.type && val.meta.type === 'invitation') {
               this.mode = 'view'
+              this.exerciseType = 'invitation'
               this.columnDescriptionVisibility = true
               this.setInvitation(id)
             }
@@ -104,6 +141,18 @@
       }
     },
     methods: {
+      ...mapMutations({
+        'changeInvitationStatus': 'pg/changeInvitationStatus'
+      }),
+      confetti () {
+        this.$confetti.start({shape: 'rect'})
+        setTimeout(() => {
+          this.$confetti.stop()
+        }, 2000)
+      },
+      toggleTable () {
+        this.showingUserTable = !this.showingUserTable
+      },
       setInvitation (id) {
         console.log('set invitation')
         const invIdx = this.invitations.findIndex(x => x.id === id)
@@ -139,22 +188,46 @@
       testKey (evt) {
         if (evt.keyCode === 13 && evt.metaKey) {
           this.testQuery()
+        } else if (evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
+          if (this.firstShiftActivated) {
+            this.firstShiftActivated = false
+            this.toggleTable()
+          } else {
+            this.firstShiftActivated = true
+            setTimeout(() => {
+              this.firstShiftActivated = false
+            }, 280)
+          }
         }
       },
       async testQuery () {
         // TODO: make sure this.dbId and this.lastDbId match
         // TODO: make sure headersMatch is checked
         // TODO: check duplicateColumns set from response before saving created exercise
+        this.aQuerySent = true
+        const invitationIdx = this.invitations.findIndex(x => x.id === parseInt(this.$route.params.id))
         const {data} = await this.$axios.post('test-query/', {
           sql: this.sql,
           db: this.dbId,
           sessionId: this.sessionInfo.id,
-          dtSession: this.dtSession
+          dtSession: this.dtSession,
+          invitationId: this.invitations[invitationIdx].id,
+          firstQueryInvitation: this.invitations[invitationIdx].status === 'accepted'
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
+        console.log(data.match)
+        if (data.match) {
+          this.confetti()
+        }
+        if (data.match !== this.invitations[invitationIdx].status) {
+          this.changeInvitationStatus({
+            invitationId: this.invitations[invitationIdx].id,
+            status: data.invitation_status
+          })
+        }
       }
     },
     created () {

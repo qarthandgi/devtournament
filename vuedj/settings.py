@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 import records
 
+from private.private import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -51,9 +53,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
-    'reset_migrations',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'reset_migrations'
 ]
 
 MIDDLEWARE = [
@@ -99,10 +101,10 @@ DATABASES = {
     # },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'devtournament',
-        'USER': 'nilesbrandon',
-        'PASSWORD': 'postgrespain883',
-        'HOST': '127.0.0.1',
+        'NAME': config['db_name'],
+        'USER': config['user'],
+        'PASSWORD': config['password'],
+        'HOST': config['host'],
         'PORT': '5432'
     },
     'libra': {
@@ -113,10 +115,6 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
-}
-
-DBS = {
-  'libra': records.Database('postgres://nilesbrandon:postgrespain883@localhost:5432/libra_university')
 }
 
 

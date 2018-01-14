@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-from .models import User, Database, CompanyExercise, UserExercise, Invitation
-from .serializers import CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
+from .models import User, Database, CompanyExercise, UserExercise, Invitation, IN_PROGRESS, SUCCESSFULLY_COMPLETED
+from .serializers import CompanyExerciseSerializer, CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
 import pickle
@@ -63,12 +63,7 @@ def compare_2d(stored, attempt):
     return True
 
 
-def compare_query_results(data, session_id, dt_session):
-    if dt_session:
-        pass
-    else:
-        exercise = UserExercise.objects.get(pk=session_id)
-
+def compare_query_results(data, exercise, dt_session):
     expected_headers = pickle.loads(exercise.expected_headers)
     expected_rows = pickle.loads(exercise.expected_rows)
 
@@ -102,8 +97,12 @@ def load_postgres(request):
     custom_exercises = load_custom_exercises(request.user) if request.user.is_authenticated else None
     invitations = load_invitations(request.user) if request.user.is_authenticated else None
 
+    exercises = CompanyExercise.objects.filter(enabled=True)
+    company_serializer = CompanyExerciseSerializer(exercises, many=True)
+
     resp = {
         'databases': dbs,
+        'exercises': company_serializer.data
     }
     if custom_exercises is not None:
         resp['custom_exercises'] = custom_exercises
@@ -136,18 +135,40 @@ def test_query(request):
     db_id = request.data['db']
     session_id = request.data['sessionId']
     dt_session = request.data['dtSession']
+    sql = request.data['sql']
+    invitation_id = request.data['invitationId']
+
+    inv = Invitation.objects.get(pk=invitation_id)
+
+    if dt_session:
+        exercise = CompanyExercise.objects.get(pk=session_id)
+    else:
+        exercise = UserExercise.objects.get(pk=session_id)
 
     db = Database.objects.get(pk=db_id)
-    data = execute_sql(db, request.data['sql'])
-    match = compare_query_results(data, session_id, dt_session)
+    data = execute_sql(db, sql)
+    match = compare_query_results(data, exercise, dt_session)
+
+    first_query_invitation = request.data.get('firstQueryInvitation', False)
+    if first_query_invitation:
+        inv.status = IN_PROGRESS
+
+    if match:
+        inv.status = SUCCESSFULLY_COMPLETED
+        inv.successful_query = sql
+
+    inv.last_query = sql
+    inv.save()
 
     resp = {
       'rows': data['rows'],
       'headers': data['headers'],
       'db_id': db_id,
       'duplicates': data['duplicates'],
-      'match': match
+      'match': match,
+      'invitation_status': inv.status
     }
+
     return Response(data=resp, status=200)
 
 
@@ -165,17 +186,30 @@ def create_exercise(request):
     expected_headers = pickle.dumps(data['headers'])
     expected_rows = pickle.dumps(data['rows'])
 
-    ue = UserExercise(
-      name=name,
-      db=db,
-      author=request.user,
-      objective=objective,
-      working_query=sql,
-      expected_headers=expected_headers,
-      expected_rows=expected_rows,
-      column_descriptions=request.data['columnDescriptions']
-    )
-    ue.save()
+    if request.user.is_superuser and request.user.email == 'adminCREATE@devtournament.com':
+        ce = CompanyExercise(
+          name=name,
+          db=db,
+          author=request.user,
+          objective=objective,
+          working_query=sql,
+          expected_headers=expected_headers,
+          expected_rows=expected_rows,
+          column_descriptions=request.data['columnDescriptions']
+        )
+        ce.save()
+    else:
+        ue = UserExercise(
+          name=name,
+          db=db,
+          author=request.user,
+          objective=objective,
+          working_query=sql,
+          expected_headers=expected_headers,
+          expected_rows=expected_rows,
+          column_descriptions=request.data['columnDescriptions']
+        )
+        ue.save()
 
     return Response(status=200)
 

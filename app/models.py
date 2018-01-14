@@ -172,6 +172,7 @@ class Exercise(models.Model):
     column_descriptions = JSONField()
     subject = models.CharField(max_length=20, choices=SUBJECT_CHOICES, default=POSTGRES)
     added = models.DateTimeField(auto_now_add=True)
+    position = models.IntegerField(default=0)
 
     class Meta:
         abstract = True
@@ -182,6 +183,7 @@ class CompanyExercise(Exercise):
     new = models.BooleanField(default=False)
     needed_subscription = models.CharField(max_length=15, choices=SUBSCRIPTION_CHOICES,
                                            default=BASIC, null=True, blank=True)
+    enabled = models.BooleanField(default=False)
 
 
 class UserExercise(Exercise):
@@ -200,3 +202,22 @@ class Invitation(models.Model):
     # TODO: Make sure to warn users that when deleting a custom exercise, it will also delete any invitations associated with it
     exercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)
     archived = models.BooleanField(default=False)
+    last_query = models.TextField(null=True, blank=True)
+    successful_query = models.TextField(null=True, blank=True)
+
+
+# class SuccessfulAttempt(models.Model):
+#     query = models.TextField()
+#     time = models.DateTimeField(auto_now_add=True)
+#     user = models.ForeignKey(User, related_name='%(class)s_set', related_query_name='%(class)ss')
+#
+#     class Meta:
+#         abstract = True
+#
+#
+# class SuccessfulCompanyAttempt(SuccessfulAttempt):
+#     exercise = models.ForeignKey(CompanyExercise, on_delete=models.CASCADE)
+#
+#
+# class SuccessfulUserAttempt(SuccessfulAttempt):
+#     exercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)

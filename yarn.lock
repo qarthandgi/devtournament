@@ -6937,6 +6937,10 @@ void-elements@^2.0.0, void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
+vue-confetti@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/vue-confetti/-/vue-confetti-0.3.2.tgz#26f9ac74b190d5320d4eaabcfd8630c51bd72bbb"
+
 vue-cookies@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/vue-cookies/-/vue-cookies-1.5.4.tgz#c897fd43f5c7edead3e993d4d3d116100bb8a3bb"

@@ -5,7 +5,8 @@ function initialState () {
   return {
     databases: [],
     customExercises: [],
-    invitations: []
+    invitations: [],
+    exercises: []
   }
 }
 
@@ -43,6 +44,10 @@ export default {
       const index = state.customExercises.findIndex(x => x.id === payload.customExerciseId)
       const idx = state.customExercises[index].invitation_set.findIndex(x => x.id === payload.invitationId)
       state.customExercises[index].invitation_set.splice(idx, 1)
+    },
+    changeInvitationStatus (state, payload) {
+      const idx = state.invitations.findIndex(x => x.id === payload.invitationId)
+      Vue.set(state.invitations[idx], 'status', payload.status)
     }
   },
   actions: {

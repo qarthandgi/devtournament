@@ -1,5 +1,5 @@
 <template lang="pug">
-  .clip(:class="{create, 'no-pointer': noPointer}", @click="selectClip")
+  .clip(:class="{create, 'no-pointer': noPointer, success: successStatus}", @click="selectClip")
     .clip__invite(v-if="invite && item.status === 'pending'")
       .clip__invite__text(style="margin-top:8px;") {{this.item.exercise.name}}
       .clip__invite__text
@@ -9,7 +9,7 @@
       .clip__invite__buttons
         .clip__invite__buttons__option.decline(@click="rsvpInvitation(false)") Decline
         .clip__invite__buttons__option.accept(@click="rsvpInvitation(true)") Accept
-    .clip__number-bg(v-if="!create")
+    .clip__number-bg(v-if="!create", :class="{success: successStatus}")
     .clip__number(v-if="!create") {{ seq }}
     .clip__body
       .clip__body__title(:class="{create}")
@@ -34,6 +34,13 @@
       ...mapState({
         'databases': state => state.pg.databases
       }),
+      successStatus () {
+        if ((!this.create) && this.item.status) {
+          return this.item.status === 'successfully completed'
+        } else {
+          return false
+        }
+      },
       noPointer () {
         return this.invite && this.item.status === 'pending'
       },
@@ -106,6 +113,8 @@
     overflow: hidden
     position: relative
     cursor: pointer
+    &.success
+      border: 1px $success-green solid
     &.no-pointer
       cursor: default
     &.create
@@ -163,6 +172,8 @@
       top: -64px
       left: -64px
       transform: rotateZ(45deg)
+      &.success
+        background-color: $success-green
     &__number
       position: absolute
       top: 3px

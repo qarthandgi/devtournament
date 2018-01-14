@@ -1,13 +1,23 @@
 <template lang="pug">
-  .info-action
+  .info-action(@click="select", :class="{success: successStatus}")
     .info-action__content
       span Double Tap <pre>SHIFT</pre> to View&nbsp;
-        span.type Expected Results
+        span.type(v-if="userTableVisibility") EXPECTED
+        span.type(v-else) YOUR
+      span &nbsp;results
 </template>
 
 <script>
   export default {
-
+    props: {
+      userTableVisibility: {required: true},
+      successStatus: {required: false, default: false}
+    },
+    methods: {
+      select () {
+        this.$emit('select')
+      }
+    }
   }
 </script>
 
@@ -27,6 +37,9 @@
     height: 40px
     left: 0
     right: 0
+    cursor: pointer
+    &.success
+      border-top: 3px $success-green solid
     pre
       display: inline
       color: rgba(220,80,80,0.8)

@@ -1,8 +1,25 @@
 from rest_framework import serializers
 
-from .models import UserExercise, Invitation, User
+from .models import CompanyExercise, UserExercise, Invitation, User
 
 import pickle
+
+
+class CompanyExerciseSerializer(serializers.ModelSerializer):
+    expected_output = serializers.SerializerMethodField()
+
+    def get_expected_output(self, exercise):
+        headers = pickle.loads(exercise.expected_headers)
+        rows = pickle.loads(exercise.expected_rows)
+        output = {
+          'headers': headers,
+          'rows': rows
+        }
+        return output
+
+    class Meta:
+        model = CompanyExercise
+        fields = ('id', 'name', 'db', 'objective', 'column_descriptions', 'added', 'expected_output', 'difficulty', 'needed_subscription')
 
 
 class InviteExerciseSerializer(serializers.ModelSerializer):

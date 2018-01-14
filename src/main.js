@@ -8,6 +8,7 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
+import VueConfetti from 'vue-confetti'
 
 import {store} from './store/index'
 
@@ -43,6 +44,7 @@ axios.defaults.validateStatus = function (status) {
 Vue.use(VueCookies)
 Vue.use(Vuelidate)
 Vue.use(VueLodash, lodash)
+Vue.use(VueConfetti)
 
 const tokenKey = VueCookies.get('tokenKey')
 if (tokenKey) {

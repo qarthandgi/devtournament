@@ -1,5 +1,7 @@
 <template lang="pug">
   .info
+    .info__check(:class="{success: successStatus}")
+      span.fas.fa-check-circle
     .info__details
       .info__details__item.idi-session
         .info__details__item__label EXERCISE
@@ -73,7 +75,8 @@
       mode: {required: false, default: 'view'},
       headers: {required: false, default: []},
       custom: {required: false, default: false},
-      invitation: {required: false, default: false}
+      invitation: {required: false, default: false},
+      successStatus: {required: false, default: false}
     },
     data () {
       return {
@@ -151,6 +154,14 @@
     padding: 20px
     box-sizing: border-box
     overflow: scroll
+    &__check
+      position: absolute
+      top: 12px
+      right: 12px
+      color: rgba(220,220,220,0.45)
+      font-size: 38px
+      &.success
+        color: $success-green
     &__details
       position: relative
       top: 0
