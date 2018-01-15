@@ -18,6 +18,9 @@ export default {
   getters: {
     getInvitationById: (state) => (customExerciseId, invitationId) => {
       return state.customExercises.find(x => x.id === customExerciseId).invitation_set.find(x => x.id === invitationId)
+    },
+    getNoviceExercises: (state) => {
+      return state.exercises.filter(x => x.difficulty === 'novice')
     }
   },
   mutations: {
@@ -25,6 +28,7 @@ export default {
       Vue.set(state, 'databases', (payload.databases || []).sort((a, b) => a.id - b.id))
       Vue.set(state, 'customExercises', (payload.custom_exercises || []).sort((a, b) => a.added - b.added))
       Vue.set(state, 'invitations', (payload.invitations || []).sort((a, b) => a.added - b.added))
+      Vue.set(state, 'exercises', (payload.exercises || []).sort((a, b) => a.position - b.position))
     },
     // replaceInvite will be the top level invitations, replaceInvitation will be those inside customExercises
     replaceInvite (state, payload) {

@@ -18,7 +18,7 @@
         .top-panel.darker
         .pg__row__section__title Tournament
         .pg__row__section__description
-          span The tournament is your place to prove your skills and make real money. Hone your skills in the Sandbox and Sessions to prepare for the timed Tournament. You’ll have access to a UML diagram shortly beforehand to study. Be ready.
+          span The tournament is your place to prove yourself. Hone your skills in the Sandbox and Sessions to prepare for the timed Tournament. You’ll have access to a UML diagram shortly beforehand to study. Be ready.
         .pg__row__section__tournament(style="font-size:16px;") Next Tournament
           br
           span(style="font-size:18px;") TBD
@@ -55,6 +55,15 @@
           )
         .pg__row__section__category Novice
         .pg__row__section__content
+          large-clip(
+            v-for="(item, $index) in noviceExercises",
+            :key="item.id",
+            :item="item",
+            :custom="false",
+            :seq="item.position",
+            :company="true",
+            @select="selectExercise(arguments[0], 'company')"
+          )
         .pg__row__section__category Intermediate
         .pg__row__section__content
           span hey
@@ -64,7 +73,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import {mapState, mapGetters} from 'vuex'
   import SmallClip from '@/units/SmallClip'
   import LargeClip from '@/units/LargeClip'
 
@@ -82,6 +91,9 @@
         'databases': state => state.pg.databases,
         'customExercises': state => state.pg.customExercises,
         'invitations': state => state.pg.invitations
+      }),
+      ...mapGetters({
+        'noviceExercises': 'pg/getNoviceExercises'
       })
     },
     methods: {
@@ -95,6 +107,8 @@
           this.$router.push({name: 'postgres-custom', params: {id: item.id}})
         } else if (type === 'invitation') {
           this.$router.push({name: 'postgres-invitation', params: {id: item.id}})
+        } else if (type === 'company') {
+          this.$router.push({name: 'postgres-exercise', params: {id: item.id}})
         }
       }
     }

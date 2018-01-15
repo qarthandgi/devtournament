@@ -185,6 +185,9 @@ class CompanyExercise(Exercise):
                                            default=BASIC, null=True, blank=True)
     enabled = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.difficulty + ' - ' + self.name
+
 
 class UserExercise(Exercise):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -206,18 +209,11 @@ class Invitation(models.Model):
     successful_query = models.TextField(null=True, blank=True)
 
 
-# class SuccessfulAttempt(models.Model):
-#     query = models.TextField()
-#     time = models.DateTimeField(auto_now_add=True)
-#     user = models.ForeignKey(User, related_name='%(class)s_set', related_query_name='%(class)ss')
-#
-#     class Meta:
-#         abstract = True
-#
-#
-# class SuccessfulCompanyAttempt(SuccessfulAttempt):
-#     exercise = models.ForeignKey(CompanyExercise, on_delete=models.CASCADE)
-#
-#
-# class SuccessfulUserAttempt(SuccessfulAttempt):
-#     exercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)
+class SuccessfulCompanyAttempt(models.Model):
+    query = models.TextField()
+    time = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(User, related_name='%(class)s_set', related_query_name='%(class)ss')
+    exercise = models.ForeignKey(CompanyExercise, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username + ' - ' + self.exercise.name

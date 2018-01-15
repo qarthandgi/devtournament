@@ -1,6 +1,6 @@
 <template lang="pug">
-  .info
-    .info__check(:class="{success: successStatus}")
+  .info(:class="{'to-bottom': toBottomClass}")
+    .info__check(v-if="checkVisibility", :class="{success: successStatus}")
       span.fas.fa-check-circle
     .info__details
       .info__details__item.idi-session
@@ -32,7 +32,7 @@
         .info__details__item__content
           span(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
-      .info__details__item.idi-requirements(v-if="mode === 'edit' || custom || invitation")
+      .info__details__item.idi-requirements(v-if="mode === 'edit' || custom || invitation || sessionType === 'company'")
         .info__details__item__label OUTPUT REQUIREMENTS
         .info__details__item__content
           .info__details__item__content__toggle(v-if="custom", @click="outputColumnsVisibility = !outputColumnsVisibility") Toggle Output Requirements
@@ -41,7 +41,7 @@
             @defined-headers="definedHeaders = arguments[0]",
             @columns="definedColumns = arguments[0]",
             :json-columns="sessionInfo.column_descriptions || ''",
-            :custom-view="mode === 'view' && (custom || invitation)"
+            :custom-view="mode === 'view' && (custom || invitation || sessionType === 'company')"
           )
       .info__details__item.idi-invites(v-if="custom && mode === 'view'")
         .info__details__item__label INVITATIONS
@@ -52,9 +52,9 @@
             :key="item.id"
           )
           invite-clip(:create="true")
-    .info__shift(v-if="false")
-      .info__shift__content(v-if="mode === 'view'") {{ doubleShiftMessage }}
-      .info__shift__content(v-else, @click="createExercise") Create Exercise
+    .info__shift(v-if="true")
+      .info__shift__content(v-if="false") {{ doubleShiftMessage }}
+      .info__shift__content(v-if="mode === 'edit'", @click="createExercise") Create Exercise
 </template>
 
 <script>
@@ -76,7 +76,8 @@
       headers: {required: false, default: []},
       custom: {required: false, default: false},
       invitation: {required: false, default: false},
-      successStatus: {required: false, default: false}
+      successStatus: {required: false, default: false},
+      sessionType: {required: false, default: null}
     },
     data () {
       return {
@@ -94,12 +95,18 @@
       }
     },
     computed: {
-      invitations () {
-        return this.sessionInfo.invitation_set
-      },
       ...mapState({
         databases: state => state.pg.databases
       }),
+      toBottomClass () {
+        return this.sessionType === 'custom-create'
+      },
+      checkVisibility () {
+        return this.sessionType !== 'sandbox' && this.sessionType !== 'custom-create'
+      },
+      invitations () {
+        return this.sessionInfo.invitation_set
+      },
       doubleShiftMessage () {
         let message = ''
         if (this.showingUserTable) {
@@ -111,9 +118,18 @@
       }
     },
     watch: {
+      // TODO: really best implementation here?
       invitation: {
         handler (val) {
           this.outputColumnsVisibility = true
+        },
+        immediate: true
+      },
+      sessionType: {
+        handler (val) {
+          if (val === 'company') {
+            this.outputColumnsVisibility = true
+          }
         },
         immediate: true
       },
@@ -136,6 +152,9 @@
         const match = this._.isEqual(this.headers, this.definedHeaders)
         this.$emit('headers-match', match)
       }
+    },
+    mounted () {
+      this.selectDb(this.databases[0])
     }
   }
 </script>
@@ -143,7 +162,7 @@
 
 <style lang="sass" scoped>
   @import '../assets/sass/vars'
-  $double-tap-height: 45px
+  $double-tap-height: 20px
 
   .info
     position: absolute
@@ -154,6 +173,8 @@
     padding: 20px
     box-sizing: border-box
     overflow: scroll
+    &.to-bottom
+      bottom: 0px
     &__check
       position: absolute
       top: 12px
@@ -232,27 +253,30 @@
       flex-flow: column nowrap
       justify-content: center
       align-items: center
-      position: absolute
-      bottom: 0
-      left: 0
-      right: 0
+      /*position: absolute*/
+      /*bottom: 0*/
+      /*left: 0*/
+      /*right: 0*/
       height: $double-tap-height
-      border: 1px red solid
+      /*border: 1px red solid*/
       &__content
         width: 150px
         position: absolute
         left: 0
         right: 0
         margin: 0px auto
+        border: 1px #c1981c solid
+        border-radius: 5px
         +averia-font()
         color: #c1981c
         text-align: center
         /*border: 1px transparentize(#c1981c, 0.3) solid*/
-        padding: 3px
-        font-size: 14px
+        padding: 4px
+        font-size: 15px
         &:hover
           cursor: pointer
-          color: lighten(#c1981c, 7%)
+          color: lighten(#c1981c, 9%)
+          background-color: rgba(255,255,255,0.05)
         &:active
           color: lighten(#c1981c, 20%)
 

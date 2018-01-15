@@ -10,9 +10,15 @@
           @create="createExercise",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
           :invitation="$route.meta.hasOwnProperty('type') && $route.meta.type === 'invitation'",
-          :success-status="successStatus"
+          :success-status="successStatus",
+          :session-type="sessionType"
         )
-        info-action(@select="toggleTable", :user-table-visibility="showingUserTable", :success-status="successStatus")
+        info-action(
+          v-if="infoActionVisibility",
+          @select="toggleTable",
+          :user-table-visibility="showingUserTable",
+          :success-status="successStatus",
+        )
         transition(appear)
           router-view
     .code__io
@@ -68,7 +74,7 @@
         columnDescriptionVisibility: false,
         dtSession: false,
         firstShiftActivated: false,
-        exerciseType: null,
+        sessionType: null,
         aQuerySent: false // so that confetti doesn't fall on load, only after a query has been sent
       }
     },
@@ -76,8 +82,15 @@
       ...mapState({
         databases: state => state.pg.databases,
         customExercises: state => state.pg.customExercises,
-        invitations: state => state.pg.invitations
+        invitations: state => state.pg.invitations,
+        exercises: state => state.pg.exercises
       }),
+      allowDoubleShift () {
+        return this.sessionType !== 'sandbox' && this.sessionType !== 'custom-create'
+      },
+      infoActionVisibility () {
+        return this.sessionType !== 'sandbox' && this.mode !== 'edit'
+      },
       outputHeaders () {
         if (this.showingUserTable) {
           return this.tableData.headers
@@ -93,7 +106,7 @@
         }
       },
       successStatus () {
-        if (this.exerciseType === 'invitation') {
+        if (this.sessionType === 'invitation') {
           const invitationIdx = this.invitations.findIndex(x => x.id === parseInt(this.$route.params.id))
           const completed = this.invitations[invitationIdx].status === 'successfully completed'
           if (completed) {
@@ -113,7 +126,7 @@
       },
       '$route': {
         async handler (val) {
-          this.exerciseType = null
+          this.sessionType = null
           const mode = val.meta.mode
           const id = val.params.id === 'new' ? 'new' : parseInt(val.params.id)
           if (mode === 'sandbox') {
@@ -121,18 +134,25 @@
             this.dbId = db.id
             this.sessionInfo = sandboxInit(db.full_name)
             this.shiftChangeVisibility = false
+            this.sessionType = 'sandbox'
           } else if (mode === 'exercise') {
             if (id === 'new') {
               this.mode = 'edit'
               this.$set(this, 'tableData', tableData())
+              this.sessionType = 'custom-create'
             } else if (val.meta.type && val.meta.type === 'custom') {
               this.mode = 'view'
               this.setCustomExercise(id)
             } else if (val.meta.type && val.meta.type === 'invitation') {
               this.mode = 'view'
-              this.exerciseType = 'invitation'
+              this.sessionType = 'invitation'
               this.columnDescriptionVisibility = true
               this.setInvitation(id)
+            } else if (val.meta.type && val.meta.type === 'company') {
+              this.mode = 'view'
+              this.sessionType = 'company'
+              this.columnDescriptionVisibility = true
+              this.setCompanyExercise(id)
             }
           }
         },
@@ -172,6 +192,14 @@
           this.$set(this, 'sessionInfo', {...this.customExercises[ce]})
         }
       },
+      setCompanyExercise (id) {
+        const eIdx = this.exercises.findIndex(x => x.id === id)
+        if (eIdx !== -1) {
+          const dbIdx = this.databases.findIndex(x => x.id === this.exercises[eIdx].db)
+          this.dbId = this.databases[dbIdx].id
+          this.$set(this, 'sessionInfo', {...this.exercises[eIdx]})
+        }
+      },
       async createExercise (exercise) {
         const {data} = await this.$axios.post('create-exercise/', {
           ...exercise,
@@ -187,8 +215,16 @@
       },
       testKey (evt) {
         if (evt.keyCode === 13 && evt.metaKey) {
-          this.testQuery()
-        } else if (evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
+          if (this.sessionType === 'sandbox') {
+            this.sandboxTestQuery()
+          } else if (this.sessionType === 'invitation') {
+            this.invitationTestQuery()
+          } else if (this.sessionType === 'custom-create') {
+            this.customTestQuery()
+          } else if (this.sessionType === 'company') {
+            this.companyTestQuery()
+          }
+        } else if (this.allowDoubleShift && evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
           if (this.firstShiftActivated) {
             this.firstShiftActivated = false
             this.toggleTable()
@@ -200,10 +236,41 @@
           }
         }
       },
-      async testQuery () {
+      async sandboxTestQuery () {
+        const {data} = await this.$axios.post('sandbox-test-query/', {
+          sql: this.sql,
+          db: this.dbId
+        })
+        this.$set(this.tableData, 'headers', data.headers)
+        this.$set(this.tableData, 'rows', data.rows)
+      },
+      async customTestQuery () {
         // TODO: make sure this.dbId and this.lastDbId match
         // TODO: make sure headersMatch is checked
         // TODO: check duplicateColumns set from response before saving created exercise
+        const {data} = await this.$axios.post('custom-test-query/', {
+          sql: this.sql,
+          db: this.dbId
+        })
+        this.$set(this.tableData, 'headers', data.headers)
+        this.$set(this.tableData, 'rows', data.rows)
+        this.lastDbId = data.db_id
+        this.duplicateColumns = data.duplicates
+      },
+      async companyTestQuery () {
+        this.aQuerySent = true
+        const {data} = await this.$axios.post('company-test-query/', {
+          sql: this.sql,
+          db: this.dbId,
+          sessionId: this.sessionInfo.id
+        })
+        this.$set(this.tableData, 'headers', data.headers)
+        this.$set(this.tableData, 'rows', data.rows)
+        if (data.match) {
+          this.confetti()
+        }
+      },
+      async invitationTestQuery () {
         this.aQuerySent = true
         const invitationIdx = this.invitations.findIndex(x => x.id === parseInt(this.$route.params.id))
         const {data} = await this.$axios.post('test-query/', {

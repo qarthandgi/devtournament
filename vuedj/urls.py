@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^load-postgres/', views.load_postgres),
     url(r'^load-custom-exercises', views.load_custom_exercises),
 
+    url(r'^sandbox-test-query/', views.sandbox_test_query),
+    url(r'^company-test-query/', views.company_test_query),
+    url(r'^custom-test-query/', views.custom_test_query),
     url(r'^test-query/', views.test_query),
     url(r'^create-exercise/', views.create_exercise),
     url(r'^invite-user/', views.invite_user),
@@ -39,4 +42,5 @@ urlpatterns = [
     url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^.*/$', views.index, name='home')
 ]

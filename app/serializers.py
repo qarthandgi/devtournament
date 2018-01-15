@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
-from .models import CompanyExercise, UserExercise, Invitation, User
+from .models import CompanyExercise, UserExercise, Invitation, User, SuccessfulCompanyAttempt
 
 import pickle
 
 
 class CompanyExerciseSerializer(serializers.ModelSerializer):
     expected_output = serializers.SerializerMethodField()
+    # completed = serializers.SerializerMethodField()
+    last_successful_completion = serializers.SerializerMethodField()
 
     def get_expected_output(self, exercise):
         headers = pickle.loads(exercise.expected_headers)
@@ -17,9 +19,26 @@ class CompanyExerciseSerializer(serializers.ModelSerializer):
         }
         return output
 
+    # def get_completed(self, exercise):
+    #     user = self.context['request'].user
+    #     try:
+    #         success_attempt = SuccessfulCompanyAttempt.objects.get(user=user, exercise=exercise)
+    #         return True
+    #     except SuccessfulCompanyAttempt.DoesNotExist:
+    #         return False
+
+    def get_last_successful_completion(self, exercise):
+        user = self.context['request'].user
+        try:
+            success_attempt = SuccessfulCompanyAttempt.objects.get(user=user, exercise=exercise)
+            return success_attempt.time
+        except SuccessfulCompanyAttempt.DoesNotExist:
+            return False
+
     class Meta:
         model = CompanyExercise
-        fields = ('id', 'name', 'db', 'objective', 'column_descriptions', 'added', 'expected_output', 'difficulty', 'needed_subscription')
+        fields = ('id', 'name', 'db', 'objective', 'column_descriptions', 'added', 'expected_output',
+                  'difficulty', 'needed_subscription', 'position', 'last_successful_completion')
 
 
 class InviteExerciseSerializer(serializers.ModelSerializer):

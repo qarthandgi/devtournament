@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.db import connections
+from django.utils import timezone
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from .models import User, Database, CompanyExercise, UserExercise, Invitation, IN_PROGRESS, SUCCESSFULLY_COMPLETED
+from .models import SuccessfulCompanyAttempt
 from .serializers import CompanyExerciseSerializer, CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
@@ -63,7 +65,7 @@ def compare_2d(stored, attempt):
     return True
 
 
-def compare_query_results(data, exercise, dt_session):
+def compare_query_results(data, exercise):
     expected_headers = pickle.loads(exercise.expected_headers)
     expected_rows = pickle.loads(exercise.expected_rows)
 
@@ -98,7 +100,10 @@ def load_postgres(request):
     invitations = load_invitations(request.user) if request.user.is_authenticated else None
 
     exercises = CompanyExercise.objects.filter(enabled=True)
-    company_serializer = CompanyExerciseSerializer(exercises, many=True)
+    print(len(exercises))
+    company_serializer = CompanyExerciseSerializer(exercises, many=True, context={'request': request})
+    print('company serializer!! data')
+    pprint(company_serializer.data)
 
     resp = {
         'databases': dbs,
@@ -131,6 +136,76 @@ def load_invitations(user):
 
 @api_view(['POST'])
 @permission_classes((AllowAny,))
+def sandbox_test_query(request):
+    db_id = request.data['db']
+    sql = request.data['sql']
+    db = Database.objects.get(pk=db_id)
+    data = execute_sql(db, sql)
+
+    resp = {
+      'rows': data['rows'],
+      'headers': data['headers'],
+    }
+
+    return Response(data=resp, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+def custom_test_query(request):
+    db_id = request.data['db']
+    sql = request.data['sql']
+    db = Database.objects.get(pk=db_id)
+    data = execute_sql(db, sql)
+
+    resp = {
+      'rows': data['rows'],
+      'headers': data['headers'],
+      'db_id': db_id,
+      'duplicates': data['duplicates']
+    }
+
+    return Response(data=resp, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def company_test_query(request):
+    db_id = request.data['db']
+    session_id = request.data['sessionId']
+    sql = request.data['sql']
+
+    exercise = CompanyExercise.objects.get(pk=session_id)
+
+    db = Database.objects.get(pk=db_id)
+    data = execute_sql(db, sql)
+    match = compare_query_results(data, exercise)
+
+    resp = {
+      'rows': data['rows'],
+      'headers': data['headers'],
+      'db_id': db_id,
+      'match': match,
+    }
+
+    if match:
+        try:
+            success_attempt = SuccessfulCompanyAttempt.objects.get(exercise=exercise, user=request.user)
+            success_attempt.time = timezone.now()
+            success_attempt.save()
+        except SuccessfulCompanyAttempt.DoesNotExist:
+            success_attempt = SuccessfulCompanyAttempt(exercise=exercise, user=request.user, query=sql)
+            success_attempt.save()
+
+        serializer = CompanyExerciseSerializer(exercise, context={'request': request})
+        resp['exercise'] = serializer.data
+
+    return Response(data=resp, status=200)
+
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny,))
 def test_query(request):
     db_id = request.data['db']
     session_id = request.data['sessionId']
@@ -147,7 +222,7 @@ def test_query(request):
 
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, sql)
-    match = compare_query_results(data, exercise, dt_session)
+    match = compare_query_results(data, exercise)
 
     first_query_invitation = request.data.get('firstQueryInvitation', False)
     if first_query_invitation:
@@ -186,11 +261,10 @@ def create_exercise(request):
     expected_headers = pickle.dumps(data['headers'])
     expected_rows = pickle.dumps(data['rows'])
 
-    if request.user.is_superuser and request.user.email == 'adminCREATE@devtournament.com':
+    if request.user.is_superuser and request.user.email == 'adminCREATE@dev.com':
         ce = CompanyExercise(
           name=name,
           db=db,
-          author=request.user,
           objective=objective,
           working_query=sql,
           expected_headers=expected_headers,

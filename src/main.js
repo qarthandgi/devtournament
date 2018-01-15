@@ -29,7 +29,8 @@ const NON_TOKEN_URLS = [
   'rest-auth/registration/',
   'profile-data/',
   'load-postgres/',
-  'test-query/'
+  'sandbox-test-query/',
+  'custom-test-query/'
 ]
 
 axios.interceptors.request.use(function (config) {

@@ -16,7 +16,7 @@
         span.clip__body__title__text {{ nameText }}
       .clip__body__sub-title
         span.clip__body__sub-title__text {{ subTitleText }}
-    .clip__footer {{ footerText }}
+    .clip__footer(:class="[footerClass]") {{ footerText }}
 </template>
 
 <script>
@@ -28,12 +28,22 @@
       item: {required: false},
       create: {required: false, default: false},
       custom: {required: false, default: false},
-      invite: {required: false, default: false}
+      invite: {required: false, default: false},
+      company: {required: false, default: false}
     },
     computed: {
       ...mapState({
         'databases': state => state.pg.databases
       }),
+      footerClass () {
+        if (this.company) {
+          if (this.item.last_successful_completion) {
+            return 'success'
+          } else {
+            return 'danger'
+          }
+        }
+      },
       successStatus () {
         if ((!this.create) && this.item.status) {
           return this.item.status === 'successfully completed'
@@ -47,7 +57,7 @@
       nameText () {
         if (this.create) {
           return 'Create a Custom Exercise'
-        } else if (this.custom) {
+        } else if (this.custom || this.company) {
           return this.item.name
         } else if (this.invite) {
           return this.item.exercise.name
@@ -58,7 +68,7 @@
       subTitleText () {
         if (this.create) {
           return 'Invite Others to Complete'
-        } else if (this.custom) {
+        } else if (this.custom || this.company) {
           const dbIdx = this.databases.findIndex(x => x.id === this.item.db)
           return this.databases[dbIdx].full_name
         } else if (this.invite) {
@@ -75,6 +85,12 @@
         } else if (this.invite) {
           const inviter = this.item.inviter.email
           return `Invitation sent by ${inviter}`
+        } else if (this.company) {
+          if (this.item.last_successful_completion) {
+            return 'Last Successful Completion: ' + this.item.last_successful_completion
+          } else {
+            return ''
+          }
         }
       }
     },
@@ -205,5 +221,9 @@
       +averia-font()
       font-size: 13px
       color: rgba(95,95,95,1)
+      &.danger
+        color: darken(rgba(220,80,80,0.8), 9%)
+      &.success
+        color: $success-green
 
 </style>

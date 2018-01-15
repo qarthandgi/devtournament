@@ -61,7 +61,7 @@ const router = new Router({
           path: 'exercise/:id',
           name: 'postgres-exercise',
           component: CodingShell,
-          meta: {mode: 'exercise'}
+          meta: {mode: 'exercise', type: 'company'}
         }
       ]
     },
