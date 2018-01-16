@@ -45,8 +45,10 @@
         }
       },
       successStatus () {
-        if ((!this.create) && this.item.status) {
+        if ((!this.create) && this.item.status && (!this.company)) {
           return this.item.status === 'successfully completed'
+        } else if (this.company) {
+          return !!this.item.last_successful_completion
         } else {
           return false
         }
@@ -87,7 +89,7 @@
           return `Invitation sent by ${inviter}`
         } else if (this.company) {
           if (this.item.last_successful_completion) {
-            return 'Last Successful Completion: ' + this.item.last_successful_completion
+            return 'Successfully Completed'
           } else {
             return ''
           }

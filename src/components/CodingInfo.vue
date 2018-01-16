@@ -52,9 +52,11 @@
             :key="item.id"
           )
           invite-clip(:create="true")
+    .info__validation-message
+      .info__validation-message__content(v-if="invalidCreation") {{ invalidMessage }}
     .info__shift(v-if="true")
       .info__shift__content(v-if="false") {{ doubleShiftMessage }}
-      .info__shift__content(v-if="mode === 'edit'", @click="createExercise") Create Exercise
+      .info__shift__content(v-if="mode === 'edit'", @click="createExercise", :class="{invalid: invalidCreation}") Create Exercise
 </template>
 
 <script>
@@ -77,7 +79,8 @@
       custom: {required: false, default: false},
       invitation: {required: false, default: false},
       successStatus: {required: false, default: false},
-      sessionType: {required: false, default: null}
+      sessionType: {required: false, default: null},
+      sql: {required: false, default: ''}
     },
     data () {
       return {
@@ -91,13 +94,21 @@
         },
         definedHeaders: [],
         definedColumns: [],
-        outputColumnsVisibility: false
+        outputColumnsVisibility: false,
+        invalidMessage: ''
       }
     },
     computed: {
       ...mapState({
         databases: state => state.pg.databases
       }),
+      invalidCreation () {
+        if (this.sql === '') {
+          this.invalidMessage = 'Must Enter a SQL Query'
+          return true
+        }
+        return false
+      },
       toBottomClass () {
         return this.sessionType === 'custom-create'
       },
@@ -143,7 +154,11 @@
     },
     methods: {
       createExercise () {
-        this.$emit('create', {...this.newExercise, columnDescriptions: JSON.stringify(this.definedColumns)})
+        if (this.invalidCreation) {
+          return false
+        } else {
+          this.$emit('create', {...this.newExercise, columnDescriptions: JSON.stringify(this.definedColumns)})
+        }
       },
       selectDb (db) {
         this.$set(this.newExercise, 'database', db.id)
@@ -273,12 +288,31 @@
         /*border: 1px transparentize(#c1981c, 0.3) solid*/
         padding: 4px
         font-size: 15px
-        &:hover
+        &.invalid
+          color: gray
+          border: 1px gray solid
+          cursor: not-allowed
+        &:hover:not(.invalid)
           cursor: pointer
           color: lighten(#c1981c, 9%)
           background-color: rgba(255,255,255,0.05)
-        &:active
+        &:active:not(.invalid)
           color: lighten(#c1981c, 20%)
+    &__validation-message
+      color: rgba(220,80,80,0.8)
+      text-align: center
+      +averia-font()
+      margin: 10px auto 15px
+      font-size: 13px
+      position: relative
+      height: 15px
+      /*border: 1px red solid*/
+      &__content
+        position: absolute
+        text-align: center
+        top: 0
+        left: 0
+        right: 0
 
 
 </style>

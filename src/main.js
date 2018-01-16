@@ -30,13 +30,16 @@ const NON_TOKEN_URLS = [
   'profile-data/',
   'load-postgres/',
   'sandbox-test-query/',
-  'custom-test-query/'
+  'custom-test-query/',
+  'company-test-query/'
 ]
 
 axios.interceptors.request.use(function (config) {
   if (NON_TOKEN_URLS.findIndex(x => x === config.url) === -1) {
     config.headers.common['Authorization'] = 'Token ' + store.state.user.tokenKey
   } else if (config.url === 'load-postgres/' && store.state.user.loggedIn) {
+    config.headers.common['Authorization'] = 'Token ' + store.state.user.tokenKey
+  } else if (config.url === 'company-test-query/' && store.state.user.loggedIn) {
     config.headers.common['Authorization'] = 'Token ' + store.state.user.tokenKey
   }
   return config

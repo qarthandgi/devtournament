@@ -11,7 +11,8 @@
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
           :invitation="$route.meta.hasOwnProperty('type') && $route.meta.type === 'invitation'",
           :success-status="successStatus",
-          :session-type="sessionType"
+          :session-type="sessionType",
+          :sql="sql"
         )
         info-action(
           v-if="infoActionVisibility",
@@ -113,6 +114,8 @@
             return true
           }
           return false
+        } else if (this.sessionType === 'company') {
+          return !!this.sessionInfo.last_successful_completion
         } else {
           return false
         }
@@ -232,7 +235,7 @@
             this.firstShiftActivated = true
             setTimeout(() => {
               this.firstShiftActivated = false
-            }, 280)
+            }, 200)
           }
         }
       },

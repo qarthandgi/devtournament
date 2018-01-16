@@ -109,10 +109,10 @@ DATABASES = {
     },
     'libra': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'libra_university',
-        'USER': 'nilesbrandon',
-        'PASSWORD': 'postgrespain883',
-        'HOST': '127.0.0.1',
+        'NAME': config['libra']['db_name'],
+        'USER': config['libra']['user'],
+        'PASSWORD': config['libra']['password'],
+        'HOST': config['libra']['host'],
         'PORT': '5432'
     }
 }

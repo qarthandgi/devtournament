@@ -100,10 +100,7 @@ def load_postgres(request):
     invitations = load_invitations(request.user) if request.user.is_authenticated else None
 
     exercises = CompanyExercise.objects.filter(enabled=True)
-    print(len(exercises))
     company_serializer = CompanyExerciseSerializer(exercises, many=True, context={'request': request})
-    print('company serializer!! data')
-    pprint(company_serializer.data)
 
     resp = {
         'databases': dbs,
@@ -169,7 +166,7 @@ def custom_test_query(request):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def company_test_query(request):
     db_id = request.data['db']
     session_id = request.data['sessionId']
@@ -196,7 +193,9 @@ def company_test_query(request):
         except SuccessfulCompanyAttempt.DoesNotExist:
             success_attempt = SuccessfulCompanyAttempt(exercise=exercise, user=request.user, query=sql)
             success_attempt.save()
-
+        except Exception as e:
+            print(e)
+        # TODO: FIX SERIALIZER HERE
         serializer = CompanyExerciseSerializer(exercise, context={'request': request})
         resp['exercise'] = serializer.data
 

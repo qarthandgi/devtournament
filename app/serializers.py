@@ -3,11 +3,11 @@ from rest_framework import serializers
 from .models import CompanyExercise, UserExercise, Invitation, User, SuccessfulCompanyAttempt
 
 import pickle
+from pprint import pprint
 
 
 class CompanyExerciseSerializer(serializers.ModelSerializer):
     expected_output = serializers.SerializerMethodField()
-    # completed = serializers.SerializerMethodField()
     last_successful_completion = serializers.SerializerMethodField()
 
     def get_expected_output(self, exercise):
@@ -19,16 +19,11 @@ class CompanyExerciseSerializer(serializers.ModelSerializer):
         }
         return output
 
-    # def get_completed(self, exercise):
-    #     user = self.context['request'].user
-    #     try:
-    #         success_attempt = SuccessfulCompanyAttempt.objects.get(user=user, exercise=exercise)
-    #         return True
-    #     except SuccessfulCompanyAttempt.DoesNotExist:
-    #         return False
-
     def get_last_successful_completion(self, exercise):
         user = self.context['request'].user
+        if user.is_anonymous:
+            print('user anonymous')
+            return False
         try:
             success_attempt = SuccessfulCompanyAttempt.objects.get(user=user, exercise=exercise)
             return success_attempt.time
