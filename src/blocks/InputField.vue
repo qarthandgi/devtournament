@@ -4,11 +4,11 @@
       :id="id",
       :type="password ? 'password' : 'text'",
       spellcheck="false",
-      @keyup="keyPressed",
-      @keyup.enter.prevent="$emit('enter')",
+      @keyup.enter.prevent="enterPressed",
       :key="reuseKey",
       :placeholder="placeholder",
       :style="{'font-size': fontSize}",
+      @blur="keyPressed"
     )
     label(:for="id", v-if="!hideLabel") {{name}}
 </template>
@@ -30,10 +30,11 @@
     },
     methods: {
       enterPressed (e) {
-        this.$emit('enter')
+        console.log(e.target.value)
+        this.$emit('enter', e.target.value)
       },
       keyPressed (e) {
-        // console.log('ok', e.target.value)
+        console.log('ok', e.target.value)
         this.$emit('update', e.target.value)
       }
     }

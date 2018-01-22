@@ -9,10 +9,12 @@ function initialState () {
       firstName: '',
       lastName: '',
       username: '',
-      email: ''
+      email: '',
+      subscription: 'none'
     },
     tokenKey: '',
-    loggedIn: false
+    loggedIn: false,
+    loaded: false
   }
 }
 
@@ -38,6 +40,10 @@ export default {
       state.user.username = payload.username
       state.user.email = payload.email
     },
+    setUserDetails (state, payload) {
+      state.user.subscription = payload.subscription
+      state.loaded = true
+    },
     clearData (state, payload) {
       const iS = initialState()
       for (let item in state) {
@@ -60,6 +66,7 @@ export default {
           VueCookies.set('tokenKey', data.key, '5d', '/')
           commit('setTokenKey', data)
           dispatch('getUser')
+          dispatch('getUserDetails')
           resolve(true)
         } else {
           console.log('response code ' + response.status)
@@ -79,6 +86,10 @@ export default {
     async getUser ({commit}) {
       const {data} = await axios.get('rest-auth/user/')
       commit('setUser', data)
+    },
+    async getUserDetails ({commit}) {
+      const {data} = await axios.get('user-details/')
+      commit('setUserDetails', data)
     },
     async register ({commit, dispatch}, {username, email, password1, password2}) {
       return new Promise(async (resolve, reject) => {

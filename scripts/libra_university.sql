@@ -1318,6 +1318,12 @@ insert into staff (id, profile_id, office, active, hire_date, salary) values (79
 insert into staff (id, profile_id, office, active, hire_date, salary) values (80, 164, 'legal', true, '2003-10-29', '45000.00');
 
 
+5 departments
+7 courses
+
+
+
+
 
 
 INSERT INTO profile (email, first_name, last_name) VALUES ('gregl@libra.com', 'Greg', 'Landolm');

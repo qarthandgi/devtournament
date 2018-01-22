@@ -12,7 +12,7 @@
             id="login-email-input",
             name="email",
             @update="updateLogin('username', $event)",
-            @enter="sendLogin",
+            @enter="updateLogin('username', $event, true)",
             :reuse-key="'login-email-input'"
           )
           input-field(
@@ -20,7 +20,7 @@
             name="password",
             :password="true",
             @update="updateLogin('password', $event)",
-            @enter="sendLogin",
+            @enter="updateLogin('password', $event, true)",
             :reuse-key="'login-password-input'"
           )
           .headings
@@ -185,7 +185,11 @@
       updateLogin (...args) {
         // args[0] is the field name (eg. username)
         // args[1] is the actual value from the field
+        // args[2] is if true was set on the call to also send login request
         this.$set(this.returningUser, args[0], args[1])
+        if (args[2]) {
+          this.sendLogin()
+        }
       },
       updateRegister (...args) {
         this.$set(this.newUser, args[0], args[1])

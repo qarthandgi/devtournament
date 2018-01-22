@@ -27,6 +27,7 @@ const NON_TOKEN_URLS = [
   'rest-auth/password/reset/',
   'rest-auth/password/reset/confirm/',
   'rest-auth/registration/',
+  'rest-auth/registration/verify-email/',
   'profile-data/',
   'load-postgres/',
   'sandbox-test-query/',
@@ -58,6 +59,7 @@ const tokenKey = VueCookies.get('tokenKey')
 if (tokenKey) {
   store.commit('user/setTokenKey', {key: tokenKey})
   store.dispatch('user/getUser')
+  store.dispatch('user/getUserDetails')
 }
 
 Vue.config.productionTip = process.env['NODE_ENV'] === 'development'

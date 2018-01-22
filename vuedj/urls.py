@@ -23,6 +23,7 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='home'),
+    url(r'^user-details/', views.user_details),
     url(r'^profile-data/', views.profile_data),
     url(r'^load-postgres/', views.load_postgres),
     url(r'^load-custom-exercises', views.load_custom_exercises),

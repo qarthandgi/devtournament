@@ -36,6 +36,9 @@ export const store = new Vuex.Store({
   getters: {
     fullName (state, getters) {
       return state.profile.firstName + ' ' + state.profile.lastName
+    },
+    dataLoaded (state, getters) {
+      return state.pg.loaded === true && state.user.loaded === true
     }
   },
   mutations: {

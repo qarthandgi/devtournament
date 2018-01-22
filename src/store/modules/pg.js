@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function initialState () {
   return {
+    loaded: false,
     databases: [],
     customExercises: [],
     invitations: [],
@@ -29,6 +30,7 @@ export default {
       Vue.set(state, 'customExercises', (payload.custom_exercises || []).sort((a, b) => a.added - b.added))
       Vue.set(state, 'invitations', (payload.invitations || []).sort((a, b) => a.added - b.added))
       Vue.set(state, 'exercises', (payload.exercises || []).sort((a, b) => a.position - b.position))
+      state.loaded = true
     },
     // replaceInvite will be the top level invitations, replaceInvitation will be those inside customExercises
     replaceInvite (state, payload) {

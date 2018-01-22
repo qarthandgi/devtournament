@@ -29,7 +29,7 @@ PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 SECRET_KEY = 'n3@wsgyxr)65$+s%z=b7#@8460%t_t0&s*elevyu%h5w_0i9@@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config['debug']
 
 ALLOWED_HOSTS = ['*']
 
@@ -109,10 +109,10 @@ DATABASES = {
     },
     'libra': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config['libra']['db_name'],
-        'USER': config['libra']['user'],
-        'PASSWORD': config['libra']['password'],
-        'HOST': config['libra']['host'],
+        'NAME': config['libra'][config['env']]['db_name'],
+        'USER': config['libra'][config['env']]['user'],
+        'PASSWORD': config['libra'][config['env']]['password'],
+        'HOST': config['libra'][config['env']]['host'],
         'PORT': '5432'
     }
 }

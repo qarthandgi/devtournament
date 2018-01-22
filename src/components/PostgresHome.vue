@@ -102,7 +102,7 @@
       },
       selectExercise (item, type) {
         if (item === 'create') {
-          this.$router.push({name: 'postgres-exercise', params: {id: 'new'}})
+          this.$router.push({name: 'postgres-new', params: {id: 'new'}})
         } else if (type === 'custom') {
           this.$router.push({name: 'postgres-custom', params: {id: item.id}})
         } else if (type === 'invitation') {

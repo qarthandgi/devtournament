@@ -28,7 +28,9 @@
         setLayoutState: 'app/setLayoutState'
       }),
       async fetch () {
-        const response = await this.$axios.get('load-custom-exercises/')
+        const response = await this.$axios.post('rest-auth/registration/verify-email/', {
+          key: 'Mg:1ed95k:4UPrHeM6WfBW1Z4NeLbT9I-u_Ig'
+        })
         console.log('response from load data')
         console.log(response)
       }

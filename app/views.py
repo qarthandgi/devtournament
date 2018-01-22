@@ -79,6 +79,10 @@ def compare_query_results(data, exercise):
 
     return all_match
 
+@api_view()
+@permission_classes((IsAuthenticated,))
+def user_details(request):
+    return Response({'subscription': request.user.subscription})
 
 # TODO: this shouldn't be AllowAny
 # @permission_classes((AllowAny,))
