@@ -2,7 +2,7 @@ import stripe
 # from private.private import config
 
 # stripe.api_key = config['stripe']['test']
-stripe.api_key = 'sk_test_qXjhBOzNy2QGmpD5XlXaUfn5'
+stripe.api_key = '<test api key here>'
 
 basic_subscription = stripe.Plan.create(
   currency='usd',
