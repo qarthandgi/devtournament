@@ -15,9 +15,11 @@ export function denyCompanyExercise (to) {
     console.log('RUNNIGN DENY COMPANY EXERCISE')
     console.log(to.name)
     if (to.name !== 'postgres-exercise') {
+      console.log('OK IN IF')
       resolve(false)
+      return
     }
-
+    console.log('AFTER IF')
     let deny = false
     function proceed () {
       const userSubscription = store.state.user.user.subscription

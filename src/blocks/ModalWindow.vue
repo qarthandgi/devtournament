@@ -12,13 +12,13 @@
     }
   }
 </script>
-
+A
 <style lang="sass" scoped>
   @import '../assets/sass/vars'
 
   .modal
     position: fixed
-    height: 400px
+    height: auto
     width: 600px
     left: 50%
     top: 50%

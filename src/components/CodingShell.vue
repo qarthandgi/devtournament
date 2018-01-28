@@ -204,11 +204,19 @@
         }
       },
       async createExercise (exercise) {
-        const {data} = await this.$axios.post('create-exercise/', {
-          ...exercise,
-          sql: this.sql
-        })
-        console.log(data)
+        if (this.dbId !== this.lastDbId) {
+          console.log('Error: Database ID and last database ID do not match')
+        } else if (this.headersMatch === false) {
+          console.log('Error: Headers do not match')
+        } else if (this.duplicateColumns === true) {
+          console.log('Error: Duplicate columns')
+        } else {
+          const {data} = await this.$axios.post('create-exercise/', {
+            ...exercise,
+            sql: this.sql
+          })
+          console.log(data)
+        }
       },
       setDb (id) {
         this.dbId = id
@@ -251,6 +259,7 @@
         // TODO: make sure this.dbId and this.lastDbId match
         // TODO: make sure headersMatch is checked
         // TODO: check duplicateColumns set from response before saving created exercise
+
         const {data} = await this.$axios.post('custom-test-query/', {
           sql: this.sql,
           db: this.dbId

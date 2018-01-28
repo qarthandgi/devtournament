@@ -29,6 +29,15 @@
     watch: {
       loggedIn () {
         this.loadData()
+      },
+      '$route.query': {
+        handler (val) {
+          if (val.verified === true) {
+            this.authVisibility = true
+          }
+        },
+        immediate: true,
+        deep: true
       }
     },
     computed: {

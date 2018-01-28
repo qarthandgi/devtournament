@@ -7,11 +7,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from .models import User, Database, CompanyExercise, UserExercise, Invitation, IN_PROGRESS, SUCCESSFULLY_COMPLETED
-from .models import SuccessfulCompanyAttempt
+from .models import SuccessfulCompanyAttempt, Global
 from .serializers import CompanyExerciseSerializer, CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
 import pickle
+from decimal import Decimal
+
+import stripe
+from private.private import config
 
 
 # Create your views here.
@@ -23,6 +27,8 @@ def execute_sql(db, sql):
     with connections[db.internal_name].cursor() as cursor:
         cursor.execute(sql)
         rows = cursor.fetchall()
+        print('OK EXECUTE SQL')
+        pprint(rows)
         columns = []
         headers = [x[0] for x in cursor.description]
         duplicate_header_names = len(headers) > len(set(headers))
@@ -30,6 +36,7 @@ def execute_sql(db, sql):
             col_data = list(map(lambda x: x[i], rows))
             col = {col[0]: col_data}
             columns.append(col)
+        pprint(rows)
 
     data = {
       'rows': rows,
@@ -79,10 +86,99 @@ def compare_query_results(data, exercise):
 
     return all_match
 
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def to_premium(request):
+    user = User.objects.get(pk=request.user)
+    create_source = request.data['createSource']
+
+    if create_source:
+        stripe_source = request.data['stripeSource']
+        stripe_customer_id = user.stripe_customer_id
+        stripe_customer = stripe.Customer.retrieve(stripe_customer_id)
+        stripe_customer.sources.create(source=stripe_source)
+        stripe_customer.default_source = stripe_source
+        stripe_customer.save()
+        user.stripe_default_source_id = stripe_source
+
+    subscription = stripe.Subscription.retrieve(user.stripe_subscription_id)
+    stripe.Subscription.modify(user.stripe_subscription_id,
+                               items=[{
+                                 'id': subscription['items']['data'][0].id,
+                                 'plan': 'premium-subscription'
+                               }])
+    user.subscription = 'premium'
+    user.save()
+
+    return Response({'details': 'ok'})
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def change_subscription(request):
+    user = User.objects.get(pk=request.user)
+    new_subscription = request.data['newSubscription']
+
+    subscription = stripe.Subscription.retrieve(user.stripe_subscription_id)
+    if new_subscription == 'premium':
+        token = request.data['stripeToken']
+        stripe.Subscription.modify(user.stripe_subscription_id,
+                                   items=[{
+                                     'id': subscription['items']['data'][0].id,
+                                     'plan': 'premium-subscription'
+                                   }])
+        user.subscription = 'premium'
+    elif new_subscription == 'basic':
+        stripe.Subscription.modify(user.stripe_subscription_id,
+                                   items=[{
+                                     'id': subscription['items']['data'][0].id,
+                                     'plan': 'basic-subscription'
+                                   }])
+        user.subscription = 'basic'
+    user.save()
+
+    return Response({'details': 'ok'})
+
+
 @api_view()
 @permission_classes((IsAuthenticated,))
 def user_details(request):
-    return Response({'subscription': request.user.subscription})
+    resp = {
+      'subscription': request.user.subscription,
+      'setup': request.user.setup
+    }
+    return Response(resp)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated,))
+def user_logged_in(request):
+    print('in user logged in!!!')
+    first_time = False
+    u = request.user
+    if not u.setup:
+        print('about to setup')
+        customer = stripe.Customer.create(
+          email=u.email
+        )
+        print('CUSTOMER RESPONSE STRIPE')
+        pprint(customer)
+        u.stripe_customer_id = customer.id
+
+        subscription = stripe.Subscription.create(
+          customer=customer.id,
+          items=[{'plan': 'basic-subscription'}]
+        )
+        u.stripe_subscription_id = subscription.id
+        print('SUBSCRIPTION RESPONSE STRIPE')
+        pprint(subscription)
+        u.setup = True
+        u.save()
+        first_time = True
+
+    return Response({'details': 'ok', 'first_time': first_time})
+
 
 # TODO: this shouldn't be AllowAny
 # @permission_classes((AllowAny,))
@@ -107,8 +203,10 @@ def load_postgres(request):
     company_serializer = CompanyExerciseSerializer(exercises, many=True, context={'request': request})
 
     resp = {
-        'databases': dbs,
-        'exercises': company_serializer.data
+      'databases': dbs,
+      'exercises': company_serializer.data,
+      'premium_exercises': Global.objects.get(name='premium_exercises').int_value,
+      'non_premium_exercises': Global.objects.get(name='non_premium_exercises').int_value
     }
     if custom_exercises is not None:
         resp['custom_exercises'] = custom_exercises
@@ -135,6 +233,21 @@ def load_invitations(user):
     return serializer.data
 
 
+def check_datatypes(data):
+    new_data = []
+    for i, row in enumerate(data):
+        new_data.append([])
+        for j, item in enumerate(row):
+            if isinstance(item, Decimal):
+                print(new_data)
+                print(i, j)
+                new_data[i].append(str(item))
+            else:
+                new_data[i].append(item)
+
+    return new_data
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny,))
 def sandbox_test_query(request):
@@ -143,8 +256,10 @@ def sandbox_test_query(request):
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, sql)
 
+    pprint(data)
+
     resp = {
-      'rows': data['rows'],
+      'rows': check_datatypes(data['rows']),
       'headers': data['headers'],
     }
 

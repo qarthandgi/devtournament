@@ -15,6 +15,8 @@ import records
 
 from private.private import config
 
+import stripe
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -187,7 +189,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ),
+    )
 }
 
 OLD_PASSWORD_FIELD_ENABLED = True
@@ -201,3 +203,5 @@ EMAIL_HOST_USER = 'do_not_reply@devtournament.com'
 EMAIL_HOST_PASSWORD = 'P@ssw0rd123TESTINGSMTP'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+stripe.api_key = config['stripe'][config['env']]

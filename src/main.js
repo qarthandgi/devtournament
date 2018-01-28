@@ -55,6 +55,16 @@ Vue.use(Vuelidate)
 Vue.use(VueLodash, lodash)
 Vue.use(VueConfetti)
 
+Vue.prototype.$log = function (...args) {
+  console.log(...[...args || []].map(val => val ? JSON.parse(JSON.stringify(val)) : undefined))
+  return args
+}
+
+// eslint-disable-next-line
+Vue.prototype.$stripe = Stripe('pk_test_S3VXP6uRGyjayGm8zfmLJT0a')
+// eslint-disable-next-line
+Vue.prototype.$elements = Vue.prototype.$stripe.elements()
+
 const tokenKey = VueCookies.get('tokenKey')
 if (tokenKey) {
   store.commit('user/setTokenKey', {key: tokenKey})

@@ -114,7 +114,10 @@ class DatabaseManager(models.Manager):
 
 
 class Global(models.Model):
-    create_company_exercise = models.BooleanField(default=True)
+    name = models.CharField(max_length=50, null=True, blank=True)
+    int_value = models.IntegerField(null=True, blank=True)
+    bool_value = models.NullBooleanField(null=True, blank=True)
+    text_value = models.CharField(null=True, blank=True, max_length=50)
 
 
 class User(AbstractUser):
@@ -124,6 +127,10 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, error_messages={'unique': "A user with that email already exists."})
     username = models.CharField(max_length=20, unique=True)
     subscription = models.CharField(max_length=15, choices=SUBSCRIPTION_CHOICES, default=BASIC)
+    setup = models.BooleanField(default=False)
+    stripe_customer_id = models.CharField(null=True, blank=True, max_length=100)
+    stripe_subscription_id = models.CharField(null=True, blank=True, max_length=100)
+    stripe_default_source_id = models.CharField(null=True, blank=True, max_length=100)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -187,6 +194,13 @@ class CompanyExercise(Exercise):
 
     def __str__(self):
         return self.difficulty + ' - ' + self.name
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        num_exercises = CompanyExercise.objects.filter(enabled=True).count()
+        property = Global.objects.get(name='company_exercise_num')
+        property.int_value = num_exercises
+        property.save()
 
 
 class UserExercise(Exercise):

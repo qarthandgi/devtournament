@@ -20,7 +20,7 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/rest-auth/registration/account-confirm-email/:key',
+      path: '/rest-auth/registration/account-confirm-email/:key/',
       name: 'verify-email',
       async beforeEnter (to, from, next) {
         console.log(to.params.key)
@@ -29,7 +29,11 @@ const router = new Router({
         })
         console.log('THIS IS RESPONSE')
         console.log(resp)
-        router.replace({name: 'postgres-home'})
+        // next()
+        router.replace({name: 'postgres-home', query: {verified: true}})
+        // if (resp.data.status === 200) {
+        //   const resp2 = await axios.post('verify-')
+        // }
       }
     },
     {
@@ -44,7 +48,14 @@ const router = new Router({
         {
           path: '',
           name: 'postgres-home',
-          component: PostgresHome
+          component: PostgresHome,
+          props: route => {
+            let verified = false
+            if (route.query.verified) {
+              verified = route.query.verified === 'true'
+            }
+            return {verified: verified}
+          }
         },
         {
           path: 'sandbox/:id',
@@ -117,12 +128,9 @@ router.beforeEach(async (to, from, next) => {
       store.commit('app/setSubject', {subject: 'postgres'})
     }
   }
-  console.log('FROM ROUTE: ', await denyCompanyExercise(to))
   if (premiumNeeded.includes(to.name) && !isPremium()) {
     next(false)
   } else if (await denyCompanyExercise(to)) {
-    console.log('IN HERE OK GOOOOO383833')
-    // next(false)
     router.push({name: 'postgres-home'})
     next(false)
   } else if (to.name === `home`) {

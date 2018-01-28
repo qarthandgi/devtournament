@@ -7,7 +7,9 @@ function initialState () {
     databases: [],
     customExercises: [],
     invitations: [],
-    exercises: []
+    exercises: [],
+    premiumExercises: 0,
+    nonPremiumExercises: 0
   }
 }
 
@@ -30,6 +32,8 @@ export default {
       Vue.set(state, 'customExercises', (payload.custom_exercises || []).sort((a, b) => a.added - b.added))
       Vue.set(state, 'invitations', (payload.invitations || []).sort((a, b) => a.added - b.added))
       Vue.set(state, 'exercises', (payload.exercises || []).sort((a, b) => a.position - b.position))
+      state.premiumExercises = payload.premium_exercises
+      state.nonPremiumExercises = payload.non_premium_exercises
       state.loaded = true
     },
     // replaceInvite will be the top level invitations, replaceInvitation will be those inside customExercises

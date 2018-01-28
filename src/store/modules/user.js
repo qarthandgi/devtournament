@@ -49,6 +49,9 @@ export default {
       for (let item in state) {
         Vue.set(state, item, iS[item])
       }
+    },
+    changeSubscription (state, payload) {
+      Vue.set(state.user, 'subscription', payload.subscription)
     }
   },
   actions: {
@@ -67,11 +70,12 @@ export default {
           commit('setTokenKey', data)
           dispatch('getUser')
           dispatch('getUserDetails')
-          resolve(true)
+          const resp = await axios.get('user-logged-in/')
+          resolve({success: true, firstTime: resp.data.first_time})
         } else {
           console.log('response code ' + response.status)
           console.log('wrong credentials')
-          resolve(false)
+          resolve({success: false})
         }
       })
     },

@@ -4,6 +4,9 @@
       span.fas.fa-times-circle
     .content(v-if="!loggedIn || notLoggedInState === 3")
       template(v-if="notLoggedInState === 0")
+        .headings(v-if="verifiedState")
+          .headings__title.success Thank you for verifying your email!
+          .headings__sub-title Login to Complete Registration
         .headings
           .headings__title LOGIN
           //.headings__sub-title Enter email to begin.
@@ -91,22 +94,35 @@
             span.far.fa-check-circle.check-circle
             div.break
             span.check-message Successfully Logged in
+      template(v-else-if="notLoggedInState === 4")
+        .headings
+          .headings__title
+            span Welcome to #DevTournament!
+        .body
+          subscription-selection(v-model="selectedSubscription")
     .content(v-else)
       .headings
+        .headings__title SUBSCRIPTION
+        .headings__sub-title You're currently on the {{user.subscription.toUpperCase()}} subscription
+      .body(style="margin-top:30px;margin-bottom:70px;")
+        subscription-selection(v-model="selectedSubscription", @change="changeSubscription", @reset="resetSubscription")
+      .headings
         .headings__title LOGOUT
-        .headings__sub-title.select(@click="logout", style="margin-top: 35px;") End your session
+        .headings__sub-title.select(@click="logout", style="margin-top: 20px;") End your session
 
 </template>
 
 <script>
   import ModalWindow from '@/blocks/ModalWindow'
   import InputField from '@/blocks/InputField'
+  import SubscriptionSelection from '@/blocks/SubscriptionSelection'
   import {mapActions, mapState} from 'vuex'
 
   export default {
     components: {
       ModalWindow,
-      InputField
+      InputField,
+      SubscriptionSelection
     },
     props: {
       show: {required: true}
@@ -124,29 +140,63 @@
           password2: ''
         },
         notLoggedInState: 0, // different screen states only when the user is not already logged in
-        successPanels: false // used to set border panels to green on successful login or successful registration
+        successPanels: false, // used to set border panels to green on successful login or successful registration
+        l_selectedSubscription: '',
+        verifiedState: false
       }
     },
     watch: {
       show (newState) {
         this.changeNotLoggedInState(0)
         this.successPanels = false
+      },
+      '$route.query': {
+        handler (val) {
+          if (val.verified === 'true' || val.verified === true) {
+            this.verifiedState = true
+          } else {
+            this.verifiedState = false
+          }
+        },
+        immediate: true,
+        deep: true
       }
     },
     computed: {
       ...mapState({
-        loggedIn: state => state.user.loggedIn
-      })
+        loggedIn: state => state.user.loggedIn,
+        user: state => state.user.user
+      }),
+      selectedSubscription: {
+        get () {
+          if (this.l_selectedSubscription) {
+            return this.l_selectedSubscription
+          } else if (this.loggedIn) {
+            return this.user.subscription
+          } else {
+            return 'premium'
+          }
+        },
+        set (value) {
+          this.$set(this, 'l_selectedSubscription', value)
+        }
+      }
     },
     methods: {
-      fbLogin () {
-        console.log('fb login')
+      ...mapActions({
+        login: 'user/login',
+        testLogin: 'user/testLogin',
+        logout: 'user/logout',
+        register: 'user/register'
+      }),
+      resetSubscription () {
+        this.selectedSubscription = this.user.subscription
       },
-      fbLogout () {
-        console.log('fb logout')
-      },
-      fbGet (obj) {
-        console.log('fb get', obj)
+      changeSubscription () {
+        const {data} = this.$axios.post('change-subscription', {
+          'newSubscription': this.l_selectedSubscription
+        })
+        console.log(data)
       },
       closeModal () {
         this.$emit('toggle-auth')
@@ -154,15 +204,20 @@
       changeNotLoggedInState (state) {
         this.notLoggedInState = state
       },
+      changeToState3 () {
+        this.changeNotLoggedInState(3)
+        setTimeout(() => {
+          this.$emit('toggle-auth')
+        }, 1800)
+      },
       async sendLogin () {
-        const success = await this.login(this.returningUser)
-        if (success) {
+        const resp = await this.login(this.returningUser)
+        console.log('OK NOW HERE')
+        console.log(resp)
+        if (resp.success) {
           console.log('TODO: make success message')
           this.successPanels = true
-          this.changeNotLoggedInState(3)
-          setTimeout(() => {
-            this.$emit('toggle-auth')
-          }, 1800)
+          this.changeToState3()
         } else {
           console.log('TODO: in component and wrong credentials')
         }
@@ -170,18 +225,12 @@
       async sendRegister () {
         const success = await this.register(this.newUser)
         if (success) {
-          console.log('TODO: make successful registrion')
+          console.log('TODO: make successful registration')
           this.changeNotLoggedInState(2)
         } else {
           console.log('TODO: registration unsuccessful')
         }
       },
-      ...mapActions({
-        login: 'user/login',
-        testLogin: 'user/testLogin',
-        logout: 'user/logout',
-        register: 'user/register'
-      }),
       updateLogin (...args) {
         // args[0] is the field name (eg. username)
         // args[1] is the actual value from the field
@@ -218,6 +267,8 @@
       +text-normal-white(1.0)
       font-size: 20px
       margin-bottom: 5px
+      &.success
+        color: $success-green
     .headings__sub-title
       +text-normal-white(0.8)
       font-size: 12px
