@@ -358,11 +358,20 @@
         position: relative
       &__input
         /*border: 1px green solid*/
-        flex: 11
+        /*flex: 11*/
+        /*flex-grow: 0*/
+        /*flex-shrink: 0*/
+        height: 60%
       &__status
         /*border: 1px blue solid*/
         flex: 1
+        flex-shrink: 0
+        /*flex-grow: 0*/
+        height: 5%
       &__output
         /*border: 1px red solid*/
         flex: 8
+        flex-shrink: 0
+        height: 35%
+        /*flex-grow: 0*/
 </style>

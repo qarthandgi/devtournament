@@ -34,6 +34,8 @@
   @import '../assets/sass/vars'
 
   .output
+    height: 100%
+    overflow: scroll
     &__body
       margin: 3px 0px
       position: relative
@@ -58,6 +60,16 @@
             background-color: #c9c9cb
             td
               border-bottom: 1px rgba(30,30,30,0.9) solid
+              background-color: #c9c9cb
+              position: sticky
+              top: 3px
+              &:after
+                content: ''
+                position: absolute
+                left: 0
+                bottom: 0
+                width: 100%
+                border-bottom: 1px rgba(30,30,30,0.9) solid
         tbody
           tr
             &:nth-child(even)
