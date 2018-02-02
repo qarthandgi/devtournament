@@ -100,7 +100,7 @@ CREATE TABLE class_seat (
   id            serial PRIMARY KEY,
   class_id      INTEGER REFERENCES class (id),
   student_id    INTEGER REFERENCES student (id),
-  grade         NUMERIC(5,3),
+  grade         NUMERIC(6,3),
   classes_missed SMALLINT
 );
 
@@ -129,7 +129,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (15, 'Osbourn', 'Weatherley', 'o.weatherley@libra.edu', 'male', '1967-11-01', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (18, 'Lurleen', 'Allott', 'l.allott@libra.edu', 'female', '1954-12-26', 35686);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (19, 'Brendin', 'Scholard', 'b.scholard@libra.edu', 'male', '1990-03-12', null);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (20, 'Levin', 'Ewens', 'l.ewens@libra.edu', 'male', '1997-09-21', 37419);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (21, 'Peterus', 'Nayshe', 'p.nayshe@libra.edu', 'male', '2006-09-16', 36781);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (25, 'Florie', 'Dowda', 'f.dowda@libra.edu', 'female', '1941-12-21', 36053);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (26, 'Darcie', 'Thamelt', 'd.thamelt@libra.edu', 'female', '2006-04-08', 37566);
@@ -144,7 +143,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (38, 'Barclay', 'Rizzolo', 'b.rizzolo@libra.edu', 'male', '1934-01-24', 37553);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (39, 'Marv', 'Bunt', 'm.bunt@libra.edu', 'male', '1944-10-05', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (42, 'Portie', 'Foskew', 'p.foskew@libra.edu', 'male', '1959-03-23', 36041);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (43, 'Eryn', 'Paddemore', 'e.paddemore@libra.edu', 'female', '1966-03-25', 36309);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (44, 'Keslie', 'Gertz', 'k.gertz@libra.edu', 'female', '1976-06-24', 37565);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (45, 'Albrecht', 'Bonicelli', 'a.bonicelli@libra.edu', 'male', '1987-07-27', 37900);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (46, 'Millie', 'Shavel', 'm.shavel@libra.edu', 'female', '1978-02-28', 35309);
@@ -177,7 +175,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (87, 'Emmie', 'Probin', 'e.probin@libra.edu', 'female', '1992-10-20', 36601);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (88, 'Ada', 'Abercrombie', 'a.abercrombie@libra.edu', 'female', '1956-04-07', 35683);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (89, 'Dimitri', 'Moles', 'd.moles@libra.edu', 'male', '2006-05-28', 37453);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (91, 'Claudius', 'Volke', 'c.volke@libra.edu', 'male', '1994-12-15', 36134);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (92, 'Bink', 'Merill', 'b.merill@libra.edu', 'male', '1968-02-04', 36675);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (94, 'Elwyn', 'Haverson', 'e.haverson@libra.edu', 'male', '1934-02-24', 35603);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (95, 'Justin', 'Bontein', 'j.bontein@libra.edu', 'male', '1982-09-12', 36090);
@@ -211,7 +208,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (136, 'Ansel', 'Piffe', 'a.piffe@libra.edu', 'male', '1935-11-16', 37587);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (137, 'Lowell', 'Edmund', 'l.edmund@libra.edu', 'male', '1978-11-05', 37360);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (138, 'Kurtis', 'Mallall', 'k.mallall@libra.edu', 'male', '1984-10-09', 36464);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (139, 'Hermann', 'Alejandre', 'h.alejandre@libra.edu', 'male', '1968-02-07', 36061);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (140, 'Verena', 'Fairleigh', 'v.fairleigh@libra.edu', 'female', '1981-10-20', 35777);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (141, 'Benni', 'Goding', 'b.goding@libra.edu', 'female', '2000-11-25', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (142, 'Saree', 'Ledwidge', 's.ledwidge@libra.edu', 'female', '1984-07-04', 36327);
@@ -229,7 +225,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (155, 'Thea', 'Jenney', 't.jenney@libra.edu', 'female', '2009-05-23', 35635);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (156, 'Daron', 'Newall', 'd.newall@libra.edu', 'male', '1968-12-03', 37213);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (157, 'Olin', 'Kemitt', 'o.kemitt@libra.edu', 'male', '1935-09-24', 36672);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (158, 'Kendra', 'Folan', 'k.folan@libra.edu', 'female', '1980-09-20', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (159, 'Casie', 'Norkett', 'c.norkett@libra.edu', 'female', '1971-03-25', 38108);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (160, 'Michail', 'Lammerts', 'm.lammerts@libra.edu', 'male', '1954-04-05', 37799);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (161, 'Sydney', 'Nolte', 's.nolte@libra.edu', 'male', '1941-05-12', null);
@@ -272,7 +267,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (198, 'Hartley', 'Coppens', 'h.coppens@libra.edu', 'male', '1957-08-28', 37265);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (199, 'Marlon', 'Straker', 'm.straker@libra.edu', 'male', '1943-02-01', 37397);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (200, 'Shanna', 'Peebles', 's.peebles@libra.edu', 'female', '1972-08-04', 37063);
-
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (202, 'Kevon', 'Onge', 'k.onge@libra.edu', 'male', '1945-07-01', 37822);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (204, 'Brice', 'Burtwhistle', 'b.burtwhistle@libra.edu', 'male', '1958-05-18', 36233);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (205, 'Elsworth', 'Cottom', 'e.cottom@libra.edu', 'male', '1956-08-27', 37167);
@@ -318,7 +312,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (245, 'Carmelia', 'Gatlin', 'c.gatlin@libra.edu', 'female', '2000-08-08', 36605);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (246, 'Roslyn', 'Wildbore', 'r.wildbore@libra.edu', 'female', '2000-10-05', 36902);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (247, 'Chrystel', 'Kayes', 'c.kayes@libra.edu', 'female', '2005-04-26', 38186);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (248, 'Mathian', 'Hargate', 'm.hargate@libra.edu', 'male', '1932-12-06', null);
+
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (249, 'Tamar', 'Eyam', 't.eyam@libra.edu', 'female', '1969-02-19', 37044);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (250, 'Glennis', 'Skewis', 'g.skewis@libra.edu', 'female', '1972-11-06', 36121);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (251, 'Greggory', 'Hatje', 'g.hatje@libra.edu', 'male', '1989-03-17', 36366);
@@ -332,12 +326,10 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (259, 'Desi', 'Luciano', 'd.luciano@libra.edu', 'male', '1970-04-29', 35426);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (260, 'Maudie', 'Mion', 'm.mion@libra.edu', 'female', '1953-07-20', 35547);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (261, 'Murray', 'M''Chirrie', 'm.m''chirrie@libra.edu', 'male', '1964-09-24', 35965);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (262, 'Tiffanie', 'MacAnellye', 't.macanellye@libra.edu', 'female', '1961-09-18', 37018);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (263, 'Rockie', 'Dorrington', 'r.dorrington@libra.edu', 'male', '1949-03-10', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (264, 'Junina', 'Hawford', 'j.hawford@libra.edu', 'female', '1940-12-02', 36102);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (265, 'Shena', 'Beston', 's.beston@libra.edu', 'female', '1973-03-31', 36647);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (266, 'Sandy', 'Viggars', 's.viggars@libra.edu', 'male', '1932-07-02', 36139);
-
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (268, 'Mela', 'Burghall', 'm.burghall@libra.edu', 'female', '1974-12-03', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (269, 'Alec', 'Drains', 'a.drains@libra.edu', null, '1970-11-18', 36856);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (270, 'Laurent', 'Patise', 'l.patise@libra.edu', 'male', '1981-01-15', 37636);
@@ -377,7 +369,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (304, 'Ashton', 'Standbrook', 'a.standbrook@libra.edu', 'male', '1942-04-15', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (305, 'Chet', 'Hardwich', 'c.hardwich@libra.edu', 'male', '1954-04-02', 35442);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (306, 'Rodger', 'Wimbridge', 'r.wimbridge@libra.edu', 'male', '1986-05-11', 37064);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (307, 'Eileen', 'Howgill', 'e.howgill@libra.edu', 'female', '1975-06-13', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (308, 'Amberly', 'Saffill', 'a.saffill@libra.edu', 'female', '2004-09-27', 35980);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (309, 'Erina', 'Shilston', 'e.shilston@libra.edu', 'female', '1971-02-06', 37334);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (310, 'Sunny', 'Noah', 's.noah@libra.edu', 'female', '1980-11-27', 37962);
@@ -414,7 +405,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (341, 'Franciska', 'Shepland', 'f.shepland@libra.edu', 'female', '2000-03-30', 37885);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (342, 'Cristina', 'Bruun', 'c.bruun@libra.edu', 'female', '1942-12-26', 35290);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (343, 'Amber', 'Pyatt', 'a.pyatt@libra.edu', 'female', '1972-10-21', 35341);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (344, 'Billy', 'Altree', 'b.altree@libra.edu', 'female', '1987-01-25', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (345, 'Tonnie', 'Tubby', 't.tubby@libra.edu', 'male', '1945-12-23', 35956);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (346, 'Onfroi', 'Hestrop', 'o.hestrop@libra.edu', 'male', '1998-12-14', 35920);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1959-03-05', 35877);
@@ -463,7 +453,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (390, 'Currey', 'Ruckert', 'c.ruckert@libra.edu', 'male', '1987-09-18', 36301);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (391, 'Estel', 'Rampton', 'e.rampton@libra.edu', 'female', '1952-01-16', 35732);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (392, 'Ursulina', 'Northern', 'u.northern@libra.edu', 'female', '1948-06-29', 37446);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (393, 'Rory', 'Bush', 'r.bush@libra.edu', 'male', '1950-01-12', 36553);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (394, 'Virgil', 'Waight', 'v.waight@libra.edu', 'male', '1973-08-27', 38245);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (395, 'Kalie', 'Caldes', 'k.caldes@libra.edu', 'female', '1942-08-31', 37266);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (396, 'Jesse', 'Ayshford', 'j.ayshford@libra.edu', 'female', '1958-06-28', 37994);
@@ -471,7 +460,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (398, 'Jay', 'Harken', 'j.harken@libra.edu', 'male', '1935-01-25', 35900);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (399, 'Amelia', 'Cannon', 'a.cannon@libra.edu', 'female', '1937-04-14', 37930);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (400, 'Raynell', 'McCrachen', 'r.mccrachen@libra.edu', 'female', '1944-06-12', 36756);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (401, 'Mirelle', 'Yewdall', 'm.yewdall@libra.edu', 'female', '1999-02-17', 37407);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (402, 'Koo', 'Giddons', 'k.giddons@libra.edu', 'female', '1971-05-29', 37356);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (403, 'Abie', 'Wadley', 'a.wadley@libra.edu', 'male', '1992-11-08', 36581);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (404, 'Jozef', 'MacRinn', 'j.macrinn@libra.edu', 'male', '1971-10-26', null);
@@ -485,7 +473,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (412, 'Nealson', 'Ionn', 'n.ionn@libra.edu', 'male', '1963-01-12', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (413, 'Gail', 'Dillintone', 'g.dillintone@libra.edu', 'male', '1945-04-28', 35931);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (414, 'Ruggiero', 'Kirby', 'r.kirby@libra.edu', 'male', '1960-06-28', null);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (415, 'Diego', 'Archard', 'd.archard@libra.edu', 'male', '1955-10-10', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (416, 'Martina', 'Haney`', 'm.haney`@libra.edu', 'female', '1967-10-30', 36049);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (417, 'Say', 'Shallcrass', 's.shallcrass@libra.edu', 'male', '1934-06-17', 38200);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (418, 'Anthea', 'Treadgall', 'a.treadgall@libra.edu', 'female', '1982-01-24', null);
@@ -560,7 +547,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (487, 'Candace', 'Widdecombe', 'c.widdecombe@libra.edu', 'female', '1970-03-24', 36863);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (488, 'Berny', 'Dracey', 'b.dracey@libra.edu', 'male', '1974-11-25', 35285);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (489, 'Burk', 'Johansen', 'b.johansen@libra.edu', 'male', '1976-02-10', 38146);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1962-09-14', 37122);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (491, 'Robert', 'Emmines', 'r.emmines@libra.edu', 'male', '1942-04-06', 35435);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (492, 'Hillery', 'Womersley', 'h.womersley@libra.edu', 'male', '2004-09-16', 37810);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (493, 'Candi', 'Maillard', 'c.maillard@libra.edu', 'female', '1954-08-01', 37820);
@@ -610,7 +596,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (537, 'Aloysius', 'Turnell', 'a.turnell@libra.edu', 'male', '1993-08-06', 35716);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (538, 'Nester', 'Thal', 'n.thal@libra.edu', 'male', '2006-09-19', 37621);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (539, 'Gregory', 'Mil', 'g.mil@libra.edu', 'male', '1978-02-05', 35796);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (540, 'Roddie', 'McElory', 'r.mcelory@libra.edu', 'male', '1944-01-07', 36169);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (541, 'Gawen', 'Perrett', 'g.perrett@libra.edu', null, '1948-12-31', 35361);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (542, 'Dalston', 'Jobb', 'd.jobb@libra.edu', 'male', '1960-12-20', 37166);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (543, 'Loni', 'Darcey', 'l.darcey@libra.edu', 'female', '1938-07-24', 36839);
@@ -638,7 +623,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (565, 'Agnella', 'Wallsworth', 'a.wallsworth@libra.edu', 'female', '1931-11-06', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (566, 'Harley', 'Baglow', 'h.baglow@libra.edu', 'male', '1967-01-27', 35419);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (567, 'Elberta', 'Yarker', 'e.yarker@libra.edu', 'female', '1994-10-26', 36159);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (568, 'Farly', 'Egan', 'f.egan@libra.edu', 'male', '1995-01-12', 37619);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (569, 'Danny', 'Prodrick', 'd.prodrick@libra.edu', 'male', '2007-08-01', 35950);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (570, 'Marris', 'Tink', 'm.tink@libra.edu', 'female', '2001-12-31', 35822);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (571, 'Bessie', 'Hartgill', 'b.hartgill@libra.edu', 'female', '1969-05-09', 37068);
@@ -694,7 +678,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (621, 'Camellia', 'Cornborough', 'c.cornborough@libra.edu', 'female', '1963-05-25', 36961);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (622, 'Rafael', 'Doddridge', 'r.doddridge@libra.edu', 'male', '1969-03-12', 38178);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (623, 'Betta', 'Larderot', 'b.larderot@libra.edu', 'female', '1977-06-17', null);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (624, 'Germana', 'Bourcq', 'g.bourcq@libra.edu', null, '1956-11-08', 37435);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (625, 'Grace', 'Timperley', 'g.timperley@libra.edu', 'male', '2004-12-02', 37602);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (626, 'Edd', 'Berns', 'e.berns@libra.edu', null, '2002-07-29', 37054);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (627, 'Thorvald', 'Middlebrook', 't.middlebrook@libra.edu', 'male', '1977-04-29', 37250);
@@ -744,7 +727,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (671, 'Johnath', 'Iacopetti', 'j.iacopetti@libra.edu', 'female', '1966-01-01', 38053);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (672, 'Aylmar', 'Stygall', 'a.stygall@libra.edu', 'male', '2007-06-13', 36646);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (673, 'Winni', 'Aliman', 'w.aliman@libra.edu', 'female', '1992-04-12', 35491);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (674, 'Ulrich', 'Achurch', 'u.achurch@libra.edu', 'male', '1999-09-04', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (675, 'Johnette', 'Cumpsty', 'j.cumpsty@libra.edu', 'female', '1945-09-04', 36459);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (676, 'Spenser', 'Hercock', 's.hercock@libra.edu', 'male', '1970-08-15', 36516);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (677, 'Daniela', 'Cleworth', 'd.cleworth@libra.edu', 'female', '1936-02-23', 35767);
@@ -836,7 +818,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (763, 'Ferdinanda', 'Camilli', 'f.camilli@libra.edu', 'female', '1964-06-17', 37992);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (764, 'Bailey', 'Auty', 'b.auty@libra.edu', 'male', '1949-05-28', 37835);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (765, 'Clayson', 'Puzey', 'c.puzey@libra.edu', 'male', '1941-10-08', 36292);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (766, 'Marris', 'Belliss', 'm.belliss@libra.edu', 'female', '1996-06-21', 38010);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (767, 'Corbett', 'Bounds', 'c.bounds@libra.edu', 'male', '1990-03-18', 38289);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (768, 'Reena', 'Form', 'r.form@libra.edu', 'female', '1969-01-13', 36100);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (769, 'Bernadette', 'Levey', 'b.levey@libra.edu', 'female', '1937-07-11', 35693);
@@ -905,7 +886,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (832, 'Shina', 'Laxtonne', 's.laxtonne@libra.edu', 'female', '1944-01-25', 35631);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (833, 'Annabell', 'Feldhuhn', 'a.feldhuhn@libra.edu', 'female', '1993-08-12', 37808);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (834, 'Kiley', 'Benaine', 'k.benaine@libra.edu', null, '1998-05-27', 37022);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (835, 'Miguelita', 'Gillibrand', 'm.gillibrand@libra.edu', 'female', '1997-04-09', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (836, 'Selby', 'Swoffer', 's.swoffer@libra.edu', 'male', '1961-04-08', 36126);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (837, 'Alric', 'Andrelli', 'a.andrelli@libra.edu', 'male', '1987-04-17', 36944);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (838, 'Seth', 'Kraft', 's.kraft@libra.edu', 'male', '1946-06-21', 38213);
@@ -1088,7 +1068,6 @@ insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) va
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (21, 43, 'instructor', false, false, '2005-02-21', '49000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (22, 105, 'professor', false, true, '2000-07-06', '86000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (23, 28, 'associate professor', false, true, '2009-06-20', '63000.00');
-
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (25, 85, 'teaching assistant', false, true, '2002-08-15', '19000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (27, 113, 'assistant professor', false, true, '2007-07-15', '50000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (30, 62, 'professor', false, true, '2005-05-27', '102000.00');
@@ -1149,7 +1128,6 @@ insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) va
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (116, 34, 'associate professor', false, true, '2010-02-12', '76000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (117, 115, 'professor', true, true, '2002-12-28', '93000.00');
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (118, 18, 'assistant professor', false, true, '2003-06-23', '48000.00');
-
 insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (120, 29, 'assistant professor', false, true, '2003-08-25', '34000.00');
 
 
@@ -1562,7 +1540,7 @@ insert into course (id, department_id, number, name, credits, type) values (26, 
       (183, 6, 7, 26), -- Spring 2016 - Cathrine
       (184, 8, 26, 26); -- Spring 2017 - Ronni
 
-insert into course (id, department_id, number, name, credits, type) values (27, 3, 248, 'Languages of Africa', 4, 'core');
+insert into course (id, department_id, number, name, credits, type) values (27, 3, 248, 'Languages of Mesopotamia', 4, 'core');
   insert into class (id, semester_id, teacher_id, course_id)
     values
       (185, 1, 29, 27), -- Fall 2013 - Eran
@@ -1573,9 +1551,9 @@ insert into course (id, department_id, number, name, credits, type) values (27, 
 insert into course (id, department_id, number, name, credits, type) values (28, 3, 290, 'Sociolinguistics ', 4, 'core');
   insert into class (id, semester_id, teacher_id, course_id)
     values
-      (186, 2, 7, 28), -- Spring 2014 - Cathrine
-      (187, 4, 76, 28), -- Spring 2015 - Ronda
-      (188, 6, 7, 28), -- Spring 2016 - Cathrine
+      (306, 2, 7, 28), -- Spring 2014 - Cathrine
+      (307, 4, 76, 28), -- Spring 2015 - Ronda
+      (308, 6, 7, 28), -- Spring 2016 - Cathrine
       (189, 8, 17, 28); -- Spring 2017 - Izak
 
 insert into course (id, department_id, number, name, credits, type) values (29, 3, 323, 'Deciphering Ancient Languages', 4, 'core');
@@ -1607,20 +1585,20 @@ insert into course (id, department_id, number, name, credits, type) values (31, 
 insert into course (id, department_id, number, name, credits, type) values (32, 3, 383, 'Bilingualism', 3, 'elective');
   insert into class (id, semester_id, teacher_id, course_id)
     values
-      (200, 1, 60, 32), -- Fall 2013 - Martin
-      (201, 4, 76, 32), -- Spring 2015 - Ronda
-      (201, 5, 29, 32), -- Fall 2015 - Eran
-      (202, 6, 60, 32), -- Spring 2016 - Martin
-      (203, 8, 17, 32); -- Spring 2017 - Izak
+      (309, 1, 60, 32), -- Fall 2013 - Martin
+      (310, 4, 76, 32), -- Spring 2015 - Ronda
+      (311, 5, 29, 32), -- Fall 2015 - Eran
+      (312, 6, 60, 32), -- Spring 2016 - Martin
+      (313, 8, 17, 32); -- Spring 2017 - Izak
 
 insert into course (id, department_id, number, name, credits, type) values (33, 3, 412, 'Advanced Syntax', 4, 'elective');
   insert into class (id, semester_id, teacher_id, course_id)
     values
-      (200, 1, 17, 33), -- Fall 2013 - Izak
-      (201, 2, 26, 33), -- Spring 2014 - Ronni
-      (201, 3, 76, 33), -- Fall 2014 - Ronda
-      (202, 5, 29, 33), -- Fall 2015 - Eran
-      (203, 8, 60, 33); -- Spring 2017 - Martin
+      (314, 1, 17, 33), -- Fall 2013 - Izak
+      (315, 2, 26, 33), -- Spring 2014 - Ronni
+      (316, 3, 76, 33), -- Fall 2014 - Ronda
+      (317, 5, 29, 33), -- Fall 2015 - Eran
+      (318, 8, 60, 33); -- Spring 2017 - Martin
 
 --   ****** END LINGUISTICS COURSES AND CLASSES
 
@@ -1667,7 +1645,7 @@ insert into course (id, department_id, number, name, credits, type) values (36, 
       (214, 5, 93, 36), -- Fall 2015 - Brucie
       (215, 7, 77, 36); -- Fall 2016 - Lilas
 
-insert into course (id, department_id, number, name, credits, type) values (37, 4, 292, 'Intermediate Calculus', 4, 'core');
+insert into course (id, department_id, number, name, credits, type) values (37, 4, 292, 'Calculus III', 4, 'core');
   insert into class (id, semester_id, teacher_id, course_id)
     values
       (216, 2, 80, 37), -- Spring 2014 - Wakefield
@@ -1729,13 +1707,13 @@ insert into course (id, department_id, number, name, credits, type) values (43, 
 insert into course (id, department_id, number, name, credits, type) values (44, 4, 532, 'Geometric Combinatorics', 4, 'elective');
   insert into class (id, semester_id, teacher_id, course_id)
     values
-      (247, 1, 88, 44), -- Spring 2015 - Alvin
-      (248, 2, 41, 44), -- Fall 2015 - Vito
-      (249, 3, 95, 44), -- Spring 2016 - Clemmie
-      (250, 4, 80, 44), -- Fall 2016 - Wakefield
-      (251, 5, 80, 44), -- Spring 2017 - Wakefield
-      (252, 6, 77, 44), -- Spring 2017 - Lilas
-      (253, 7, 84, 44), -- Spring 2017 - Gabriell
+      (247, 1, 88, 44), -- Fall 2013 - Alvin
+      (248, 2, 41, 44), -- Spring 2014 - Vito
+      (249, 3, 95, 44), -- Fall 2014 - Clemmie
+      (250, 4, 80, 44), -- Spring 2015 - Wakefield
+      (251, 5, 80, 44), -- Fall 2015 - Wakefield
+      (252, 6, 77, 44), -- Spring 2016 - Lilas
+      (253, 7, 84, 44), -- Fall 2016 - Gabriell
       (254, 8, 41, 44); -- Spring 2017 - Vito
 
 --   ****** END MATHEMATICS COURSES AND CLASSES
@@ -1814,7 +1792,7 @@ insert into course (id, department_id, number, name, credits, type) values (51, 
       (279, 1, 28, 51), -- Fall 2013 - Sandro
       (280, 3, 73, 51), -- Fall 2014 - Evelin
       (281, 5, 6, 51), -- Fall 2015 - Laurella
-      (282, 7, 23, 51); -- Fall 2016 - Sandro
+      (282, 7, 28, 51); -- Fall 2016 - Sandro
 
 insert into course (id, department_id, number, name, credits, type) values (52, 5, 412, 'Public Finance', 3, 'elective');
   insert into class (id, semester_id, teacher_id, course_id)
@@ -1848,12 +1826,12 @@ insert into course (id, department_id, number, name, credits, type) values (55, 
     values
       (298, 1, 73, 55), -- Fall 2013 - Evelin
       (299, 2, 28, 55), -- Spring 2014 - Sandro
-      (299, 3, 73, 55), -- Fall 2014 - Evelin
-      (299, 4, 6, 55), -- Spring 2015 - Laurella
-      (300, 5, 81, 55), -- Fall 2015 - Moina
-      (300, 6, 6, 55), -- Spring 2016 - Laurella
-      (301, 7, 34, 55), -- Fall 2016 - Cari
-      (302, 8, 28, 55); -- Spring 2017 - Sandro
+      (300, 3, 73, 55), -- Fall 2014 - Evelin
+      (301, 4, 6, 55), -- Spring 2015 - Laurella
+      (302, 5, 81, 55), -- Fall 2015 - Moina
+      (303, 6, 6, 55), -- Spring 2016 - Laurella
+      (304, 7, 34, 55), -- Fall 2016 - Cari
+      (305, 8, 28, 55); -- Spring 2017 - Sandro
 
 --   ****** END ECONOMICS COURSES AND CLASSES
 
@@ -2162,20 +2140,593 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (89, 134, 6, 81.50, 0), -- LA 248 - Palestinian-Israeli Relations
     -- FALL 2014 - Semester 3
     (90, 70, 6, 91.03, 0), -- MUS 121 - Theory I
-    (74, 100, 6, 62.11, 1), -- MUS 274 - Scoring for Strings
+    (91, 100, 6, 62.11, 1), -- MUS 274 - Scoring for Strings
     -- SPRING 2015 - Semester 4
-    (75, 74, 6, 83.22, 1), -- MUS 149 - Performance Ensemble 1
-    (76, 143, 6, 90.11, 0), -- LA 412 - Mythology and Folklore
+    (92, 74, 6, 83.22, 1), -- MUS 149 - Performance Ensemble 1
+    (93, 143, 6, 90.11, 0), -- LA 412 - Mythology and Folklore
     -- FALL 2015 - Semester 5
-    (77, 79, 6, 82.00, 1), -- MUS - Theory II
-    (78, 117, 6, 68.22, 1), -- LA 234 - Topics in Archaeology
+    (94, 79, 6, 82.00, 1), -- MUS - Theory II
+    (95, 117, 6, 68.22, 1), -- LA 234 - Topics in Archaeology
     -- SPRING 2016 - Semester 6
-    (79, 83, 6, 84.23, 0), -- MUS 210 - Electronic Music & Composition
-    (80, 152, 6, 89.20, 0), -- LA 378 - Ethical Theories
+    (96, 83, 6, 84.23, 0), -- MUS 210 - Electronic Music & Composition
+    (97, 152, 6, 89.20, 0), -- LA 378 - Ethical Theories
     -- FALL 2016 - Semester 7
-    (81, 88, 6, 96.11, 1), -- MUS 322 - Advanced Theory Topics in Global Music
-    (82, 108, 6, 90.94, 2), -- MUS 403 - World Music Composition
-    (83, 93, 6, 78.19, 0), -- MUS 184 - Arranging for Vocals
+    (98, 88, 6, 96.11, 1), -- MUS 322 - Advanced Theory Topics in Global Music
+    (99, 108, 6, 90.94, 2), -- MUS 403 - World Music Composition
+    (100, 93, 6, 78.19, 0), -- MUS 184 - Arranging for Vocals
     -- SPRING 2017 - Semester 8
-    (84, 163, 6, 97.94, 0), -- LA 344 - History of Rhetoric
-    (85, 168, 6, 97.32, 0); -- LA 239 - Topics in Archaeology
+    (101, 163, 6, 97.94, 0), -- LA 344 - History of Rhetoric
+    (102, 168, 6, 97.32, 0); -- LA 239 - Topics in Archaeology
+
+-- MUS Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (158, 'Kendra', 'Folan', 'k.folan@libra.edu', 'female', '1980-09-20', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (7, 158, 3.83, null, 2, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (103, 61, 7, 78.22, 2), -- MUS 102 - Musicianship
+    (104, 110, 7, 63.23, 3), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (105, 65, 7, 90.32, 2), -- MUS 108 - Music History I
+    (106, 134, 7, 81.50, 0), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2014 - Semester 3
+    (107, 70, 7, 94.11, 0), -- MUS 121 - Theory I
+    (108, 139, 7, 77.23, 1), -- LA 323 - International Human Rights
+    -- SPRING 2015 - Semester 4
+    (109, 74, 7, 98.22, 1), -- MUS 149 - Performance Ensemble 1
+    (110, 156, 7, 88.22, 0), -- LA 311 - Theory of Knowledge
+    -- FALL 2015 - Semester 5
+    (111, 79, 7, 63.88, 3), -- MUS - Theory II
+    (112, 148, 7, 68.22, 1), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (113, 83, 7, 80.39, 0), -- MUS 210 - Electronic Music & Composition
+    (114, 152, 7, 78.22, 0), -- LA 378 - Ethical Theories
+    -- FALL 2016 - Semester 7
+    (115, 88, 7, 96.11, 1), -- MUS 322 - Advanced Theory Topics in Global Music
+    (116, 125, 7, 88.10, 0), -- LA 145 - Nations and Nationalism
+    (117, 167, 7, 98.00, 0), -- LA 239 - Topics in Archaeology
+    -- SPRING 2017 - Semester 8
+    (118, 94, 7, 92.92, 0), -- MUS 184 - Arranging for Vocals
+    (119, 109, 7, 90.00, 1); -- MUS 403 - World Music Composition
+
+-- MUS Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (139, 'Hermann', 'Alejandre', 'h.alejandre@libra.edu', 'male', '1968-02-07', 36061);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (8, 139, 3.22, null, 2, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (120, 61, 8, 98.00, 0), -- MUS 102 - Musicianship
+    (121, 110, 8, 89.23, 1), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (122, 65, 8, 78.32, 2), -- MUS 108 - Music History I
+    (123, 142, 8, 80.22, 0), -- LA 412 - Mythology and Folklore
+    -- FALL 2014 - Semester 3
+    (124, 70, 8, 90.05, 1), -- MUS 121 - Theory I
+    (125, 139, 8, 98.50, 1), -- LA 323 - International Human Rights
+    -- SPRING 2015 - Semester 4
+    (126, 74, 8, 62.22, 1), -- MUS 149 - Performance Ensemble 1
+    (127, 161, 8, 88.22, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2015 - Semester 5
+    (128, 79, 8, 73.22, 2), -- MUS 233 - Theory II
+    (129, 148, 8, 90.01, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (130, 83, 8, 90.23, 0), -- MUS 210 - Electronic Music & Composition
+    (131, 128, 8, 78.22, 0), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2016 - Semester 7
+    (132, 88, 8, 90.23, 1), -- MUS 322 - Advanced Theory Topics in Global Music
+    (133, 93, 8, 80.94, 0), -- MUS 184 - Arranging for Vocals
+    (134, 167, 8, 83.23, 0), -- LA 239 - Topics in Archaeology
+    -- SPRING 2017 - Semester 8
+    (135, 94, 8, 90.99, 0), -- MUS 184 - Arranging for Vocals
+    (136, 109, 8, 98.23, 1); -- MUS 403 - World Music Composition
+
+-- MUS Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (344, 'Billy', 'Altree', 'b.altree@libra.edu', 'female', '1987-01-25', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (9, 344, 3.92, 9000.00, 2, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (137, 61, 9, 78.23, 1), -- MUS 102 - Musicianship
+    (138, 110, 9, 80.23, 1), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (139, 65, 9, 68.02, 0), -- MUS 108 - Music History I
+    (140, 160, 9, 80.22, 1), -- LA 344 - History of Rhetoric
+    -- FALL 2014 - Semester 3
+    (141, 70, 9, 69.33, 1), -- MUS 121 - Theory I
+    (142, 139, 9, 63.03, 0); -- LA 323 - International Human Rights
+
+-- MUS Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (91, 'Claudius', 'Volke', 'c.volke@libra.edu', 'male', '1994-12-15', 36134);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (10, 91, 3.22, null, 2, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (143, 61, 10, 99.32, 1), -- MUS 102 - Musicianship
+    (144, 146, 10, 89.23, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2014 - Semester 2
+    (145, 65, 10, 79.22, 1), -- MUS 108 - Music History I
+    (146, 126, 10, 89.33, 0), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2014 - Semester 3
+    (147, 70, 10, 90.12, 1), -- MUS 121 - Theory I
+    (148, 155, 10, 98.50, 2), -- LA 311 - Theory of Knowledge
+    -- SPRING 2015 - Semester 4
+    (149, 74, 10, 98.00, 1), -- MUS 149 - Performance Ensemble 1
+    (150, 119, 10, 88.22, 0), -- LA 103 - Effective Communication
+    -- FALL 2015 - Semester 5
+    (151, 79, 10, 89.65, 0), -- MUS 233 - Theory II
+    (152, 132, 10, 84.22, 1), -- LA 234 - History of Modern East Asia
+    -- SPRING 2016 - Semester 6
+    (153, 83, 10, 95.47, 0), -- MUS 210 - Electronic Music & Composition
+    (154, 144, 10, 89.22, 1), -- LA 412 - Mythology and Folklore
+    (155, 136, 10, 92.01, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2016 - Semester 7
+    (156, 88, 10, 95.23, 1), -- MUS 322 - Advanced Theory Topics in Global Music
+    (157, 102, 10, 89.01, 0), -- MUS 274 - Scoring for Strings
+    -- SPRING 2017 - Semester 8
+    (158, 94, 10, 97.22, 0), -- MUS 184 - Arranging for Vocals
+    (159, 109, 10, 96.34, 1); -- MUS 403 - World Music Composition
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (20, 'Levin', 'Ewens', 'l.ewens@libra.edu', 'male', '1997-09-21', 37419);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (11, 20, 3.10, 2000.00, 3, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (160, 169, 11, 80.65, 0), -- LING 102 - Intro to Language & Linguistics
+    (161, 146, 11, 89.23, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2014 - Semester 2
+    (162, 173, 11, 82.54, 1), -- LING 113 - Phonetics & Phonology
+    (163, 134, 11, 82.44, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2014 - Semester 3
+    (164, 178, 11, 84.84, 1), -- LING 212 - Psychology of Language
+    (165, 155, 11, 92.23, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2015 - Semester 4
+    (166, 182, 11, 93.84, 1), -- LING 239 - Intro to Machine Translation
+    (167, 143, 11, 84.94, 0), -- LA 412 - Mythology and Folklore
+    -- FALL 2015 - Semester 5
+    (168, 187, 11, 71.68, 0), -- LING 248 - Languages of Mesopotamia
+    (169, 148, 11, 89.71, 1), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (170, 308, 11, 95.47, 0), -- LANG 290 - Sociolinguistics
+    (171, 152, 11, 89.22, 1), -- LA 378 - Ethical Theories
+    (172, 162, 11, 92.01, 1), -- LA 344 - History of Rhetoric
+    -- FALL 2016 - Semester 7
+    (173, 193, 11, 93.85, 1), -- LING 323 - Deciphering Ancient Languages
+    (174, 202, 11, 79.51, 0), -- LING 342 - Introduction to Indo-European
+    -- SPRING 2017 - Semester 8
+    (175, 318, 11, 97.22, 0), -- LING 412 - Advanced Syntax
+    (176, 313, 11, 96.34, 1); -- LING 383 - Bilingualism
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (401, 'Mirelle', 'Yewdall', 'm.yewdall@libra.edu', 'female', '1999-02-17', 37407);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (12, 401, 3.22, 2900.00, 3, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (177, 169, 12, 90.22, 1), -- LING 102 - Intro to Language & Linguistics
+    (178, 146, 12, 84.95, 2), -- LA 428 - Gender and Power in History
+    -- SPRING 2014 - Semester 2
+    (179, 173, 12, 72.44, 1), -- LING 113 - Phonetics & Phonology
+    (180, 134, 12, 95.02, 2), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2014 - Semester 3
+    (181, 178, 12, 84.84, 1), -- LING 212 - Psychology of Language
+    (182, 195, 12, 76.55, 3), -- LING 403 - Linguistics of American Sign Language
+    -- SPRING 2015 - Semester 4
+    (183, 182, 12, 96.19, 0), -- LING 239 - Intro to Machine Translation
+    (184, 151, 12, 84.94, 0), -- LA 378 - Ethical Theories
+    -- FALL 2015 - Semester 5
+    (185, 187, 12, 85.02, 1), -- LING 248 - Languages of Mesopotamia
+    (186, 148, 12, 89.71, 1), -- LA 428 - Gender and Power in History
+    (187, 140, 12, 95.93, 1), -- LA 323 - International Human rights
+    -- SPRING 2016 - Semester 6
+    (188, 308, 12, 91.48, 0), -- LANG 290 - Sociolinguistics
+    (189, 312, 12, 83.44, 0), -- LA 383 - Bilingualism
+    -- FALL 2016 - Semester 7
+    (190, 193, 12, 81.03, 1), -- LING 323 - Deciphering Ancient Languages
+    (191, 202, 12, 95.45, 0), -- LING 342 - Introduction to Indo-European
+    -- SPRING 2017 - Semester 8
+    (192, 163, 12, 85.02, 0), -- LA 344 - History of Rhetoric
+    (193, 318, 12, 91.43, 1); -- LING 412 - Advanced Syntax
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (540, 'Roddie', 'McElory', 'r.mcelory@libra.edu', 'male', '1944-01-07', 36169);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (13, 540, 3.22, 2900.00, 3, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (194, 169, 13, 74.40, 1), -- LING 102 - Intro to Language & Linguistics
+    (195, 159, 13, 99.85, 2), -- LA 344 - History of Rhetoric
+    -- SPRING 2014 - Semester 2
+    (196, 173, 13, 92.04, 0), -- LING 113 - Phonetics & Phonology
+    (197, 118, 13, 92.53, 2), -- LA 103 - Effective Communication
+    -- FALL 2014 - Semester 3
+    (198, 178, 13, 89.00, 0), -- LING 212 - Psychology of Language
+    (199, 123, 13, 79.02, 1), -- LA 145 - Nations and Nationalism
+    -- SPRING 2015 - Semester 4
+    (200, 182, 13, 100.00, 0), -- LING 239 - Intro to Machine Translation
+    (201, 151, 13, 84.94, 0), -- LA 378 - Ethical Theories
+    -- FALL 2015 - Semester 5
+    (202, 187, 13, 98.40, 1), -- LING 248 - Languages of Mesopotamia
+    (203, 132, 13, 85.93, 1), -- LA 234 - History of Modern East Asia
+    (204, 166, 13, 70.22, 1), -- LA 239 - Topics in Archaeology
+    -- SPRING 2016 - Semester 6
+    (205, 308, 13, 94.20, 0), -- LANG 290 - Sociolinguistics
+    (206, 312, 13, 90.23, 0), -- LA 383 - Bilingualism
+    -- FALL 2016 - Semester 7
+    (207, 193, 13, 81.03, 0), -- LING 323 - Deciphering Ancient Languages
+    (208, 141, 13, 83.58, 2), -- LA 323 - International Human Rights
+    -- SPRING 2017 - Semester 8
+    (209, 137, 13, 76.88, 2), -- LA 248 - Palestinian-Israeli Relations
+    (210, 318, 13, 90.23, 0); -- LING 412 - Advanced Syntax
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (766, 'Marris', 'Belliss', 'm.belliss@libra.edu', 'female', '1996-06-21', 38010);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (14, 766, 3.10, null, 3, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (211, 169, 14, 100.00, 1), -- LING 102 - Intro to Language & Linguistics
+    (212, 111, 14, 94.04, 3), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (213, 173, 14, 89.22, 0), -- LING 113 - Phonetics & Phonology
+    (214, 160, 14, 90.32, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2014 - Semester 3
+    (215, 178, 14, 95.30, 2), -- LING 212 - Psychology of Language
+    (216, 139, 14, 99.20, 3), -- LA 323 - International Human Rights
+    -- SPRING 2015 - Semester 4
+    (217, 182, 14, 73.00, 0), -- LING 239 - Intro to Machine Translation
+    (218, 156, 14, 87.23, 1), -- LA 311 - Theory of Knowledge
+    -- FALL 2015 - Semester 5
+    (219, 187, 14, 88.01, 3), -- LING 248 - Languages of Mesopotamia
+    (220, 148, 14, 82.42, 2), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (221, 308, 14, 92.00, 1), -- LANG 290 - Sociolinguistics
+    (222, 144, 14, 89.22, 0), -- LA 412 - Mythology and Folklore
+    (223, 136, 14, 78.22, 0), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2016 - Semester 7
+    (224, 193, 14, 92.50, 0), -- LING 323 - Deciphering Ancient Languages
+    (225, 199, 14, 98.04, 0), -- LING 403 - Linguistics of American Sign Language
+    -- SPRING 2017 - Semester 8
+    (226, 318, 14, 94.40, 2), -- LING 412 - Advanced Syntax
+    (227, 313, 14, 89.22, 1); -- LING 383 - Bilingualism
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (262, 'Tiffanie', 'MacAnellye', 't.macanellye@libra.edu', 'female', '1961-09-18', 37018);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (15, 262, 3.85, null, 3, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (228, 169, 15, 87.50, 0), -- LING 102 - Intro to Language & Linguistics
+    (229, 111, 15, 75.04, 4), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (230, 173, 15, 90.23, 0), -- LING 113 - Phonetics & Phonology
+    (231, 160, 15, 68.95, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2014 - Semester 3
+    (232, 178, 15, 77.23, 2), -- LING 212 - Psychology of Language
+    (233, 147, 15, 99.20, 3), -- LA 428 - Gender and Power in History
+    -- SPRING 2015 - Semester 4
+    (234, 182, 15, 89.05, 0), -- LING 239 - Intro to Machine Translation
+    (235, 119, 15, 87.23, 1), -- LA 103 - Effective Communication
+    -- FALL 2015 - Semester 5
+    (236, 187, 15, 79.92, 3), -- LING 248 - Languages of Mesopotamia
+    (237, 157, 15, 80.84, 1), -- LA 311 - Theory of Knowledge
+    -- SPRING 2016 - Semester 6
+    (238, 308, 15, 95.34, 1), -- LANG 290 - Sociolinguistics
+    (239, 128, 15, 88.34, 0), -- LA 212 - Ancient Religions and Philosophies
+    (240, 152, 15, 94.04, 0), -- LA 378 - Ethical Theories
+    -- FALL 2016 - Semester 7
+    (241, 193, 15, 99.76, 1), -- LING 323 - Deciphering Ancient Languages
+    (242, 199, 15, 93.23, 0), -- LING 403 - Linguistics of American Sign Language
+    -- SPRING 2017 - Semester 8
+    (243, 203, 15, 91.11, 1), -- LING 403 - Introduction to Indo-European
+    (244, 313, 15, 76.59, 1); -- LING 383 - Bilingualism
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (307, 'Eileen', 'Howgill', 'e.howgill@libra.edu', 'female', '1975-06-13', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (16, 307, 3.85, null, 4, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (245, 204, 16, 93.12, 1), -- MATH 102 - Calculus I
+    (246, 111, 16, 85.40, 0), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (247, 208, 16, 95.11, 0), -- MATH 212 - Calculus II
+    (248, 142, 16, 78.22, 1), -- LA 412 - Mythology and Folklore
+    -- FALL 2014 - Semester 3
+    (249, 213, 16, 79.02, 0), -- MATH 242 - Discrete Mathematics
+    (250, 147, 16, 83.33, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2015 - Semester 4
+    (251, 217, 16, 90.30, 0), -- MATH 292 - Calculus III
+    (252, 119, 16, 84.45, 1), -- LA 103 - Effective Communication
+    -- FALL 2015 - Semester 5
+    (253, 222, 16, 79.92, 3), -- MATH 320 - Computational Linear Algebra
+    (254, 166, 16, 91.99, 1), -- LA 239 - Topics in Archaeology
+    -- SPRING 2016 - Semester 6
+    (255, 226, 16, 96.12, 1), -- MATH 422 - Differential Equations I
+    (256, 244, 16, 88.34, 0), -- MATH 445 - Distributed Algorithms
+    (257, 136, 16, 94.04, 0), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2016 - Semester 7
+    (258, 231, 16, 92.05, 1), -- MATH 489 - Abstract Algebra I
+    (259, 158, 16, 82.55, 0), -- LA 66 - Theory of Knowledge
+    -- SPRING 2017 - Semester 8
+    (260, 254, 16, 99.00, 1), -- MATH 532 - Geometric Combinatorics
+    (261, 153, 16, 81.03, 0); -- LA 378 - Ethical Theories
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (624, 'Germana', 'Bourcq', 'g.bourcq@libra.edu', null, '1956-11-08', 37435);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (17, 624, 3.54, null, 4, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (262, 204, 17, 90.45, 1), -- MATH 102 - Calculus I
+    (263, 111, 17, 99.50, 0), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (264, 208, 17, 89.05, 0), -- MATH 212 - Calculus II
+    (265, 126, 17, 90.05, 1), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2014 - Semester 3
+    (266, 213, 17, 73.04, 0), -- MATH 242 - Discrete Mathematics
+    (267, 131, 17, 84.76, 0), -- LA 234 - History of Modern East Asia
+    -- SPRING 2015 - Semester 4
+    (268, 217, 17, 90.44, 0), -- MATH 292 - Calculus III
+    (269, 151, 17, 99.45, 1), -- LA 378 - Ethical Theories
+    -- FALL 2015 - Semester 5
+    (270, 222, 17, 85.04, 2), -- MATH 320 - Computational Linear Algebra
+    (271, 234, 17, 96.99, 0), -- MATH 341 - Integral Equations
+    -- SPRING 2016 - Semester 6
+    (272, 226, 17, 78.95, 1), -- MATH 422 - Differential Equations I
+    (273, 244, 17, 80.55, 0), -- MATH 445 - Distributed Algorithms
+    (274, 162, 17, 94.04, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2016 - Semester 7
+    (275, 231, 17, 98.24, 1), -- MATH 489 - Abstract Algebra I
+    (276, 158, 17, 62.08, 0), -- LA 66 - Theory of Knowledge
+    -- SPRING 2017 - Semester 8
+    (277, 254, 17, 88.25, 1), -- MATH 532 - Geometric Combinatorics
+    (278, 137, 17, 95.23, 0); -- LA 248 - Palestinian-Israeli Relations
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (415, 'Diego', 'Archard', 'd.archard@libra.edu', 'male', '1955-10-10', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (18, 415, 3.42, null, 4, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (279, 204, 18, 89.23, 1), -- MATH 102 - Calculus I
+    (280, 122, 18, 80.22, 0), -- LA 145 - Nations and Nationalism
+    -- SPRING 2014 - Semester 2
+    (281, 208, 18, 78.43, 0), -- MATH 212 - Calculus II
+    (282, 126, 18, 79.02, 1), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2014 - Semester 3
+    (283, 213, 18, 90.00, 0), -- MATH 242 - Discrete Mathematics
+    (284, 147, 18, 84.76, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2015 - Semester 4
+    (285, 217, 18, 83.23, 0), -- MATH 292 - Calculus III
+    (286, 143, 18, 99.45, 1), -- LA 412 - Mythology and Folklore
+    -- FALL 2015 - Semester 5
+    (287, 222, 18, 99.32, 2), -- MATH 320 - Computational Linear Algebra
+    (288, 157, 18, 96.99, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2016 - Semester 6
+    (289, 226, 18, 90.23, 0), -- MATH 422 - Differential Equations I
+    (290, 235, 18, 75.44, 1), -- MATH 341 - Integral Equations
+    -- FALL 2016 - Semester 7
+    (291, 231, 18, 99.05, 1), -- MATH 489 - Abstract Algebra I
+    (292, 125, 18, 79.33, 0), -- LA 145 - Nations and Nationalism
+    (293, 141, 18, 92.34, 0), -- LA 323 - International Human Rights
+    -- SPRING 2017 - Semester 8
+    (294, 254, 18, 96.43, 0), -- MATH 532 - Geometric Combinatorics
+    (295, 246, 18, 81.93, 1); -- MATH 445 - Distributed Algorithms
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (568, 'Farly', 'Egan', 'f.egan@libra.edu', 'male', '1995-01-12', 37619);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (19, 568, 3.58, null, 4, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (296, 204, 19, 95.47, 1), -- MATH 102 - Calculus I
+    (297, 110, 19, 81.43, 0), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (298, 208, 19, 89.02, 0), -- MATH 212 - Calculus II
+    (299, 232, 19, 93.75, 0), -- MATH 341 - Integral Equations
+    -- FALL 2014 - Semester 3
+    (300, 213, 19, 92.39, 0), -- MATH 242 - Discrete Mathematics
+    (301, 155, 19, 84.76, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2015 - Semester 4
+    (302, 217, 19, 88.04, 0), -- MATH 292 - Calculus III
+    (303, 127, 19, 93.03, 1), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2015 - Semester 5
+    (304, 222, 19, 95.34, 1), -- MATH 320 - Computational Linear Algebra
+    (305, 148, 19, 96.99, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (306, 226, 19, 91.51, 0), -- MATH 422 - Differential Equations I
+    (307, 136, 19, 89.74, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2016 - Semester 7
+    (308, 231, 19, 89.82, 1), -- MATH 489 - Abstract Algebra I
+    (309, 125, 19, 88.23, 0), -- LA 145 - Nations and Nationalism
+    (310, 241, 19, 91.34, 0), -- MATH 382 - Analysis I
+    -- SPRING 2017 - Semester 8
+    (311, 254, 19, 96.22, 0), -- MATH 532 - Geometric Combinatorics
+    (312, 246, 19, 95.23, 1); -- MATH 445 - Distributed Algorithms
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (393, 'Rory', 'Bush', 'r.bush@libra.edu', 'male', '1950-01-12', 36553);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (20, 393, 3.92, null, 4, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (313, 204, 20, 82.03, 1), -- MATH 102 - Calculus I
+    (314, 110, 20, 94.02, 2), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (315, 208, 20, 90.23, 0), -- MATH 212 - Calculus II
+    (316, 160, 20, 93.75, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2014 - Semester 3
+    (317, 213, 20, 94.21, 0), -- MATH 242 - Discrete Mathematics
+    (318, 131, 20, 87.03, 0), -- LA 212 - Ancient Religions and Philosophies
+    -- SPRING 2015 - Semester 4
+    (319, 217, 20, 83.45, 0), -- MATH 292 - Calculus III
+    (320, 242, 20, 91.35, 1), -- MATH 445 - Distributed Algorithms
+    -- FALL 2015 - Semester 5
+    (321, 222, 20, 97.75, 1), -- MATH 320 - Computational Linear Algebra
+    (322, 157, 20, 96.99, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2016 - Semester 6
+    (323, 226, 20, 94.23, 0), -- MATH 422 - Differential Equations I
+    (324, 152, 20, 90.34, 1), -- LA 378 - Ethical Theories
+    -- FALL 2016 - Semester 7
+    (325, 231, 20, 94.23, 1), -- MATH 489 - Abstract Algebra I
+    (326, 241, 20, 91.34, 0), -- MATH 382 - Analysis I
+    (327, 167, 20, 88.23, 1), -- LA 239 - Topics in Archaeology
+    -- SPRING 2017 - Semester 8
+    (328, 254, 20, 90.58, 0), -- MATH 532 - Geometric Combinatorics
+    (329, 236, 20, 99.85, 1); -- MATH 341 - Integral Equations
+
+-- ECON Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (674, 'Ulrich', 'Achurch', 'u.achurch@libra.edu', 'male', '1999-09-04', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (21, 674, 2.92, null, 5, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (330, 255, 21, 72.01, 4), -- ECON 103 - Principles of Microeconomics
+    (331, 110, 21, 99.00, 2), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (332, 208, 21, 82.30, 1), -- ECON 210 - Principles of Macroeconomics
+    (333, 160, 21, 93.75, 0), -- LA 344 - History of Rhetoric
+    -- FALL 2014 - Semester 3
+    (334, 264, 21, 94.21, 0), -- ECON 298 - International Monetary Economics
+    (335, 139, 21, 87.03, 0), -- LA 323 - International Human Rights
+    -- SPRING 2015 - Semester 4
+    (336, 268, 21, 70.83, 0), -- ECON 320 - Law and Economics
+    (337, 143, 21, 91.35, 1), -- LA 412 - Mythology and Folklore
+    -- FALL 2015 - Semester 5
+    (338, 273, 21, 97.75, 1), -- ECON 411 - Corporate Restructuring
+    (339, 157, 21, 65.99, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2016 - Semester 6
+    (340, 277, 21, 94.23, 0), -- ECON 423 - Urban Economics
+    (341, 120, 21, 80.22, 1), -- LA 103 - Effective Communication
+    -- FALL 2016 - Semester 7
+    (342, 282, 21, 98.50, 1), -- ECON 488 - Game Theory
+    (343, 296, 21, 90.90, 0), -- ECON 521 - Asset Pricing
+    (344, 133, 21, 83.20, 1), -- LA 234 - History of Modern East Asia
+    -- SPRING 2017 - Semester 8
+    (345, 305, 21, 76.89, 0), -- ECON 467 - Health Economics
+    (346, 287, 21, 70.22, 1); -- ECON 412 - Public Finance
+
+-- ECON Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (248, 'Mathian', 'Hargate', 'm.hargate@libra.edu', 'male', '1932-12-06', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (22, 248, 3.92, null, 5, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (347, 255, 22, 80.23, 0), -- ECON 103 - Principles of Microeconomics
+    (348, 110, 22, 90.03, 2), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (349, 208, 22, 99.12, 1), -- ECON 210 - Principles of Macroeconomics
+    (350, 142, 22, 90.55, 0), -- LA 412 - Mythology and Folklore
+    -- FALL 2014 - Semester 3
+    (351, 264, 22, 94.50, 0), -- ECON 298 - International Monetary Economics
+    (352, 155, 22, 87.03, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2015 - Semester 4
+    (353, 268, 22, 94.23, 0), -- ECON 320 - Law and Economics
+    (354, 285, 22, 91.35, 1), -- ECON 412 - Public Finance
+    -- FALL 2015 - Semester 5
+    (355, 273, 22, 91.32, 1), -- ECON 411 - Corporate Restructuring
+    (356, 132, 22, 89.23, 0), -- LA 234 - History of Modern East Asia
+    -- SPRING 2016 - Semester 6
+    (357, 277, 22, 90.99, 0), -- ECON 423 - Urban Economics
+    (358, 120, 22, 89.54, 1), -- LA 103 - Effective Communication
+    -- FALL 2016 - Semester 7
+    (359, 282, 22, 92.31, 1), -- ECON 488 - Game Theory
+    (360, 167, 22, 90.90, 0), -- LA 239 - Topics in Archaeology
+    (361, 149, 22, 91.39, 1), -- LA 428 - Gender and Power in History
+    -- SPRING 2017 - Semester 8
+    (362, 305, 22, 88.65, 0), -- ECON 467 - Health Economics
+    (363, 297, 22, 99.08, 1); -- ECON 521 - Asset Pricing
+
+-- ECON Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (835, 'Miguelita', 'Gillibrand', 'm.gillibrand@libra.edu', 'female', '1997-04-09', null);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (23, 835, 3.64, null, 5, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (364, 255, 23, 98.04, 0), -- ECON 103 - Principles of Microeconomics
+    (365, 110, 23, 82.44, 2), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (366, 208, 23, 78.45, 2), -- ECON 210 - Principles of Macroeconomics
+    (367, 142, 23, 78.55, 3), -- LA 412 - Mythology and Folklore
+    -- FALL 2014 - Semester 3
+    (368, 264, 23, 99.85, 1), -- ECON 298 - International Monetary Economics
+    (369, 294, 23, 80.42, 0), -- ECON 521 - Asset Pricing
+    -- SPRING 2015 - Semester 4
+    (370, 268, 23, 90.54, 0), -- ECON 320 - Law and Economics
+    (371, 161, 23, 82.76, 1), -- LA 344 - History of Rhetoric
+    -- FALL 2015 - Semester 5
+    (372, 273, 23, 87.66, 1), -- ECON 411 - Corporate Restructuring
+    (373, 148, 23, 79.32, 0), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (374, 277, 23, 90.99, 0), -- ECON 423 - Urban Economics
+    (375, 120, 23, 80.58, 1), -- LA 103 - Effective Communication
+    -- FALL 2016 - Semester 7
+    (376, 282, 23, 99.02, 1), -- ECON 488 - Game Theory
+    (377, 141, 23, 98.55, 0), -- LA 323 - International Human Rights
+    (378, 158, 23, 93.02, 1), -- LA 311 - Theory of Knowledge
+    -- SPRING 2017 - Semester 8
+    (379, 305, 23, 88.65, 0), -- ECON 467 - Health Economics
+    (380, 292, 23, 94.66, 1); -- ECON 389 - Advanced Macroeconomic Theory
+
+-- ECON Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1962-09-14', 37122);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (24, 490, 3.84, null, 5, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (381, 255, 24, 100.00, 0), -- ECON 103 - Principles of Microeconomics
+    (382, 122, 24, 77.23, 1), -- LA 145 - Nations and Nationalism
+    -- SPRING 2014 - Semester 2
+    (383, 208, 24, 89.02, 2), -- ECON 210 - Principles of Macroeconomics
+    (384, 111, 24, 80.43, 3), -- LA 102 - Success at Libra University
+    -- FALL 2014 - Semester 3
+    (385, 264, 24, 90.09, 1), -- ECON 298 - International Monetary Economics
+    (386, 131, 24, 99.00, 0), -- LA 234 - History of Modern East Asia
+    -- SPRING 2015 - Semester 4
+    (387, 268, 24, 100.54, 0), -- ECON 320 - Law and Economics
+    (388, 143, 24, 92.45, 1), -- LA 412 - Mythology and Folklore
+    -- FALL 2015 - Semester 5
+    (389, 273, 24, 70.09, 1), -- ECON 411 - Corporate Restructuring
+    (390, 157, 24, 80.23, 0), -- LA 311 - Theory of Knowledge
+    -- SPRING 2016 - Semester 6
+    (391, 277, 24, 87.24, 0), -- ECON 423 - Urban Economics
+    (392, 286, 24, 89.25, 1), -- ECON 412 - Public Finance
+    -- FALL 2016 - Semester 7
+    (393, 282, 24, 86.34, 1), -- ECON 488 - Game Theory
+    (394, 167, 24, 82.04, 0), -- LA 239 - Topics in Archaeology
+    (395, 141, 24, 84.78, 1), -- LA 323 - International Human Rights
+    -- SPRING 2017 - Semester 8
+    (396, 297, 24, 89.43, 0), -- ECON 521 - Asset Pricing
+    (397, 292, 24, 90.22, 1); -- ECON 389 - Advanced Macroeconomic Theory
+
+-- ECON Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (43, 'Eryn', 'Paddemore', 'e.paddemore@libra.edu', 'female', '1966-03-25', 36309);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (25, 43, 3.84, null, 5, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (398, 255, 25, 89.42, 0), -- ECON 103 - Principles of Microeconomics
+    (399, 110, 25, 77.05, 1), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (400, 208, 25, 90.42, 2), -- ECON 210 - Principles of Macroeconomics
+    (401, 118, 25, 78.24, 3), -- LA 103 - Effective Communication
+    -- FALL 2014 - Semester 3
+    (402, 264, 25, 89.45, 1), -- ECON 298 - International Monetary Economics
+    (403, 139, 25, 99.55, 0), -- LA 323 - International Human Rights
+    -- SPRING 2015 - Semester 4
+    (404, 268, 25, 98.43, 0), -- ECON 320 - Law and Economics
+    (405, 161, 25, 65.12, 1), -- LA 344 - History of Rhetoric
+    -- FALL 2015 - Semester 5
+    (406, 273, 25, 76.92, 1), -- ECON 411 - Corporate Restructuring
+    (407, 132, 25, 89.42, 0), -- LA 234 - History of Modern East Asia
+    -- SPRING 2016 - Semester 6
+    (408, 277, 25, 83.22, 0), -- ECON 423 - Urban Economics
+    (409, 286, 25, 67.42, 1), -- ECON 389 - Advanced Macroeconomic Theory
+    -- FALL 2016 - Semester 7
+    (410, 282, 25, 99.55, 1), -- ECON 488 - Game Theory
+    (411, 296, 25, 78.09, 0), -- ECON 521 - Asset Pricing
+    (412, 125, 25, 88.23, 1), -- LA 145 - Nations and Nationalism
+    -- SPRING 2017 - Semester 8
+    (413, 287, 25, 78.54, 0), -- ECON 412 - Public Finance
+    (414, 145, 25, 72.42, 1); -- LA 412 - Mythology and Folklore

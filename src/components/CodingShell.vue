@@ -225,7 +225,7 @@
         this.sql = val
       },
       testKey (evt) {
-        if (evt.keyCode === 13 && evt.metaKey) {
+        if (evt.keyCode === 13 && (evt.metaKey || evt.ctrlKey)) {
           if (this.sessionType === 'sandbox') {
             this.sandboxTestQuery()
           } else if (this.sessionType === 'invitation') {
