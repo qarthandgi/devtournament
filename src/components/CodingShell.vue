@@ -26,6 +26,7 @@
       .code__io__input
         coding-input(
           @update="updateInput",
+          @selection-update="updateSqlSelection",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
           :sql="sessionInfo.working_query",
 
@@ -48,6 +49,7 @@
 
   import {mapState, mapMutations} from 'vuex'
   import {sandboxInit, tableData} from '@/utils/objects'
+  import {bus} from '@/utils/bus'
 
   export default {
     components: {
@@ -60,6 +62,7 @@
     data () {
       return {
         sql: '',
+        sqlSelection: '',
         tableData: {
           headers: [],
           rows: []
@@ -224,17 +227,29 @@
       updateInput (val) {
         this.sql = val
       },
+      updateSqlSelection (val) {
+        this.sql = val
+        this.executeQuery()
+        bus.$emit('execute-sql', {type: 'selection'})
+      },
+      executeQuery () {
+        if (this.sessionType === 'sandbox') {
+          this.sandboxTestQuery()
+        } else if (this.sessionType === 'invitation') {
+          this.invitationTestQuery()
+        } else if (this.sessionType === 'custom-create') {
+          this.customTestQuery()
+        } else if (this.sessionType === 'company') {
+          this.companyTestQuery()
+        }
+      },
       testKey (evt) {
         if (evt.keyCode === 13 && (evt.metaKey || evt.ctrlKey)) {
-          if (this.sessionType === 'sandbox') {
-            this.sandboxTestQuery()
-          } else if (this.sessionType === 'invitation') {
-            this.invitationTestQuery()
-          } else if (this.sessionType === 'custom-create') {
-            this.customTestQuery()
-          } else if (this.sessionType === 'company') {
-            this.companyTestQuery()
-          }
+          bus.$emit('execute-all', {type: 'all'})
+          this.executeQuery()
+        } else if (evt.keyCode === 13 && evt.altKey) {
+          console.log('we in here')
+          bus.$emit('get-sql-selection')
         } else if (this.allowDoubleShift && evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
           if (this.firstShiftActivated) {
             this.firstShiftActivated = false

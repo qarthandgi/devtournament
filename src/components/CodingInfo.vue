@@ -103,6 +103,9 @@
         databases: state => state.pg.databases
       }),
       invalidCreation () {
+        if (this.sessionType === 'sandbox') {
+          return false
+        }
         if (this.sql === '') {
           this.invalidMessage = 'Must Enter a SQL Query'
           return true

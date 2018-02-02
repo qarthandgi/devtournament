@@ -1,15 +1,43 @@
 <template lang="pug">
   .status
-    .status__option
-      .status__option__indicator
+    .status__option(:class="{executing: executeAll}")
+      .status__option__indicator(:class="{executing: executeAll}")
       .status__option__text Execute All
-    .status__option
-      .status__option__indicator
+    .status__option(:class="{executing: executeSelection}")
+      .status__option__indicator(:class="{executing: executeSelection}")
       .status__option__text Execute Selection
 </template>
 
 <script>
+  import {bus} from '@/utils/bus'
   export default {
+    data () {
+      return {
+        executeAll: false,
+        executeSelection: false
+      }
+    },
+    methods: {
+      resetExecuteStatuses () {
+        setTimeout(() => {
+          this.executeAll = false
+          this.executeSelection = false
+        }, 191)
+      },
+      setExecuteStatus (obj) {
+        console.log('here')
+        console.log(obj)
+        if (obj.type === 'all') {
+          this.executeAll = true
+        } else if (obj.type === 'selection') {
+          this.executeSelection = true
+        }
+        this.resetExecuteStatuses()
+      }
+    },
+    mounted () {
+      bus.$on('execute-sql', this.setExecuteStatus)
+    }
   }
 </script>
 
@@ -31,10 +59,14 @@
       display: flex
       align-items: center
       cursor: pointer
+      &.executing
+        color: $dev-blue
       &__indicator
         background-color: #585858
         width: 8px
         height: 8px
         margin-right: 4px
+        &.executing
+          background-color: $dev-blue
 
 </style>

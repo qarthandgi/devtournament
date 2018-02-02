@@ -1,5 +1,5 @@
 const ace = require('brace')
-
+const bus = require('../utils/bus')
 module.exports = {
   template: '<div :style="{height: height, width: width}"></div>',
 
@@ -54,6 +54,15 @@ module.exports = {
     // TODO: HAD VIM WORKING AHH - put it back in - with this link https://stackoverflow.com/questions/28078478/ace-editor-and-vim-keybindings-using-w-command
     editor.on('change', function () {
       vm.$emit('editor-update', editor.getValue())
+    })
+    const getSelection = () => {
+      console.log('in get selection')
+      vm.$emit('selection-update', editor.session.getTextRange(editor.getSelectionRange()))
+    }
+    bus.bus.$on('get-sql-selection', () => {
+      console.log('ok now')
+      getSelection()
+      console.log('after get')
     })
   },
 

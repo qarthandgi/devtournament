@@ -11,6 +11,7 @@ import VueLodash from 'vue-lodash'
 import VueConfetti from 'vue-confetti'
 
 import {store} from './store/index'
+import {stripe as stripeProd} from '@/private'
 
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
@@ -60,8 +61,13 @@ Vue.prototype.$log = function (...args) {
   return args
 }
 
-// eslint-disable-next-line
-Vue.prototype.$stripe = Stripe('pk_test_S3VXP6uRGyjayGm8zfmLJT0a')
+if (process.env['NODE_ENV'] === 'production') {
+  // eslint-disable-next-line
+  Vue.prototype.$stripe = Stripe(stripeProd)
+} else {
+  // eslint-disable-next-line
+  Vue.prototype.$stripe = Stripe('pk_test_S3VXP6uRGyjayGm8zfmLJT0a')
+}
 // eslint-disable-next-line
 Vue.prototype.$elements = Vue.prototype.$stripe.elements()
 

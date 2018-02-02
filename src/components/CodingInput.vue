@@ -9,7 +9,8 @@
         :width="'100%'",
         :height="'100%'",
         :lang="'sql'",
-        @editor-update="$emit('update', $event)"
+        @editor-update="$emit('update', $event)",
+        @selection-update="$emit('selection-update', $event)"
       )
     .input__overlay(v-if="overlayVisibility && custom")
       .input__overlay__headline You are viewing a custom exercise that you created
