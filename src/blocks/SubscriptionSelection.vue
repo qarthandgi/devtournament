@@ -58,6 +58,17 @@
         span Convert to&nbsp;
           span {{value.charAt(0).toUpperCase() + value.slice(1)}}&nbsp;
           span.fas.fa-angle-right
+    .ss__premium-footer(v-if="user.subscription === 'premium'")
+      .ss__premium-footer__message
+        span Premium Subscription&nbsp;
+        span(v-if="!user.slatedForDowngrade") Renewing&nbsp;
+        span(v-else, style="color: red;") Ending&nbsp;
+        span On:&nbsp;
+        span {{user.subscriptionEnd.toLocaleDateString("en-US", {month: 'long', year: 'numeric', day: 'numeric'})}}
+      .ss__premium-footer__message.action(@click="downgradeToBasic", v-show="!user.slatedForDowngrade && value === 'basic' ")
+        span Downgrade to Basic&nbsp;
+          span.arrow
+            span.fas.fa-angle-right
     transition(name="descend")
       .ss__card(v-show="user.subscription === 'basic' && premiumSelected")
           form(ref="payment-form", @submit="submitStripe($event)")
@@ -134,8 +145,16 @@
     },
     methods: {
       ...mapMutations({
-        'changeSubscription': 'user/changeSubscription'
+        'changeSubscription': 'user/changeSubscription',
+        'setSubscriptionEnd': 'user/setSubscriptionEnd',
+        'setSlatedForDowngrade': 'user/setSlatedForDowngrade'
       }),
+      async downgradeToBasic () {
+        console.log('downgrading')
+        await this.$axios.post('downgrade-plan/')
+        this.$toast.bottom('Downgraded to Free Basic Plan')
+        this.setSlatedForDowngrade({slatedForDowngrade: true})
+      },
       async submitStripe (event) {
         event.preventDefault()
 
@@ -143,20 +162,18 @@
         if (error) {
           console.log('Error: Stripe Create Token - $stripe.createToken')
         } else {
+          this.$toast.bottom('Congratulations! You now have a Premium Subscription.')
           const {data} = await this.$axios.post('to-premium/', {
             createSource: true,
             stripeSource: source.id
           })
-          if (data['details'] === 'ok') {
-            this.changeSubscription({subscription: 'premium'})
-          }
+          this.changeSubscription({subscription: 'premium'})
+          this.setSubscriptionEnd({subscriptionEnd: data['current_period_end']})
+          console.log('succeeded')
         }
       },
       chooseSubscription (val) {
         this.$emit('input', val)
-      },
-      changeSubscription () {
-        this.$emit('change')
       },
       stripeWebsite () {
         window.open('https://stripe.com', '_blank')
@@ -311,6 +328,18 @@
           color: #c1981c
         .basic
           color: #898672
+    &__premium-footer
+      margin-top: 15px
+      text-align: left
+      font-size: 15px
+      display: flex
+      justify-content: space-between
+      .arrow
+        position: relative
+        top: 2px
+      .action:hover
+        cursor: pointer
+        color: lighten($dev-blue, 24%)
     &__card
       position: relative
       max-height: 29px

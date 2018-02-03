@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.db import connections
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from .models import User, Database, CompanyExercise, UserExercise, Invitation, IN_PROGRESS, SUCCESSFULLY_COMPLETED
-from .models import SuccessfulCompanyAttempt, Global
+from .models import SuccessfulCompanyAttempt, Global, SubscriptionChange
 from .serializers import CompanyExerciseSerializer, CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
@@ -28,7 +29,6 @@ def execute_sql(db, sql):
         cursor.execute(sql)
         rows = cursor.fetchall()
         print('OK EXECUTE SQL')
-        pprint(rows)
         columns = []
         headers = [x[0] for x in cursor.description]
         duplicate_header_names = len(headers) > len(set(headers))
@@ -36,7 +36,6 @@ def execute_sql(db, sql):
             col_data = list(map(lambda x: x[i], rows))
             col = {col[0]: col_data}
             columns.append(col)
-        pprint(rows)
 
     data = {
       'rows': rows,
@@ -87,10 +86,11 @@ def compare_query_results(data, exercise):
     return all_match
 
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def to_premium(request):
-    user = User.objects.get(pk=request.user)
+    user = User.objects.get(pk=request.user.id)
     create_source = request.data['createSource']
 
     if create_source:
@@ -103,12 +103,27 @@ def to_premium(request):
         user.stripe_default_source_id = stripe_source
 
     subscription = stripe.Subscription.retrieve(user.stripe_subscription_id)
-    stripe.Subscription.modify(user.stripe_subscription_id,
+    modified_subscription = stripe.Subscription.modify(user.stripe_subscription_id,
                                items=[{
                                  'id': subscription['items']['data'][0].id,
                                  'plan': 'premium-subscription'
                                }])
+    pprint(modified_subscription)
+    user.stripe_current_period_start = modified_subscription['current_period_start']
+    user.stripe_current_period_end = modified_subscription['current_period_end']
     user.subscription = 'premium'
+    user.save()
+
+    return Response({'details': 'ok', 'current_period_end': str(user.stripe_current_period_end)})
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def downgrade_plan(request):
+    sc = SubscriptionChange(user=request.user, going_to='basic')
+    sc.save()
+    user = User.objects.get(pk=request.user.id)
+    user.slated_for_downgrade = True
     user.save()
 
     return Response({'details': 'ok'})
@@ -146,7 +161,9 @@ def change_subscription(request):
 def user_details(request):
     resp = {
       'subscription': request.user.subscription,
-      'setup': request.user.setup
+      'setup': request.user.setup,
+      'current_period_end': request.user.stripe_current_period_end,
+      'slated_for_downgrade': request.user.slated_for_downgrade
     }
     return Response(resp)
 
@@ -173,6 +190,8 @@ def user_logged_in(request):
         u.stripe_subscription_id = subscription.id
         print('SUBSCRIPTION RESPONSE STRIPE')
         pprint(subscription)
+        u.stripe_current_period_start = subscription['current_period_start']
+        u.stripe_current_period_end = subscription['current_period_end']
         u.setup = True
         u.save()
         first_time = True
@@ -186,7 +205,6 @@ def user_logged_in(request):
 def profile_data(request):
     u = User.objects.get(pk=3)
     dbs = Database.objects.all_for_user(u)
-    pprint(dbs)
     return Response({'databases': dbs})
     # return Response({'first_name': request.user.first_name, 'last_name': request.user.last_name,
     #                  'email': request.user.email})
@@ -228,8 +246,6 @@ def load_invitations(user):
     invitations = Invitation.objects.filter(invitee=user, archived=False).exclude(status='declined')
     serializer = InvitationSerializer(invitations, many=True)
 
-    pprint(serializer.data)
-
     return serializer.data
 
 
@@ -255,8 +271,6 @@ def sandbox_test_query(request):
     sql = request.data['sql']
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, sql)
-
-    pprint(data)
 
     resp = {
       'rows': check_datatypes(data['rows']),

@@ -28,7 +28,9 @@ urlpatterns = [
     url(r'^change-subscription/', views.change_subscription),
     url(r'^profile-data/', views.profile_data),
     url(r'^load-postgres/', views.load_postgres),
-    url(r'^load-custom-exercises', views.load_custom_exercises),
+    url(r'^load-custom-exercises/', views.load_custom_exercises),
+    url(r'^to-premium/', views.to_premium),
+    url(r'^downgrade-plan/', views.downgrade_plan),
 
     url(r'^sandbox-test-query/', views.sandbox_test_query),
     url(r'^company-test-query/', views.company_test_query),

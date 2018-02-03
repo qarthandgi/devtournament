@@ -1,8 +1,9 @@
 <template lang="pug">
-  .modal
-    .top-panel(:class="{success: successPanels}")
-    .bottom-panel(:class="{success: successPanels}")
-    slot
+  transition(name="change-this-to-garage-to-enable")
+    .modal
+      .top-panel(:class="{success: successPanels}")
+      .bottom-panel(:class="{success: successPanels}")
+      slot
 </template>
 
 <script>
@@ -26,5 +27,7 @@ A
     background-color: rgba(38,38,38,0.98)
     transform: translateX(-50%) translateY(-50%)
     border-radius: $border-panel-radius
-    z-index: 10
+    z-index: 20
+    max-height: 2000px
+    overflow: hidden
 </style>

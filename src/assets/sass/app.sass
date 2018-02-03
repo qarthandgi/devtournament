@@ -59,6 +59,12 @@ body
   z-index: 20
 
 
+.lx-toast
+  +averia-font()
+  background-color: $dev-blue
+  color: black
+  font-weight: bold
+
 
 // Stripe
 .StripeElement
@@ -87,6 +93,12 @@ body
   max-height: 5px !important
   opacity: 0
 
+.garage-enter-active, .garage-leave-active
+  transition: all 380ms
+
+.garage-enter, .garage-leave-to
+  max-height: 3px !important
+  opacity: .6
 
 
 // ---documentation --

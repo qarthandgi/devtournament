@@ -103,7 +103,7 @@
         databases: state => state.pg.databases
       }),
       invalidCreation () {
-        if (this.sessionType === 'sandbox') {
+        if (this.sessionType !== 'custom-create') {
           return false
         }
         if (this.sql === '') {

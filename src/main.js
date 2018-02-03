@@ -9,9 +9,13 @@ import VueCookies from 'vue-cookies'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
 import VueConfetti from 'vue-confetti'
+import 'vue2-toast/lib/toast.css'
+import Toast from 'vue2-toast'
 
 import {store} from './store/index'
 import {stripe as stripeProd} from '@/private'
+
+require('vue2-toast/lib/toast.css')
 
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
@@ -55,6 +59,7 @@ Vue.use(VueCookies)
 Vue.use(Vuelidate)
 Vue.use(VueLodash, lodash)
 Vue.use(VueConfetti)
+Vue.use(Toast)
 
 Vue.prototype.$log = function (...args) {
   console.log(...[...args || []].map(val => val ? JSON.parse(JSON.stringify(val)) : undefined))

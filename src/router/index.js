@@ -129,6 +129,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   if (premiumNeeded.includes(to.name) && !isPremium()) {
+    console.log('I AM IF')
     next(false)
   } else if (await denyCompanyExercise(to)) {
     router.push({name: 'postgres-home'})

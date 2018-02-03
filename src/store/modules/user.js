@@ -10,7 +10,9 @@ function initialState () {
       lastName: '',
       username: '',
       email: '',
-      subscription: 'none'
+      subscription: 'none',
+      subscriptionEnd: '',
+      slatedForDowngrade: false
     },
     tokenKey: '',
     loggedIn: false,
@@ -42,6 +44,8 @@ export default {
     },
     setUserDetails (state, payload) {
       state.user.subscription = payload.subscription
+      state.user.subscriptionEnd = new Date(parseFloat(payload['current_period_end']) * 1000)
+      state.user.slatedForDowngrade = payload['slated_for_downgrade']
       state.loaded = true
     },
     clearData (state, payload) {
@@ -52,6 +56,13 @@ export default {
     },
     changeSubscription (state, payload) {
       Vue.set(state.user, 'subscription', payload.subscription)
+    },
+    setSubscriptionEnd (state, payload) {
+      const date = new Date(parseFloat(payload.subscriptionEnd) * 1000)
+      Vue.set(state.user, 'subscriptionEnd', date)
+    },
+    setSlatedForDowngrade (state, payload) {
+      Vue.set(state.user, 'slatedForDowngrade', payload.slatedForDowngrade)
     }
   },
   actions: {

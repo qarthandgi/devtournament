@@ -2,7 +2,7 @@ import {store} from '@/store/index'
 
 export function isPremium () {
   if (store.state.user.loggedIn) {
-    if (store.state.user.subscription === 'premium') {
+    if (store.state.user.user.subscription === 'premium') {
       return true
     }
     return false

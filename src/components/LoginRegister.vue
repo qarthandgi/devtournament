@@ -149,6 +149,7 @@
       show (newState) {
         this.changeNotLoggedInState(0)
         this.successPanels = false
+        this.selectedSubscription = this.user.subscription
       },
       '$route.query': {
         handler (val) {
@@ -174,7 +175,7 @@
           } else if (this.loggedIn) {
             return this.user.subscription
           } else {
-            return 'premium'
+            return 'basic'
           }
         },
         set (value) {
@@ -193,10 +194,7 @@
         this.selectedSubscription = this.user.subscription
       },
       changeSubscription () {
-        const {data} = this.$axios.post('change-subscription', {
-          'newSubscription': this.l_selectedSubscription
-        })
-        console.log(data)
+        console.log('in change subscription')
       },
       closeModal () {
         this.$emit('toggle-auth')
@@ -243,6 +241,14 @@
       updateRegister (...args) {
         this.$set(this.newUser, args[0], args[1])
       }
+    },
+    mounted () {
+      console.log('mounted')
+      console.log(this.user.subscription)
+      this.selectedSubscription = this.user.subscription
+    },
+    updated () {
+      console.log('updated')
     }
   }
 </script>

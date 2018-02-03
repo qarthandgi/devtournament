@@ -7,7 +7,6 @@ from django.utils import timezone
 from allauth.account.models import EmailAddress
 
 
-
 NONE = None
 BASIC = 'basic'
 PREMIUM = 'premium'
@@ -131,6 +130,9 @@ class User(AbstractUser):
     stripe_customer_id = models.CharField(null=True, blank=True, max_length=100)
     stripe_subscription_id = models.CharField(null=True, blank=True, max_length=100)
     stripe_default_source_id = models.CharField(null=True, blank=True, max_length=100)
+    stripe_current_period_start = models.BigIntegerField(null=True, blank=True)
+    stripe_current_period_end = models.BigIntegerField(null=True, blank=True)
+    slated_for_downgrade = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -152,6 +154,12 @@ class User(AbstractUser):
     @property
     def is_verified(self):
         return getattr(EmailAddress.objects.get_primary(self), 'verified', False)
+
+
+class SubscriptionChange(models.Model):
+    added = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    going_to = models.CharField(max_length=15, choices=SUBSCRIPTION_CHOICES)
 
 
 class Database(models.Model):
