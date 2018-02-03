@@ -16,7 +16,8 @@ function initialState () {
     },
     tokenKey: '',
     loggedIn: false,
-    loaded: false
+    loaded: false,
+    finishVerification: false
   }
 }
 
@@ -31,6 +32,9 @@ export default {
     }
   },
   mutations: {
+    setFinishVerification (state, payload) {
+      state.finishVerification = payload.finishVerification
+    },
     setTokenKey (state, payload) {
       state.tokenKey = payload.key
       state.loggedIn = true

@@ -59,7 +59,12 @@ Vue.use(VueCookies)
 Vue.use(Vuelidate)
 Vue.use(VueLodash, lodash)
 Vue.use(VueConfetti)
-Vue.use(Toast)
+Vue.use(Toast, {
+  defaultType: 'bottom',
+  duration: 3200,
+  wordWrap: false,
+  width: 'auto'
+})
 
 Vue.prototype.$log = function (...args) {
   console.log(...[...args || []].map(val => val ? JSON.parse(JSON.stringify(val)) : undefined))

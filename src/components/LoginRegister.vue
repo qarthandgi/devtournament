@@ -2,7 +2,7 @@
   modal-window(v-if="show", :success-panels="successPanels")
     .close(@click='closeModal', v-if="notLoggedInState !== 3")
       span.fas.fa-times-circle
-    .content(v-if="!loggedIn || notLoggedInState === 3")
+    .content(v-if="!loggedIn || notLoggedInState === 3 || interim")
       template(v-if="notLoggedInState === 0")
         .headings(v-if="verifiedState")
           .headings__title.success Thank you for verifying your email!
@@ -35,7 +35,7 @@
           .headings__sub-title.select(style="margin-top: 30px;", @click="changeNotLoggedInState(1)") Register for a new account&nbsp;&nbsp;
             span.fas.fa-angle-right
       template(v-else-if="notLoggedInState === 1")
-        .headings
+        .headings(style='margin-top:1px;')
           .headings__title REGISTER
         .form
           input-field(
@@ -142,7 +142,8 @@
         notLoggedInState: 0, // different screen states only when the user is not already logged in
         successPanels: false, // used to set border panels to green on successful login or successful registration
         l_selectedSubscription: '',
-        verifiedState: false
+        verifiedState: false,
+        interim: false
       }
     },
     watch: {
@@ -209,6 +210,7 @@
         }, 1800)
       },
       async sendLogin () {
+        this.interim = true
         const resp = await this.login(this.returningUser)
         console.log('OK NOW HERE')
         console.log(resp)
@@ -216,6 +218,7 @@
           console.log('TODO: make success message')
           this.successPanels = true
           this.changeToState3()
+          this.interim = false
         } else {
           console.log('TODO: in component and wrong credentials')
         }

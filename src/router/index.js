@@ -30,7 +30,8 @@ const router = new Router({
         console.log('THIS IS RESPONSE')
         console.log(resp)
         // next()
-        router.replace({name: 'postgres-home', query: {verified: true}})
+        store.commit('user/setFinishVerification', {finishVerification: true})
+        router.replace({name: 'postgres-home'})
         // if (resp.data.status === 200) {
         //   const resp2 = await axios.post('verify-')
         // }

@@ -13,6 +13,8 @@
   import LoginRegister from '@/components/LoginRegister'
   import PageTitles from '@/components/PageTitles'
 
+  import {store} from '@/store/index'
+
   export default {
     name: 'app',
     components: {
@@ -30,20 +32,32 @@
       loggedIn () {
         this.loadData()
       },
-      '$route.query': {
+      finishVerification: {
         handler (val) {
-          if (val.verified === true) {
+          if (val === true) {
+            this.$toast.center('Verified! Login to complete registration')
             this.authVisibility = true
+            store.commit('user/setFinishVerification', {finishVerification: false})
           }
         },
         immediate: true,
         deep: true
       }
+      // '$route.meta': {
+      //   handler (val) {
+      //     if (val.verified === true) {
+      //       this.authVisibility = true
+      //     }
+      //   },
+      //   immediate: true,
+      //   deep: true
+      // }
     },
     computed: {
       ...mapState({
         layoutState: state => state.app.layoutState,
-        loggedIn: state => state.user.loggedIn
+        loggedIn: state => state.user.loggedIn,
+        finishVerification: state => state.user.finishVerification
       }),
       ...mapGetters({
         fullName: 'fullName'
