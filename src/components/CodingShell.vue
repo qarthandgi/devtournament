@@ -12,7 +12,10 @@
           :invitation="$route.meta.hasOwnProperty('type') && $route.meta.type === 'invitation'",
           :success-status="successStatus",
           :session-type="sessionType",
-          :sql="sql"
+          :sql="sql",
+          :invalid-creation="invalidCreation",
+          :invalid-message="invalidMessage",
+          @new-exercise-data="newExerciseData"
         )
         info-action(
           v-if="infoActionVisibility",
@@ -79,7 +82,13 @@
         dtSession: false,
         firstShiftActivated: false,
         sessionType: null,
-        aQuerySent: false // so that confetti doesn't fall on load, only after a query has been sent
+        aQuerySent: false, // so that confetti doesn't fall on load, only after a query has been sent
+        invalidMessage: '',
+        newExercise: {
+          name: '',
+          database: -1,
+          objective: ''
+        }
       }
     },
     computed: {
@@ -89,6 +98,25 @@
         invitations: state => state.pg.invitations,
         exercises: state => state.pg.exercises
       }),
+      invalidCreation () {
+        if (this.sessionType !== 'custom-create') {
+          return false
+        }
+        if (this.sql === '') {
+          this.invalidMessage = 'Must Enter a SQL Query'
+          return true
+        } else if (!this.headersMatch) {
+          this.invalidMessage = 'Make sure result column names match Output Requirements column names'
+          return true
+        } else if (this.newExercise.objective === '') {
+          this.invalidMessage = 'Enter an exercise objective'
+          return true
+        } else if (this.newExercise.name === '') {
+          this.invalidMessage = 'Enter an exercise name'
+          return true
+        }
+        return false
+      },
       allowDoubleShift () {
         return this.sessionType !== 'sandbox' && this.sessionType !== 'custom-create'
       },
@@ -170,6 +198,10 @@
       ...mapMutations({
         'changeInvitationStatus': 'pg/changeInvitationStatus'
       }),
+      newExerciseData (obj) {
+        console.log(obj)
+        this.$set(this, 'newExercise', obj)
+      },
       confetti () {
         this.$confetti.start({shape: 'rect'})
         setTimeout(() => {
@@ -241,20 +273,27 @@
           this.customTestQuery()
         } else if (this.sessionType === 'company') {
           this.companyTestQuery()
+        } else {
+          this.customTestQuery()
         }
       },
       testKey (evt) {
+        console.log('in testkey')
         if (evt.keyCode === 13 && (evt.metaKey || evt.ctrlKey)) {
+          console.log('in if 1')
           bus.$emit('execute-all', {type: 'all'})
           this.executeQuery()
         } else if (evt.keyCode === 13 && evt.altKey) {
-          console.log('we in here')
+          console.log('in if 2')
           bus.$emit('get-sql-selection')
         } else if (this.allowDoubleShift && evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
+          console.log('if in 3')
           if (this.firstShiftActivated) {
+            console.log('in if 3 a')
             this.firstShiftActivated = false
             this.toggleTable()
           } else {
+            console.log('in if 3 b')
             this.firstShiftActivated = true
             setTimeout(() => {
               this.firstShiftActivated = false
@@ -274,13 +313,15 @@
         // TODO: make sure this.dbId and this.lastDbId match
         // TODO: make sure headersMatch is checked
         // TODO: check duplicateColumns set from response before saving created exercise
-
+        console.log('CUSTOM TEST QUERY')
         const {data} = await this.$axios.post('custom-test-query/', {
           sql: this.sql,
           db: this.dbId
         })
+        console.log(data)
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
+        console.log('AFTER SET HEADERS AND ROWS')
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
       },

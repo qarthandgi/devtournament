@@ -13,7 +13,7 @@
           :font-size="'14px'",
           @enter="inviteUser"
         )
-        .invite__create__email__invite(@click="inviteUser")
+        .invite__create__email__invite(@click="inviteUser", :class="{disabled: emailToInvite === ''}")
           span.text Invite&nbsp;
           span.far.fa-angle-right
     .invite__content(v-else)
@@ -59,13 +59,16 @@
         })
       },
       async inviteUser () {
-        const customExerciseId = parseInt(this.$route.params.id)
-        const response = await this.$axios.post('invite-user/', {
-          email: this.emailToInvite,
-          customExerciseId: customExerciseId
-        })
-        console.log(response)
-        // todo: do something
+        if (this.emailToInvite !== '') {
+          const customExerciseId = parseInt(this.$route.params.id)
+          const response = await this.$axios.post('invite-user/', {
+            email: this.emailToInvite,
+            customExerciseId: customExerciseId
+          })
+          this.$toast.bottom('Invited ' + this.emailToInvite + ' to your exercise!')
+          console.log(response)
+          // todo: do something
+        }
       }
     }
   }
@@ -108,8 +111,13 @@
           right: -70px
           color: $dev-blue
           cursor: pointer
+          &.disabled
+            color: gray
+            cursor: normal
           &:hover
             color: lighten($dev-blue, 20%)
+          &.disabled:hover
+            color: gray
           svg
             right: 0px
             transition: right 90ms linear
@@ -117,6 +125,8 @@
             position: relative
             right: -5px
             transition: right 90ms linear
+          &.disabled:hover svg
+            right: 0px
     &.create &__left-border
       background-color: rgba(220,220,220,0.2)
     &:hover

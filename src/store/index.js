@@ -4,7 +4,6 @@ import axios from 'axios'
 import VueCookies from 'vue-cookies'
 
 import user from './modules/user'
-import email from './modules/email'
 import app from './modules/app'
 import pg from './modules/pg'
 
@@ -28,7 +27,6 @@ export const store = new Vuex.Store({
   strict: process.env['NODE_ENV'] !== 'production',
   modules: {
     user,
-    email,
     app,
     pg
   },

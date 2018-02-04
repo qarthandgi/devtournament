@@ -77,6 +77,16 @@ class InvitationForExerciseSerializer(serializers.ModelSerializer):
 
 class CustomExerciseSerializer(serializers.ModelSerializer):
     invitation_set = serializers.SerializerMethodField()
+    expected_output = serializers.SerializerMethodField()
+
+    def get_expected_output(self, exercise):
+        headers = pickle.loads(exercise.expected_headers)
+        rows = pickle.loads(exercise.expected_rows)
+        output = {
+          'headers': headers,
+          'rows': rows
+        }
+        return output
 
     def get_invitation_set(self, exercise):
         inv_set = Invitation.objects.filter(exercise=exercise, archived=False)
@@ -85,4 +95,5 @@ class CustomExerciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserExercise
-        fields = ('id', 'name', 'db', 'objective', 'column_descriptions', 'added', 'working_query', 'invitation_set')
+        fields = ('id', 'name', 'db', 'objective', 'column_descriptions', 'added', 'working_query',
+                  'expected_output', 'invitation_set')

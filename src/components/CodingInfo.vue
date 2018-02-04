@@ -80,7 +80,9 @@
       invitation: {required: false, default: false},
       successStatus: {required: false, default: false},
       sessionType: {required: false, default: null},
-      sql: {required: false, default: ''}
+      sql: {required: false, default: ''},
+      invalidCreation: {required: false, default: false},
+      invalidMessage: {required: false, default: ''}
     },
     data () {
       return {
@@ -94,24 +96,13 @@
         },
         definedHeaders: [],
         definedColumns: [],
-        outputColumnsVisibility: false,
-        invalidMessage: ''
+        outputColumnsVisibility: false
       }
     },
     computed: {
       ...mapState({
         databases: state => state.pg.databases
       }),
-      invalidCreation () {
-        if (this.sessionType !== 'custom-create') {
-          return false
-        }
-        if (this.sql === '') {
-          this.invalidMessage = 'Must Enter a SQL Query'
-          return true
-        }
-        return false
-      },
       toBottomClass () {
         return this.sessionType === 'custom-create'
       },
@@ -152,8 +143,19 @@
           this.$emit('db-change', val)
         }
       },
-      headers (val) { this.checkHeaders() },
-      definedHeaders (val) { this.checkHeaders() }
+      newExercise: {
+        handler (val) {
+          this.$emit('new-exercise-data', val)
+        },
+        immediate: true,
+        deep: true
+      },
+      headers (val) {
+        this.checkHeaders()
+      },
+      definedHeaders (val) {
+        this.checkHeaders()
+      }
     },
     methods: {
       createExercise () {
@@ -167,8 +169,12 @@
         this.$set(this.newExercise, 'database', db.id)
       },
       checkHeaders () {
-        const match = this._.isEqual(this.headers, this.definedHeaders)
-        this.$emit('headers-match', match)
+        if (this.headers.length === 0 && this.definedHeaders.length === 0) {
+          this.$emit('headers-match', false)
+        } else {
+          const match = this._.isEqual(this.headers, this.definedHeaders)
+          this.$emit('headers-match', match)
+        }
       }
     },
     mounted () {
@@ -308,7 +314,7 @@
       margin: 10px auto 15px
       font-size: 13px
       position: relative
-      height: 15px
+      height: 20px
       /*border: 1px red solid*/
       &__content
         position: absolute
