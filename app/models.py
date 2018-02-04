@@ -6,6 +6,8 @@ from django.utils import timezone
 
 from allauth.account.models import EmailAddress
 
+from pprint import pprint
+
 
 NONE = None
 BASIC = 'basic'
@@ -205,10 +207,32 @@ class CompanyExercise(Exercise):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        num_exercises = CompanyExercise.objects.filter(enabled=True).count()
-        property = Global.objects.get(name='company_exercise_num')
-        property.int_value = num_exercises
-        property.save()
+        non_premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=BASIC) | \
+            CompanyExercise.objects.filter(enabled=True, needed_subscription=PREMIUM)
+        non_premium_exercises = non_premium_exercises.count()
+        print('OK START DEBUGGING')
+        print(non_premium_exercises)
+        premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=PREMIUM).count()
+        print(premium_exercises)
+        prop1 = Global.objects.get(name='non_premium_exercises')
+        pprint(prop1)
+        print(prop1.name)
+        prop1.int_value = non_premium_exercises
+        prop1.save()
+        prop2 = Global.objects.get(name='premium_exercises')
+        prop2.int_value = premium_exercises
+        prop2.save()
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+        non_premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=BASIC).count()
+        premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=PREMIUM).count()
+        prop1 = Global.objects.get(name='non_premium_exercises')
+        prop1.int_value = non_premium_exercises
+        prop1.save()
+        prop2 = Global.objects.get(name='premium_exercises')
+        prop2.int_value = premium_exercises
+        prop2.save()
 
 
 class UserExercise(Exercise):

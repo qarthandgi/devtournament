@@ -58,6 +58,10 @@ export default {
     changeInvitationStatus (state, payload) {
       const idx = state.invitations.findIndex(x => x.id === payload.invitationId)
       Vue.set(state.invitations[idx], 'status', payload.status)
+    },
+    changeExerciseCompletion (state, payload) {
+      const idx = state.exercises.findIndex(x => x.id === payload.exerciseId)
+      Vue.set(state.exercises[idx], 'last_successful_completion', payload.lastSuccessfulCompletion)
     }
   },
   actions: {

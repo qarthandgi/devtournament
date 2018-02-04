@@ -153,11 +153,6 @@
       }
     },
     watch: {
-      successStatus: {
-        handler (val) {
-          console.log('OK 33333')
-        }
-      },
       '$route': {
         async handler (val) {
           this.sessionType = null
@@ -196,10 +191,10 @@
     },
     methods: {
       ...mapMutations({
-        'changeInvitationStatus': 'pg/changeInvitationStatus'
+        'changeInvitationStatus': 'pg/changeInvitationStatus',
+        'changeExerciseCompletion': 'pg/changeExerciseCompletion'
       }),
       newExerciseData (obj) {
-        console.log(obj)
         this.$set(this, 'newExercise', obj)
       },
       confetti () {
@@ -212,14 +207,11 @@
         this.showingUserTable = !this.showingUserTable
       },
       setInvitation (id) {
-        console.log('set invitation')
         const invIdx = this.invitations.findIndex(x => x.id === id)
         if (invIdx !== -1) {
-          console.log('not -1')
           const dbIdx = this.databases.findIndex(x => x.id === this.invitations[invIdx].exercise.db)
           this.dbId = this.databases[dbIdx].id
           this.$set(this, 'sessionInfo', {...this.invitations[invIdx].exercise})
-          console.log({...this.invitations[invIdx].exercise})
         }
       },
       setCustomExercise (id) {
@@ -278,22 +270,16 @@
         }
       },
       testKey (evt) {
-        console.log('in testkey')
         if (evt.keyCode === 13 && (evt.metaKey || evt.ctrlKey)) {
-          console.log('in if 1')
           bus.$emit('execute-all', {type: 'all'})
           this.executeQuery()
         } else if (evt.keyCode === 13 && evt.altKey) {
-          console.log('in if 2')
           bus.$emit('get-sql-selection')
         } else if (this.allowDoubleShift && evt.key.toLowerCase() === 'shift' && evt.type === 'keydown') {
-          console.log('if in 3')
           if (this.firstShiftActivated) {
-            console.log('in if 3 a')
             this.firstShiftActivated = false
             this.toggleTable()
           } else {
-            console.log('in if 3 b')
             this.firstShiftActivated = true
             setTimeout(() => {
               this.firstShiftActivated = false
@@ -313,19 +299,17 @@
         // TODO: make sure this.dbId and this.lastDbId match
         // TODO: make sure headersMatch is checked
         // TODO: check duplicateColumns set from response before saving created exercise
-        console.log('CUSTOM TEST QUERY')
         const {data} = await this.$axios.post('custom-test-query/', {
           sql: this.sql,
           db: this.dbId
         })
-        console.log(data)
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
-        console.log('AFTER SET HEADERS AND ROWS')
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
       },
       async companyTestQuery () {
+        console.log('COMPANY QUERY')
         this.aQuerySent = true
         const {data} = await this.$axios.post('company-test-query/', {
           sql: this.sql,
@@ -336,6 +320,11 @@
         this.$set(this.tableData, 'rows', data.rows)
         if (data.match) {
           this.confetti()
+          this.changeExerciseCompletion({
+            exerciseId: data.exercise.id,
+            lastSuccessfulCompletion: data.exercise.last_successful_completion
+          })
+          this.$set(this.sessionInfo, 'last_successful_completion', data.exercise.last_successful_completion)
         }
       },
       async invitationTestQuery () {
@@ -353,7 +342,6 @@
         this.$set(this.tableData, 'rows', data.rows)
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
-        console.log(data.match)
         if (data.match) {
           this.confetti()
         }

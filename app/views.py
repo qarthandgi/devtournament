@@ -323,13 +323,16 @@ def company_test_query(request):
             success_attempt = SuccessfulCompanyAttempt.objects.get(exercise=exercise, user=request.user)
             success_attempt.time = timezone.now()
             success_attempt.save()
+            print('succeeded try')
         except SuccessfulCompanyAttempt.DoesNotExist:
             success_attempt = SuccessfulCompanyAttempt(exercise=exercise, user=request.user, query=sql)
             success_attempt.save()
+            print('succeeded except')
         except Exception as e:
             print(e)
         # TODO: FIX SERIALIZER HERE
         serializer = CompanyExerciseSerializer(exercise, context={'request': request})
+        pprint(serializer.data)
         resp['exercise'] = serializer.data
 
     return Response(data=resp, status=200)
