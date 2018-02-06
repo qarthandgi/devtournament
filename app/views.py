@@ -28,7 +28,6 @@ def execute_sql(db, sql):
     with connections[db.internal_name].cursor() as cursor:
         cursor.execute(sql)
         rows = cursor.fetchall()
-        print('OK EXECUTE SQL')
         columns = []
         headers = [x[0] for x in cursor.description]
         duplicate_header_names = len(headers) > len(set(headers))
@@ -171,15 +170,12 @@ def user_details(request):
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def user_logged_in(request):
-    print('in user logged in!!!')
     first_time = False
     u = request.user
     if not u.setup:
-        print('about to setup')
         customer = stripe.Customer.create(
           email=u.email
         )
-        print('CUSTOMER RESPONSE STRIPE')
         pprint(customer)
         u.stripe_customer_id = customer.id
 
@@ -188,8 +184,6 @@ def user_logged_in(request):
           items=[{'plan': 'basic-subscription'}]
         )
         u.stripe_subscription_id = subscription.id
-        print('SUBSCRIPTION RESPONSE STRIPE')
-        pprint(subscription)
         u.stripe_current_period_start = subscription['current_period_start']
         u.stripe_current_period_end = subscription['current_period_end']
         u.setup = True
@@ -255,8 +249,6 @@ def check_datatypes(data):
         new_data.append([])
         for j, item in enumerate(row):
             if isinstance(item, Decimal):
-                print(new_data)
-                print(i, j)
                 new_data[i].append(str(item))
             else:
                 new_data[i].append(item)
@@ -271,6 +263,7 @@ def sandbox_test_query(request):
     sql = request.data['sql']
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, sql)
+    print('# ROWS: ' + str(len(data['rows'])))
 
     resp = {
       'rows': check_datatypes(data['rows']),
@@ -323,16 +316,13 @@ def company_test_query(request):
             success_attempt = SuccessfulCompanyAttempt.objects.get(exercise=exercise, user=request.user)
             success_attempt.time = timezone.now()
             success_attempt.save()
-            print('succeeded try')
         except SuccessfulCompanyAttempt.DoesNotExist:
             success_attempt = SuccessfulCompanyAttempt(exercise=exercise, user=request.user, query=sql)
             success_attempt.save()
-            print('succeeded except')
         except Exception as e:
             print(e)
         # TODO: FIX SERIALIZER HERE
         serializer = CompanyExerciseSerializer(exercise, context={'request': request})
-        pprint(serializer.data)
         resp['exercise'] = serializer.data
 
     return Response(data=resp, status=200)

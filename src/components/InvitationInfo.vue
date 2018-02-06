@@ -9,6 +9,10 @@
       button.inv-info__body__content__option.gray(@click="enableInvitation", v-else) {{ enableStatus }}
       .inv-info__body__content.l2(style="margin-top:10px;") Delete this invitation and all submitted query attempts?
       button.invite__content__option__button.danger(@click="deleteInvitation") Delete Invitation
+      .inv-info__body__content.l2(style="margin-top: 35px;") View Last Query Submitted
+      button.inv-info__body__content__option.dev(@click="showQuery('last')") Last Query
+      .inv-info__body__content.l2(style="margin-top: 8px;") View Last Successfully Submitted Query
+      button.inv-info__body__content__option.dev(@click="showQuery('successful')") Last Successfully Query
     .inv-info__close(@click="closeInvitation")
       .inv-info__close__content
         span.fas.fa-angle-double-up
@@ -18,6 +22,7 @@
 
 <script>
   import {mapGetters, mapMutations} from 'vuex'
+  import {bus} from '@/utils/bus'
 
   export default {
     data () {
@@ -56,6 +61,15 @@
         replaceInvitation: 'pg/replaceInvitation',
         removeInvitation: 'pg/removeInvitation'
       }),
+      showQuery (type) {
+        console.log('in method')
+        if (type === 'last') {
+          console.log('in last')
+          bus.$emit('pg/showInvitationQuery', {query: this.invitation.last_query, type: 'last', email: this.invitation.invitee_s})
+        } else if (type === 'successful') {
+          bus.$emit('pg/showInvitationQuery', {query: this.invitation.successful_query, type: 'successful', email: this.invitation.invitee_s})
+        }
+      },
       async deleteInvitation () {
         // todo: give notice of deletion
         await this.$axios.post('delete-invitation', {
@@ -71,6 +85,7 @@
             id: this.$route.params.id
           }
         })
+        bus.$emit('pg/closed/InvitationInfo')
       },
       async disableInvitation () {
         const response = await this.$axios.post('disable-invitation/', {
@@ -147,6 +162,11 @@
           color: rgba(220,80,80,0.9)
           &:hover
             color: lighten(rgba(230,70,70,0.9), 10%)
+        &.dev
+          border: 1px $dev-blue solid
+          color: $dev-blue
+          width: 145px
+          font-size: 12px
     &__close
       flex-basis: 25px
       cursor: pointer

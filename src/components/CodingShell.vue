@@ -27,6 +27,7 @@
           router-view
     .code__io
       .code__io__input
+        // select-coding-input
         coding-input(
           @update="updateInput",
           @selection-update="updateSqlSelection",
@@ -45,6 +46,7 @@
 
 <script>
   import CodingInput from '@/components/CodingInput'
+  import SelectCodingInput from '@/blocks/SelectCodingInput'
   import CodingOutput from '@/components/CodingOutput'
   import CodingStatus from '@/units/CodingStatus'
   import CodingInfo from '@/components/CodingInfo'
@@ -57,6 +59,7 @@
   export default {
     components: {
       CodingInput,
+      SelectCodingInput,
       CodingOutput,
       CodingStatus,
       CodingInfo,
@@ -394,14 +397,12 @@
       position: relative
     &__io
       width: 65%
-      /*border: 1px blue solid*/
       display: flex
       justify-content: space-between
       flex-flow: column nowrap
       & > div
         position: relative
       &__input
-        /*border: 1px green solid*/
         /*flex: 11*/
         /*flex-grow: 0*/
         /*flex-shrink: 0*/

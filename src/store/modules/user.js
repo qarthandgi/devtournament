@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 import axios from 'axios'
+import router from '@/router'
 
 function initialState () {
   return {
@@ -100,6 +101,7 @@ export default {
         console.log(response)
         VueCookies.remove('tokenKey', '/')
         commit('clearData')
+        router.push({name: 'postgres-home'})
       })
     },
     async getUser ({commit}) {

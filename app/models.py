@@ -208,11 +208,11 @@ class CompanyExercise(Exercise):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         non_premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=BASIC) | \
-            CompanyExercise.objects.filter(enabled=True, needed_subscription=PREMIUM)
+            CompanyExercise.objects.filter(enabled=True, needed_subscription=NONE)
         non_premium_exercises = non_premium_exercises.count()
         print('OK START DEBUGGING')
         print(non_premium_exercises)
-        premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=PREMIUM).count()
+        premium_exercises = CompanyExercise.objects.filter(enabled=True).count()
         print(premium_exercises)
         prop1 = Global.objects.get(name='non_premium_exercises')
         pprint(prop1)

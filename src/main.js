@@ -19,7 +19,7 @@ require('vue2-toast/lib/toast.css')
 
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
-  axios.defaults.baseURL = 'http://104.131.20.153/'
+  axios.defaults.baseURL = 'http://159.89.38.181/'
 } else {
   axios.defaults.baseURL = 'http://localhost:8000/'
 }
@@ -50,6 +50,36 @@ axios.interceptors.request.use(function (config) {
   }
   return config
 })
+
+// const SQL_URLS = [
+//   'sandbox-test-query/',
+//   'custom-test-query/',
+//   'company-test-query/',
+//   'test-query/'
+// ]
+
+// axios.interceptors.request.use(function (config) {
+//   // todo: only for sqlUrl's
+//   const sqlUrl = SQL_URLS.includes(config.url)
+//   console.log(sqlUrl)
+//   if (store.state.user.user.subscription === 'premium') {
+//     return config
+//   } else if (store.state.user.loggedIn) {
+//     // const maxQueries = 50
+//     if (VueCookies.isKey('qcl')) {
+//       const cookie = (VueCookies.get('qcl') / 373) - 373
+//       console.log(cookie)
+//       return config
+//     } else {
+//       const num = (0 + 373) * 373
+//       VueCookies.set('qcl', num, '5m', '/')
+//       return config
+//     }
+//   } else {
+//     // const maxQueries = 10
+//     return config
+//   }
+// })
 
 axios.defaults.validateStatus = function (status) {
   return (status >= 200 && status < 300) || ([400, 401].indexOf(status) > -1)

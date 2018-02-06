@@ -84,14 +84,13 @@ CREATE TABLE course (
   number        INTEGER,
   name          VARCHAR(90),
   credits       SMALLINT,
-  required      BOOLEAN,
   type          course_type
 );
 
 CREATE TABLE class (
   id            serial PRIMARY KEY,
   semester_id   INTEGER REFERENCES semester (id),
-  teacher_id    INTEGER REFERENCES faculty (id),
+  faculty_id    INTEGER REFERENCES faculty (id),
   course_id     INTEGER REFERENCES course (id)
 );
 
@@ -215,7 +214,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (144, 'Weber', 'Temprell', 'w.temprell@libra.edu', 'male', '1940-02-24', 37666);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (145, 'Stavro', 'Caveau', 's.caveau@libra.edu', 'male', '1967-11-16', 37337);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (146, 'Bertram', 'Buttress', 'b.buttress@libra.edu', 'male', '1953-08-05', 36463);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (147, 'Sascha', 'South', 's.south@libra.edu', 'male', '1939-04-12', 36774);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (148, 'Dorian', 'Goalby', 'd.goalby@libra.edu', 'male', '1999-10-28', 37446);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (149, 'Chloris', 'Claussen', 'c.claussen@libra.edu', null, '1941-12-28', 37420);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (150, 'Vinson', 'Cobden', 'v.cobden@libra.edu', 'male', '1941-07-21', 37735);
@@ -407,7 +405,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (343, 'Amber', 'Pyatt', 'a.pyatt@libra.edu', 'female', '1972-10-21', 35341);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (345, 'Tonnie', 'Tubby', 't.tubby@libra.edu', 'male', '1945-12-23', 35956);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (346, 'Onfroi', 'Hestrop', 'o.hestrop@libra.edu', 'male', '1998-12-14', 35920);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1959-03-05', 35877);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (348, 'Benedick', 'Cartmale', 'b.cartmale@libra.edu', 'male', '1978-09-16', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (349, 'Brennan', 'Prier', 'b.prier@libra.edu', 'male', '1940-06-11', 36310);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (350, 'Bethany', 'Benettolo', 'b.benettolo@libra.edu', 'female', '1965-07-23', 37080);
@@ -1270,7 +1267,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (42, 1, 'associate professor', false, true, 1, '2000-04-21', '70000.00'); -- Teacher: ^^
 
 insert into course (id, department_id, number, name, credits, type) values (1, 1, 111, 'Intro to Computer Science', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (1, 1, 119, 1), -- Fall 2013 - Nadya
       (2, 1, 18, 1), -- Fall 2013 - Ferdinand
@@ -1279,7 +1276,7 @@ insert into course (id, department_id, number, name, credits, type) values (1, 1
       (5, 5, 119, 1); -- Fall 2016 - Nadya
 
 insert into course (id, department_id, number, name, credits, type) values (2, 1, 123, 'Mathematical Foundations of Computing', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (6, 2, 19, 2), -- Spring 2014 - Evered
       (7, 4, 54, 2), -- Spring 2015 - Maurise
@@ -1287,7 +1284,7 @@ insert into course (id, department_id, number, name, credits, type) values (2, 1
       (9, 8, 54, 2); -- Spring 2017 - Maurise
 
 insert into course (id, department_id, number, name, credits, type) values (3, 1, 203, 'Data Structures', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (10, 1, 54, 3), -- Fall 2013 - Maurise
       (11, 3, 19, 3), -- Fall 2014 - Evered
@@ -1295,7 +1292,7 @@ insert into course (id, department_id, number, name, credits, type) values (3, 1
       (13, 7, 54, 3); -- Fall 2016 - Maurise
 
 insert into course (id, department_id, number, name, credits, type) values (4, 1, 231, 'Computer Architecture', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (14, 2, 19, 4), -- Spring 2014 - Evered
       (15, 4, 119, 4), -- Spring 2015 - Nadya
@@ -1303,7 +1300,7 @@ insert into course (id, department_id, number, name, credits, type) values (4, 1
       (17, 8, 42, 4); -- Spring 2017 - Kare
 
 insert into course (id, department_id, number, name, credits, type) values (5, 1, 302, 'System Programming', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (18, 1, 54, 5), -- Fall 2013 - Maurise
       (19, 3, 18, 5), -- Fall 2014 - Ferdinand
@@ -1311,7 +1308,7 @@ insert into course (id, department_id, number, name, credits, type) values (5, 1
       (21, 7, 42, 5); -- Fall 2016 - Kare
 
 insert into course (id, department_id, number, name, credits, type) values (6, 1, 412, 'Algorithm Design', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (22, 2, 42, 6), -- Spring 2014 - Kare
       (23, 4, 18, 6), -- Spring 2015 - Ferdinand
@@ -1319,7 +1316,7 @@ insert into course (id, department_id, number, name, credits, type) values (6, 1
       (25, 8, 42, 6); -- Spring 2017 - Kare
 
 insert into course (id, department_id, number, name, credits, type) values (7, 1, 412, 'Software Development', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (26, 1, 19, 7), -- Fall 2013 - Evered
       (27, 3, 19, 7), -- Fall 2014 - Evered
@@ -1327,7 +1324,7 @@ insert into course (id, department_id, number, name, credits, type) values (7, 1
       (29, 7, 42, 7); -- Fall 2016 - Kare
 
 insert into course (id, department_id, number, name, credits, type) values (8, 1, 308, 'System Networking', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (30, 1, 54, 8), -- Fall 2013 - Maurise
       (31, 2, 54, 8), -- Spring 2014 - Maurise
@@ -1337,7 +1334,7 @@ insert into course (id, department_id, number, name, credits, type) values (8, 1
       (35, 7, 54, 8); -- Fall 2016 - Maurise
 
 insert into course (id, department_id, number, name, credits, type) values (9, 1, 333, 'User Interface Design', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (36, 2, 54, 9), -- Spring 2014 - Maurise
       (37, 3, 19, 9), -- Fall 2014 - Evered
@@ -1347,7 +1344,7 @@ insert into course (id, department_id, number, name, credits, type) values (9, 1
       (41, 7, 54, 9); -- Spring 2017 - Maurise
 
 insert into course (id, department_id, number, name, credits, type) values (10, 1, 465, 'Databases', 4, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (42, 1, 42, 10), -- Fall 2013 - Kare
       (43, 2, 42, 10), -- Spring 2014 - Kare
@@ -1358,7 +1355,7 @@ insert into course (id, department_id, number, name, credits, type) values (10, 
       (48, 8, 54, 10); -- Spring 2017 - Maurise
 
 insert into course (id, department_id, number, name, credits, type) values (11, 1, 321, 'Complexity Theory', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (49, 1, 18, 11), -- Fall 2013 - Ferdinand
       (50, 3, 42, 11), -- Fall 2014 - Kare
@@ -1369,7 +1366,7 @@ insert into course (id, department_id, number, name, credits, type) values (11, 
       (55, 8, 42, 11); -- Spring 2017 - Kare
 
 insert into course (id, department_id, number, name, credits, type) values (12, 1, 502, 'Machine Learning I', 4, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (56, 1, 18, 12), -- Fall 2013 - Ferdinand
       (57, 3, 42, 12), -- Fall 2014 - Kare
@@ -1395,7 +1392,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (98, 56, 'associate professor', false, true, '2005-08-30', '69000.00'); -- Teacher: ^^
 
 insert into course (id, department_id, number, name, credits, type) values (69, 2, 102, 'Musicianship', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (61, 1, 78, 69), -- Fall 2013 - Verla
       (62, 3, 78, 69), -- Fall 2014 - Verla
@@ -1403,7 +1400,7 @@ insert into course (id, department_id, number, name, credits, type) values (69, 
       (64, 7, 32, 69); -- Fall 2016 - Fless
 
 insert into course (id, department_id, number, name, credits, type) values (13, 2, 108, 'Music History I', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (65, 2, 32, 13), -- Spring 2014 - Fless
       (66, 4, 78, 13), -- Spring 2015 - Verla
@@ -1411,7 +1408,7 @@ insert into course (id, department_id, number, name, credits, type) values (13, 
       (68, 8, 16, 13); -- Spring 2017 - Beau
 
 insert into course (id, department_id, number, name, credits, type) values (14, 2, 121, 'Theory I', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (69, 1, 78, 14), -- Fall 2013 - Verla
       (70, 3, 78, 14), -- Fall 2014 - Verla
@@ -1419,7 +1416,7 @@ insert into course (id, department_id, number, name, credits, type) values (14, 
       (72, 7, 58, 14); -- Fall 2016 - Samuel
 
 insert into course (id, department_id, number, name, credits, type) values (15, 2, 149, 'Performance Ensemble I', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (73, 2, 58, 15), -- Spring 2014 - Samuel
       (74, 4, 58, 15), -- Spring 2015 - Samuel
@@ -1427,7 +1424,7 @@ insert into course (id, department_id, number, name, credits, type) values (15, 
       (76, 8, 78, 15); -- Spring 2017 - Verla
 
 insert into course (id, department_id, number, name, credits, type) values (16, 2, 233, 'Theory II', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (77, 1, 98, 16), -- Fall 2013 - Jessica
       (78, 3, 16, 16), -- Fall 2014 - Beau
@@ -1435,7 +1432,7 @@ insert into course (id, department_id, number, name, credits, type) values (16, 
       (80, 7, 98, 16); -- Fall 2016 - Jessica
 
 insert into course (id, department_id, number, name, credits, type) values (17, 2, 210, 'Electronic Music & Composition', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (81, 2, 98, 17), -- Spring 2014 - Jessica
       (82, 4, 98, 17), -- Spring 2015 - Jessica
@@ -1443,7 +1440,7 @@ insert into course (id, department_id, number, name, credits, type) values (17, 
       (84, 8, 16, 17); -- Spring 2017 - Beau
 
 insert into course (id, department_id, number, name, credits, type) values (18, 2, 322, 'Advanced Theory Topics in Global Music', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (85, 1, 32, 18), -- Fall 2013 - Fless
       (86, 3, 78, 18), -- Fall 2014 - Verla
@@ -1451,7 +1448,7 @@ insert into course (id, department_id, number, name, credits, type) values (18, 
       (88, 7, 16, 18); -- Fall 2016 - Beau
 
 insert into course (id, department_id, number, name, credits, type) values (19, 2, 184, 'Arranging for Vocals', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (89, 2, 16, 19), -- Spring 2014 - Beau
       (90, 3, 32, 19), -- Fall 2014 - Fless
@@ -1461,7 +1458,7 @@ insert into course (id, department_id, number, name, credits, type) values (19, 
       (94, 8, 98, 19); -- Spring 2017 - Jessica
 
 insert into course (id, department_id, number, name, credits, type) values (20, 2, 212, 'Tonal Harmony and Composition', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (95, 1, 58, 20), -- Fall 2013 - Samuel
       (96, 5, 78, 20), -- Fall 2015 - Verla
@@ -1469,7 +1466,7 @@ insert into course (id, department_id, number, name, credits, type) values (20, 
       (98, 8, 58, 20); -- Spring 2017 - Samuel
 
 insert into course (id, department_id, number, name, credits, type) values (21, 2, 274, 'Scoring for Strings', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (99, 2, 58, 21), -- Spring 2014 - Samuel
       (100, 3, 78, 21), -- Fall 2014 - Verla
@@ -1477,7 +1474,7 @@ insert into course (id, department_id, number, name, credits, type) values (21, 
       (102, 7, 58, 21); -- Fall 2016 - Samuel
 
 insert into course (id, department_id, number, name, credits, type) values (22, 2, 403, 'World Music Composition', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (103, 1, 78, 22), -- Fall 2013 - Verla
       (104, 3, 32, 22), -- Fall 2014 - Fless
@@ -1509,7 +1506,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (60, 41, 'assistant professor', true, true, '2000-07-28', '49000.00'); -- Teacher ^^
 
 insert into course (id, department_id, number, name, credits, type) values (23, 3, 102, 'Intro to Language & Linguistics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (169, 1, 26, 23), -- Fall 2013 - Ronni
       (170, 3, 26, 23), -- Fall 2014 - Ronni
@@ -1517,7 +1514,7 @@ insert into course (id, department_id, number, name, credits, type) values (23, 
       (172, 7, 26, 23); -- Fall 2016 - Ronni
 
 insert into course (id, department_id, number, name, credits, type) values (24, 3, 113, 'Phonetics & Phonology', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (173, 2, 17, 24), -- Spring 2014 - Izak
       (174, 4, 29, 24), -- Spring 2015 - Eran
@@ -1525,7 +1522,7 @@ insert into course (id, department_id, number, name, credits, type) values (24, 
       (176, 8, 52, 24); -- Spring 2017 - Clary
 
 insert into course (id, department_id, number, name, credits, type) values (25, 3, 212, 'Psychology of Language', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (177, 1, 29, 25), -- Fall 2013 - Eran
       (178, 3, 52, 25), -- Fall 2014 - Clary
@@ -1533,7 +1530,7 @@ insert into course (id, department_id, number, name, credits, type) values (25, 
       (180, 7, 29, 25); -- Fall 2016 - Eran
 
 insert into course (id, department_id, number, name, credits, type) values (26, 3, 239, 'Intro to Machine Translation', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (181, 2, 26, 26), -- Spring 2014 - Ronni
       (182, 4, 7, 26), -- Spring 2015 - Cathrine
@@ -1541,7 +1538,7 @@ insert into course (id, department_id, number, name, credits, type) values (26, 
       (184, 8, 26, 26); -- Spring 2017 - Ronni
 
 insert into course (id, department_id, number, name, credits, type) values (27, 3, 248, 'Languages of Mesopotamia', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (185, 1, 29, 27), -- Fall 2013 - Eran
       (186, 3, 26, 27), -- Fall 2014 - Ronni
@@ -1549,7 +1546,7 @@ insert into course (id, department_id, number, name, credits, type) values (27, 
       (188, 7, 76, 27); -- Fall 2016 - Ronda
 
 insert into course (id, department_id, number, name, credits, type) values (28, 3, 290, 'Sociolinguistics ', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (306, 2, 7, 28), -- Spring 2014 - Cathrine
       (307, 4, 76, 28), -- Spring 2015 - Ronda
@@ -1557,7 +1554,7 @@ insert into course (id, department_id, number, name, credits, type) values (28, 
       (189, 8, 17, 28); -- Spring 2017 - Izak
 
 insert into course (id, department_id, number, name, credits, type) values (29, 3, 323, 'Deciphering Ancient Languages', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (190, 1, 17, 29), -- Fall 2013 - Izak
       (191, 3, 17, 29), -- Fall 2014 - Izak
@@ -1565,7 +1562,7 @@ insert into course (id, department_id, number, name, credits, type) values (29, 
       (193, 7, 76, 29); -- Fall 2016 - Ronda
 
 insert into course (id, department_id, number, name, credits, type) values (30, 3, 403, 'Linguistics of American Sign Language', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (194, 2, 7, 30), -- Spring 2014 - Cathrine
       (195, 3, 29, 30), -- Fall 2014 - Eran
@@ -1575,7 +1572,7 @@ insert into course (id, department_id, number, name, credits, type) values (30, 
       (199, 7, 60, 30); -- Fall 2016 - Martin
 
 insert into course (id, department_id, number, name, credits, type) values (31, 3, 342, 'Introduction to Indo-European', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (200, 3, 26, 31), -- Fall 2014 - Ronni
       (201, 6, 17, 31), -- Spring 2016 - Izak
@@ -1583,7 +1580,7 @@ insert into course (id, department_id, number, name, credits, type) values (31, 
       (203, 8, 60, 31); -- Spring 2017 - Martin
 
 insert into course (id, department_id, number, name, credits, type) values (32, 3, 383, 'Bilingualism', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (309, 1, 60, 32), -- Fall 2013 - Martin
       (310, 4, 76, 32), -- Spring 2015 - Ronda
@@ -1592,7 +1589,7 @@ insert into course (id, department_id, number, name, credits, type) values (32, 
       (313, 8, 17, 32); -- Spring 2017 - Izak
 
 insert into course (id, department_id, number, name, credits, type) values (33, 3, 412, 'Advanced Syntax', 4, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (314, 1, 17, 33), -- Fall 2013 - Izak
       (315, 2, 26, 33), -- Spring 2014 - Ronni
@@ -1622,7 +1619,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (95, 4, 'professor', false, true, '2002-01-25', '92000.00');
 
 insert into course (id, department_id, number, name, credits, type) values (34, 4, 102, 'Calculus I', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (204, 1, 88, 34), -- Fall 2013 - Alvin
       (205, 3, 77, 34), -- Fall 2014 - Lilas
@@ -1630,7 +1627,7 @@ insert into course (id, department_id, number, name, credits, type) values (34, 
       (207, 7, 80, 34); -- Fall 2016 - Wakefield
 
 insert into course (id, department_id, number, name, credits, type) values (35, 4, 212, 'Calculus II', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (208, 2, 84, 35), -- Spring 2014 - Gabriell
       (209, 4, 88, 35), -- Spring 2015 - Alvin
@@ -1638,7 +1635,7 @@ insert into course (id, department_id, number, name, credits, type) values (35, 
       (211, 8, 77, 35); -- Spring 2017 - Lilas
 
 insert into course (id, department_id, number, name, credits, type) values (36, 4, 242, 'Discrete Mathematics I', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (212, 1, 93, 36), -- Fall 2013 - Brucie
       (213, 3, 88, 36), -- Fall 2014 - Alvin
@@ -1646,7 +1643,7 @@ insert into course (id, department_id, number, name, credits, type) values (36, 
       (215, 7, 77, 36); -- Fall 2016 - Lilas
 
 insert into course (id, department_id, number, name, credits, type) values (37, 4, 292, 'Calculus III', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (216, 2, 80, 37), -- Spring 2014 - Wakefield
       (217, 4, 77, 37), -- Spring 2015 - Lilas
@@ -1654,7 +1651,7 @@ insert into course (id, department_id, number, name, credits, type) values (37, 
       (219, 8, 93, 37); -- Spring 2017 - Brucie
 
 insert into course (id, department_id, number, name, credits, type) values (38, 4, 320, 'Computational Linear Algebra', 3, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (220, 1, 88, 38), -- Fall 2013 - Alvin
       (221, 3, 80, 38), -- Fall 2014 - Wakefield
@@ -1662,7 +1659,7 @@ insert into course (id, department_id, number, name, credits, type) values (38, 
       (223, 7, 93, 38); -- Fall 2016 - Brucie
 
 insert into course (id, department_id, number, name, credits, type) values (39, 4, 422, 'Differential Equations I', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (224, 2, 80, 39), -- Spring 2014 - Wakefield
       (225, 4, 41, 39), -- Spring 2015 - Vito
@@ -1670,7 +1667,7 @@ insert into course (id, department_id, number, name, credits, type) values (39, 
       (227, 8, 93, 39); -- Spring 2017 - Brucie
 
 insert into course (id, department_id, number, name, credits, type) values (40, 4, 489, 'Abstract Algebra I', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (228, 1, 41, 40), -- Fall 2013 - Vito
       (229, 3, 84, 40), -- Fall 2014 - Gabriell
@@ -1678,7 +1675,7 @@ insert into course (id, department_id, number, name, credits, type) values (40, 
       (231, 7, 41, 40); -- Fall 2016 - Vito
 
 insert into course (id, department_id, number, name, credits, type) values (41, 4, 341, 'Integral Equations', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (232, 2, 80, 41), -- Spring 2014 - Wakefield
       (233, 4, 41, 41), -- Spring 2015 - Vito
@@ -1687,7 +1684,7 @@ insert into course (id, department_id, number, name, credits, type) values (41, 
       (236, 8, 93, 41); -- Spring 2017 - Brucie
 
 insert into course (id, department_id, number, name, credits, type) values (42, 4, 382, 'Analysis I', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (237, 1, 93, 42), -- Fall 2013 - Brucie
       (238, 2, 95, 42), -- Spring 2014 - Clemmie
@@ -1696,7 +1693,7 @@ insert into course (id, department_id, number, name, credits, type) values (42, 
       (241, 7, 77, 42); -- Fall 2016 - Lilas
 
 insert into course (id, department_id, number, name, credits, type) values (43, 4, 445, 'Distributed Algorithms', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (242, 4, 95, 43), -- Spring 2015 - Clemmie
       (243, 5, 95, 43), -- Fall 2015 - Clemmie
@@ -1705,7 +1702,7 @@ insert into course (id, department_id, number, name, credits, type) values (43, 
       (246, 8, 93, 43); -- Spring 2017 - Brucie
 
 insert into course (id, department_id, number, name, credits, type) values (44, 4, 532, 'Geometric Combinatorics', 4, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (247, 1, 88, 44), -- Fall 2013 - Alvin
       (248, 2, 41, 44), -- Spring 2014 - Vito
@@ -1739,7 +1736,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 
 
 insert into course (id, department_id, number, name, credits, type) values (45, 5, 103, 'Principles of Microeconomics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (255, 1, 34, 45), -- Fall 2013 - Cari
       (256, 3, 89, 45), -- Fall 2014 - Tessy
@@ -1747,7 +1744,7 @@ insert into course (id, department_id, number, name, credits, type) values (45, 
       (258, 7, 28, 45); -- Fall 2016 - Sandro
 
 insert into course (id, department_id, number, name, credits, type) values (46, 5, 210, 'Principles of Macroeconomics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (259, 2, 28, 46), -- Spring 2014 - Sandro
       (260, 4, 34, 46), -- Spring 2015 - Cari
@@ -1755,7 +1752,7 @@ insert into course (id, department_id, number, name, credits, type) values (46, 
       (262, 8, 81, 46); -- Spring 2017 - Moina
 
 insert into course (id, department_id, number, name, credits, type) values (47, 5, 298, 'International Monetary Economics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (263, 1, 34, 47), -- Fall 2013 - Cari
       (264, 3, 81, 47), -- Fall 2014 - Moina
@@ -1763,7 +1760,7 @@ insert into course (id, department_id, number, name, credits, type) values (47, 
       (266, 7, 28, 47); -- Fall 2016 - Sandro
 
 insert into course (id, department_id, number, name, credits, type) values (48, 5, 320, 'Law and Economics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (267, 2, 81, 48), -- Spring 2014 - Moina
       (268, 4, 89, 48), -- Spring 2015 - Tessy
@@ -1771,7 +1768,7 @@ insert into course (id, department_id, number, name, credits, type) values (48, 
       (270, 8, 47, 48); -- Spring 2017 - Rowen
 
 insert into course (id, department_id, number, name, credits, type) values (49, 5, 411, 'Corporate Restructuring', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (271, 1, 47, 49), -- Fall 2013 - Rowen
       (272, 3, 73, 49), -- Fall 2014 - Evelin
@@ -1779,7 +1776,7 @@ insert into course (id, department_id, number, name, credits, type) values (49, 
       (274, 7, 73, 49); -- Fall 2016 - Evelin
 
 insert into course (id, department_id, number, name, credits, type) values (50, 5, 423, 'Urban Economics', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (275, 2, 73, 50), -- Spring 2014 - Evelin
       (276, 4, 34, 50), -- Spring 2015 - Cari
@@ -1787,7 +1784,7 @@ insert into course (id, department_id, number, name, credits, type) values (50, 
       (278, 8, 47, 50); -- Spring 2017 - Rowen
 
 insert into course (id, department_id, number, name, credits, type) values (51, 5, 488, 'Game Theory', 4, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (279, 1, 28, 51), -- Fall 2013 - Sandro
       (280, 3, 73, 51), -- Fall 2014 - Evelin
@@ -1795,7 +1792,7 @@ insert into course (id, department_id, number, name, credits, type) values (51, 
       (282, 7, 28, 51); -- Fall 2016 - Sandro
 
 insert into course (id, department_id, number, name, credits, type) values (52, 5, 412, 'Public Finance', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (283, 1, 6, 52), -- Fall 2013 - Laurella
       (284, 2, 6, 52), -- Spring 2014 - Laurella
@@ -1804,7 +1801,7 @@ insert into course (id, department_id, number, name, credits, type) values (52, 
       (287, 8, 28, 52); -- Spring 2017 - Sandro
 
 insert into course (id, department_id, number, name, credits, type) values (53, 5, 389, 'Advanced Macroeconomic Theory', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (288, 2, 47, 53), -- Spring 2014 - Rowen
       (289, 3, 73, 53), -- Spring 2014 - Evelin
@@ -1813,7 +1810,7 @@ insert into course (id, department_id, number, name, credits, type) values (53, 
       (292, 8, 6, 53); -- Spring 2017 - Laurella
 
 insert into course (id, department_id, number, name, credits, type) values (54, 5, 521, 'Asset Pricing', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (293, 2, 47, 54), -- Spring 2014 - Rowen
       (294, 3, 89, 54), -- Fall 2014 - Tessy
@@ -1822,7 +1819,7 @@ insert into course (id, department_id, number, name, credits, type) values (54, 
       (297, 8, 6, 54); -- Spring 2017 - Laurella
 
 insert into course (id, department_id, number, name, credits, type) values (55, 5, 467, 'Health Economics', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (298, 1, 73, 55), -- Fall 2013 - Evelin
       (299, 2, 28, 55), -- Spring 2014 - Sandro
@@ -1855,7 +1852,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (90, 119, 'associate professor', false, true, '2005-09-21', '71000.00'); -- Teacher: ^^
 
 insert into course (id, department_id, number, name, credits, type) values (56, 6, 102, 'Success at Libra University', 2, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (110, 1, 24, 56), -- Fall 2013 - Joel
       (111, 2, 14, 56), -- Spring 2014 - Mercy
@@ -1867,7 +1864,7 @@ insert into course (id, department_id, number, name, credits, type) values (56, 
       (117, 8, 57, 56); -- Spring 2017 - Lacy
 
 insert into course (id, department_id, number, name, credits, type) values (57, 6, 103, 'Effective Communication', 2, 'core');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (118, 2, 14, 57), -- Spring 2014 - Mercy
       (119, 4, 57, 57), -- Spring 2015 - Lacy
@@ -1875,7 +1872,7 @@ insert into course (id, department_id, number, name, credits, type) values (57, 
       (121, 8, 57, 57); -- Spring 2017 - Lacy
 
 insert into course (id, department_id, number, name, credits, type) values (58, 6, 145, 'Nations and Nationalism', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (122, 1, 46, 58), -- Fall 2013 - Reneto
       (123, 3, 75, 58), -- Fall 2014 - Hesther
@@ -1883,7 +1880,7 @@ insert into course (id, department_id, number, name, credits, type) values (58, 
       (125, 7, 46, 58); -- Fall 2016 - Reneto
 
 insert into course (id, department_id, number, name, credits, type) values (59, 6, 212, 'Ancient Religions and Philosophies', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (126, 2, 64, 59), -- Spring 2014 - Benson
       (127, 4, 64, 59), -- Spring 2015 - Benson
@@ -1891,7 +1888,7 @@ insert into course (id, department_id, number, name, credits, type) values (59, 
       (129, 8, 64, 59); -- Spring 2017 - Benson
 
 insert into course (id, department_id, number, name, credits, type) values (60, 6, 234, 'History of Modern East Asia', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (130, 1, 75, 60), -- Fall 2013 - Hesther
       (131, 3, 46, 60), -- Fall 2014 - Renato
@@ -1899,7 +1896,7 @@ insert into course (id, department_id, number, name, credits, type) values (60, 
       (133, 7, 75, 60); -- Fall 2016 - Hesther
 
 insert into course (id, department_id, number, name, credits, type) values (61, 6, 248, 'Palestinian-Israeli Relations', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (134, 2, 46, 61), -- Spring 2014 - Renato
       (135, 4, 46, 61), -- Spring 2015 - Renato
@@ -1907,7 +1904,7 @@ insert into course (id, department_id, number, name, credits, type) values (61, 
       (137, 8, 57, 61); -- Spring 2017 - Lacy
 
 insert into course (id, department_id, number, name, credits, type) values (62, 6, 323, 'International Human Rights', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (138, 1, 24, 62), -- Fall 2013 - Joel
       (139, 3, 24, 62), -- Fall 2014 - Joel
@@ -1915,7 +1912,7 @@ insert into course (id, department_id, number, name, credits, type) values (62, 
       (141, 7, 75, 62); -- Fall 2016 - Hesther
 
 insert into course (id, department_id, number, name, credits, type) values (63, 6, 412, 'Mythology and Folklore', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (142, 2, 24, 63), -- Spring 2014 - Joel
       (143, 4, 24, 63), -- Spring 2015 - Joel
@@ -1923,7 +1920,7 @@ insert into course (id, department_id, number, name, credits, type) values (63, 
       (145, 8, 64, 63); -- Spring 2017 - Benson
 
 insert into course (id, department_id, number, name, credits, type) values (64, 6, 428, 'Gender and Power in History', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (146, 1, 24, 64), -- Fall 2013 - Joel
       (147, 3, 14, 64), -- Fall 2014 - Mercy
@@ -1931,7 +1928,7 @@ insert into course (id, department_id, number, name, credits, type) values (64, 
       (149, 7, 14, 64); -- Fall 2016 - Mercy
 
 insert into course (id, department_id, number, name, credits, type) values (65, 6, 378, 'Ethical Theories', 2, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (150, 2, 90, 65), -- Spring 2014 - Sylvia
       (151, 4, 90, 65), -- Spring 2015 - Sylvia
@@ -1939,7 +1936,7 @@ insert into course (id, department_id, number, name, credits, type) values (65, 
       (153, 8, 75, 65); -- Spring 2017 - Hesther
 
 insert into course (id, department_id, number, name, credits, type) values (66, 6, 311, 'Theory of Knowledge', 3, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (154, 1, 90, 56), -- Fall 2013 - Sylvia
       (155, 3, 64, 56), -- Fall 2014 - Benson
@@ -1948,7 +1945,7 @@ insert into course (id, department_id, number, name, credits, type) values (66, 
       (158, 7, 64, 56); -- Fall 2016 - Benson
 
 insert into course (id, department_id, number, name, credits, type) values (67, 6, 344, 'History of Rhetoric', 2, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (159, 1, 64, 56), -- Fall 2013 - Benson
       (160, 2, 64, 56), -- Spring 2014 - Benson
@@ -1957,7 +1954,7 @@ insert into course (id, department_id, number, name, credits, type) values (67, 
       (163, 8, 75, 56); -- Spring 2017 - Besther
 
 insert into course (id, department_id, number, name, credits, type) values (68, 6, 239, 'Topics in Archaeology', 2, 'elective');
-  insert into class (id, semester_id, teacher_id, course_id)
+  insert into class (id, semester_id, faculty_id, course_id)
     values
       (164, 1, 90, 56), -- Fall 2013 - Sylvia
       (165, 2, 64, 56), -- Spring 2014 - Benson
@@ -2558,7 +2555,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (316, 160, 20, 93.75, 0), -- LA 344 - History of Rhetoric
     -- FALL 2014 - Semester 3
     (317, 213, 20, 94.21, 0), -- MATH 242 - Discrete Mathematics
-    (318, 131, 20, 87.03, 0), -- LA 212 - Ancient Religions and Philosophies
+    (318, 131, 20, 87.03, 0), -- LA 234 - History of Modern East Asia
     -- SPRING 2015 - Semester 4
     (319, 217, 20, 83.45, 0), -- MATH 292 - Calculus III
     (320, 242, 20, 91.35, 1), -- MATH 445 - Distributed Algorithms
@@ -2671,7 +2668,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1962-09-14', 37122);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (24, 490, 3.84, null, 5, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (24, 490, 3.42, 7300.00, 5, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2684,7 +2681,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (385, 264, 24, 90.09, 1), -- ECON 298 - International Monetary Economics
     (386, 131, 24, 99.00, 0), -- LA 234 - History of Modern East Asia
     -- SPRING 2015 - Semester 4
-    (387, 268, 24, 100.54, 0), -- ECON 320 - Law and Economics
+    (387, 268, 24, 100.00, 0), -- ECON 320 - Law and Economics
     (388, 143, 24, 92.45, 1), -- LA 412 - Mythology and Folklore
     -- FALL 2015 - Semester 5
     (389, 273, 24, 70.09, 1), -- ECON 411 - Corporate Restructuring
@@ -2730,3 +2727,65 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     -- SPRING 2017 - Semester 8
     (413, 287, 25, 78.54, 0), -- ECON 412 - Public Finance
     (414, 145, 25, 72.42, 1); -- LA 412 - Mythology and Folklore
+
+-- LING Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (147, 'Sascha', 'South', 's.south@libra.edu', 'male', '1939-04-12', 36774);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (26, 147, 3.44, 8900.00, 3, 'Bachelor of Science', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (415, 169, 26, 99.35, 0), -- LING 102 - Intro to Language & Linguistics
+    (416, 122, 26, 80.25, 1), -- LA 145 - Nations and Nationalism
+    -- SPRING 2014 - Semester 2
+    (417, 173, 26, 85.96, 1), -- LING 113 - Phonetics & Phonology
+    (418, 142, 26, 89.42, 3), -- LA 142 - Mythology and Folklore
+    -- FALL 2014 - Semester 3
+    (419, 178, 26, 93.42, 0), -- LING 212 - Psychology of Language
+    (420, 155, 26, 95.28, 4), -- LA 311 - Theory of Knowledge
+    -- SPRING 2015 - Semester 4
+    (421, 182, 26, 90.06, 2), -- LING 239 - Intro to Machine Translation
+    (422, 135, 26, 88.01, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2015 - Semester 5
+    (423, 187, 26, 89.86, 0), -- LING 248 - Languages of Mesopotamia
+    (424, 132, 26, 87.65, 0), -- LA 235 - History of Modern East Asia
+    (425, 197, 26, 81.32, 1), -- LING 403 - Linguistics of American Sign Language
+    -- SPRING 2016 - Semester 6
+    (426, 308, 26, 79.65, 1), -- LING 290 - Sociolinguistics
+    (427, 312, 26, 73.65, 0), -- LING 383 - Bilingualism
+    -- FALL 2016 - Semester 7
+    (428, 193, 26, 91.56, 0), -- LING 323 - Deciphering Ancient Languages
+    (429, 148, 26, 83.24, 1), -- LA 428 - Gender and Power in History
+    -- SPRING 2017 - Semester 8
+    (430, 203, 26, 78.55, 1), -- LING 342 - Introduction to Indo-European
+    (431, 318, 26, 73.19, 0); -- LING 412 - Advanced Syntax
+
+-- MATH Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1959-03-05', 35877);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (27, 347, 3.72, null, 4, 'Bachelor of Arts', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (313, 204, 27, 82.55, 1), -- MATH 102 - Calculus I
+    (314, 110, 27, 91.23, 3), -- LA 102 - Success at Libra University
+    -- SPRING 2014 - Semester 2
+    (315, 208, 27, 94.56, 0), -- MATH 212 - Calculus II
+    (316, 126, 27, 82.48, 0), -- LA 212 - Ancient Religions and Philosophies
+    -- FALL 2014 - Semester 3
+    (317, 213, 27, 91.24, 0), -- MATH 242 - Discrete Mathematics
+    (318, 123, 27, 95.32, 0), -- LA 145 - Nations and Nationalism
+    -- SPRING 2015 - Semester 4
+    (319, 217, 27, 80.13, 0), -- MATH 292 - Calculus III
+    (320, 135, 27, 70.87, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2015 - Semester 5
+    (321, 222, 27, 79.83, 4), -- MATH 320 - Computational Linear Algebra
+    (322, 140, 27, 82.54, 1), -- LA 323 - International Human Rights
+    -- SPRING 2016 - Semester 6
+    (323, 226, 27, 82.83, 3), -- MATH 422 - Differential Equations I
+    (324, 244, 27, 84.10, 2), -- MATH 445 - Distributed Algorithms
+    -- FALL 2016 - Semester 7
+    (325, 231, 27, 90.91, 2), -- MATH 489 - Abstract Algebra I
+    (326, 241, 27, 91.48, 1), -- MATH 382 - Analysis I
+    (327, 158, 27, 92.30, 2), -- LA 311 - Theory of Knowledge
+    -- SPRING 2017 - Semester 8
+    (328, 254, 27, 94.23, 0), -- MATH 532 - Geometric Combinatorics
+    (329, 236, 27, 99.66, 0); -- MATH 341 - Integral Equations

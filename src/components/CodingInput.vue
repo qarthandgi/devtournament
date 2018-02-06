@@ -19,7 +19,10 @@
       button.input__overlay__option(@click="selectOption(false)") Do Not Show Original Query
       .input__overlay__footer (You Can Change This Later at the Top Right of this Panel)
     .input__switch(v-if="custom && switcherReady")
-      .input__switch__option(v-if="!originalQueryVisibility", @click="selectOption(true)") Show Original Query
+      .input__switch__option.invitation(v-if="showingInvitationQuery")
+        span Showing {{ invitationType }} query from {{ invitationEmail }}
+        span
+      .input__switch__option(v-else-if="!originalQueryVisibility", @click="selectOption(true)") Show Original Query
       .input__switch__option(v-else, @click="selectOption(false)") Show Blank Query
 </template>
 
@@ -27,6 +30,7 @@
   import editor from '@/plugins/ace'
   import 'brace/mode/sql'
   import 'brace/theme/chrome'
+  import {bus} from '@/utils/bus'
 
   export default {
     components: {
@@ -41,7 +45,10 @@
         overlayVisibility: false,
         l_sql: '',
         originalQueryVisibility: false,
-        switcherReady: false
+        switcherReady: false,
+        showingInvitationQuery: false,
+        invitationType: '',
+        invitationEmail: ''
       }
     },
     methods: {
@@ -52,10 +59,26 @@
         this.switcherReady = true
       }
     },
+    invitationQuery (query) {
+      console.log(query)
+    },
     mounted () {
       if (this.custom) {
         this.overlayVisibility = true
       }
+      bus.$on('pg/showInvitationQuery', (obj) => {
+        console.log(obj.query)
+        this.l_sql = obj.query
+        this.showingInvitationQuery = true
+        this.invitationType = obj.type
+        this.invitationEmail = obj.email
+        this.overlayVisibility = false
+        this.switcherReady = true
+      })
+      bus.$on('pg/closed/InvitationInfo', () => {
+        this.showingInvitationQuery = false
+        this.selectOption(false)
+      })
     }
   }
 </script>
@@ -67,7 +90,7 @@
     height: 100%
     position: relative
     &__editor
-      padding: $border-panel-height 0px
+      padding: $border-panel-height 0
       width: 100%
       height: 100%
       box-sizing: border-box
@@ -110,7 +133,7 @@
     &__switch
       top: -20px
       right: 0
-      width: 120px
+      width: auto
       +averia-font()
       font-size: 13px
       color: $dev-blue
@@ -119,4 +142,12 @@
       cursor: pointer
       &:hover
         color: darken($dev-blue, 10%)
+      &__option
+        padding: 1px 7px
+        border-radius: 2px
+      &__option.invitation
+        cursor: default
+        background-color: $dev-blue
+        color: white
+
 </style>

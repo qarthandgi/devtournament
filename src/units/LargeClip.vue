@@ -1,5 +1,13 @@
 <template lang="pug">
   .clip(:class="{create, 'no-pointer': noPointer, success: successStatus}", @click="selectClip")
+    .clip__locked(@click="activateAuthWindow", v-if="locked")
+      .clip__locked__icon
+        span.fas.fa-lock-alt
+      .clip__locked__message(v-if="loggedIn")
+        span Upgrade to&nbsp;
+        span(style="color: #c1981c") Premium
+      .clip__locked__message(v-else)
+        span Login or Register
     .clip__invite(v-if="invite && item.status === 'pending'")
       .clip__invite__text(style="margin-top:8px;") {{this.item.exercise.name}}
       .clip__invite__text
@@ -21,6 +29,7 @@
 
 <script>
   import {mapState, mapMutations} from 'vuex'
+  import {bus} from '@/utils/bus'
 
   export default {
     props: {
@@ -33,7 +42,9 @@
     },
     computed: {
       ...mapState({
-        'databases': state => state.pg.databases
+        'databases': state => state.pg.databases,
+        'loggedIn': state => state.user.loggedIn,
+        user: state => state.user.user
       }),
       footerClass () {
         if (this.company) {
@@ -41,6 +52,25 @@
             return 'success'
           } else {
             return 'danger'
+          }
+        }
+      },
+      locked () {
+        if (this.company) {
+          if (this.item.needed_subscription === null) {
+            return false
+          } else if (this.item.needed_subscription === 'basic' && this.loggedIn) {
+            return false
+          } else if (this.item.needed_subscription === 'premium' && this.user.subscription === 'premium') {
+            return false
+          } else {
+            return true
+          }
+        } else if (this.create) {
+          if (this.user.subscription === 'premium') {
+            return false
+          } else {
+            return true
           }
         }
       },
@@ -101,6 +131,10 @@
         'replaceInvite': 'pg/replaceInvite',
         'removeInvite': 'pg/removeInvite'
       }),
+      activateAuthWindow () {
+        console.log('activating')
+        bus.$emit('activate-auth-window')
+      },
       async rsvpInvitation (accepted) {
         const response = await this.$axios.post('rsvp-invitation', {
           accepted,
@@ -131,6 +165,8 @@
     overflow: hidden
     position: relative
     cursor: pointer
+    box-sizing: border-box
+    margin-bottom: 15px
     &.success
       border: 1px $success-green solid
     &.no-pointer
@@ -139,6 +175,34 @@
       border: 1px #666767 dashed
     &:hover
       background-color: rgba(221, 221, 221, 0.6)
+    &__locked
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      background-color: rgba(228,228,228,0.9)
+      border: 2px white solid
+      z-index: 8
+      text-align: center
+      color: gray
+      font-size: 19px
+      &__icon
+        position: relative
+        top: 40%
+        color: #c1981c
+        opacity: 0.65
+        transition: opacity 80ms linear
+      &:hover .clip__locked__icon
+        opacity: 0.99
+        transition: opacity 170ms linear
+      &__message
+        position: relative
+        top: 44%
+        span
+          font-size: 16px
+          color: black
+          +averia-font()
     &__invite
       position: absolute
       top: 0

@@ -25,7 +25,7 @@
         .invite__content__option__body {{ item.status }}
       .invite__content__option
         .invite__content__option__label INVITATION SENT
-        .invite__content__option__body {{ item.created }}
+        .invite__content__option__body {{ item.created.slice(0,10) }}
       .invite__content__option.center
 </template>
 

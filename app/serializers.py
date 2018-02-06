@@ -76,7 +76,7 @@ class InvitationForExerciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Invitation
-        fields = ('id', 'invitee_s', 'created', 'status', 'enabled')
+        fields = ('id', 'invitee_s', 'created', 'status', 'enabled', 'last_query', 'successful_query')
 
 
 class CustomExerciseSerializer(serializers.ModelSerializer):

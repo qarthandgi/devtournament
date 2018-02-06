@@ -246,8 +246,6 @@
       }
     },
     mounted () {
-      console.log('mounted')
-      console.log(this.user.subscription)
       this.selectedSubscription = this.user.subscription
     },
     updated () {

@@ -14,6 +14,7 @@
   import PageTitles from '@/components/PageTitles'
 
   import {store} from '@/store/index'
+  import {bus} from '@/utils/bus'
 
   export default {
     name: 'app',
@@ -63,9 +64,6 @@
         fullName: 'fullName'
       })
     },
-    created () {
-      this.loadData()
-    },
     methods: {
       async loadData () {
         const loaded = await this.loadPostgres()
@@ -81,6 +79,12 @@
       ...mapMutations({
         setKey: 'setKey'
       })
+    },
+    created () {
+      this.loadData()
+    },
+    mounted () {
+      bus.$on('activate-auth-window', this.toggleAuth)
     }
   }
 </script>
