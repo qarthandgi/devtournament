@@ -20,6 +20,7 @@ require('vue2-toast/lib/toast.css')
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
   axios.defaults.baseURL = 'http://159.89.38.181/'
+  // axios.defaults.baseURL = 'http://localhost:8000/'
 } else {
   axios.defaults.baseURL = 'http://localhost:8000/'
 }
