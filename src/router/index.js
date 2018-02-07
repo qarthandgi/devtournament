@@ -17,7 +17,7 @@ import {isPremium, denyCompanyExercise} from '@/utils/routerUtils'
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/rest-auth/registration/account-confirm-email/:key/',
