@@ -18,6 +18,6 @@ echo 'Done...'
 #echo 'Server runnning on port ' $PORT
 #python manage.py runserver
 
-echo "Server running on port 8001"
-
-uwsgi --socket :8001 --module vuedj.wsgi
+#echo "Server running on port 8001"
+#
+#uwsgi --socket :8001 --module vuedj.wsgi
