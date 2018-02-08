@@ -1,7 +1,7 @@
 <template lang="pug">
   .output
-    .top-panel.darker
-    .bottom-panel.darker
+    .top-panel(:class="[error ? 'danger' : 'darker']")
+    .bottom-panel(:class="[error ? 'danger' : 'darker']")
     .output__body
       table.output__body__table(v-if="availableData")
         thead
@@ -13,6 +13,7 @@
             tr
               template(v-for="item in row")
                 td {{ item }}
+      .output__body__message(v-else-if="error", :class="['error']") {{errorMessage}}
       .output__body__message(v-else) Create a query, and press Cmd + Enter to execute
 </template>
 
@@ -20,7 +21,9 @@
   export default {
     props: {
       headers: {required: true, default: () => { return [] }},
-      rows: {required: true, default: () => { return [] }}
+      rows: {required: true, default: () => { return [] }},
+      error: {required: true, default: false},
+      errorMessage: {required: true, default: ''}
     },
     computed: {
       availableData () {
@@ -40,6 +43,13 @@
       margin: 3px 0px
       position: relative
       /*border: 1px red solid*/
+      &__error
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        border: 1px red solid
       &__message
         text-align: center
         position: relative
@@ -48,6 +58,8 @@
         +averia-font()
         font-size: 14px
         color: rgba(90,90,90,1)
+        &.error
+          color: $danger-red
       &__table
         /*border: 1px green solid*/
         width: 100%

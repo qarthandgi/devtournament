@@ -10,7 +10,9 @@ export function sandboxInit (db) {
 export function tableData () {
   return {
     headers: [],
-    rows: []
+    rows: [],
+    error: false,
+    errorMessage: ''
   }
 }
 

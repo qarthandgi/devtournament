@@ -26,20 +26,29 @@ def index(request):
 
 def execute_sql(db, sql):
     with connections[db.internal_name].cursor() as cursor:
-        cursor.execute(sql)
-        rows = cursor.fetchall()
-        columns = []
-        headers = [x[0] for x in cursor.description]
-        duplicate_header_names = len(headers) > len(set(headers))
-        for i, col in enumerate(cursor.description):
-            col_data = list(map(lambda x: x[i], rows))
-            col = {col[0]: col_data}
-            columns.append(col)
+        rows, headers = [], []
+        duplicate_header_names = False
+        error, error_message = False, ''
+        try:
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+            columns = []
+            headers = [x[0] for x in cursor.description]
+            duplicate_header_names = len(headers) > len(set(headers))
+            for i, col in enumerate(cursor.description):
+                col_data = list(map(lambda x: x[i], rows))
+                col = {col[0]: col_data}
+                columns.append(col)
+        except Exception as e:
+            error = True
+            error_message = str(e)
 
     data = {
       'rows': rows,
       'headers': headers,
-      'duplicates': duplicate_header_names
+      'duplicates': duplicate_header_names,
+      'error': error,
+      'error_message': error_message
     }
 
     return data
@@ -268,6 +277,8 @@ def sandbox_test_query(request):
     resp = {
       'rows': check_datatypes(data['rows']),
       'headers': data['headers'],
+      'error': data['error'],
+      'error_message': data['error_message']
     }
 
     return Response(data=resp, status=200)

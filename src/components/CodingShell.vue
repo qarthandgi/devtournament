@@ -41,6 +41,8 @@
         coding-output(
           :headers="outputHeaders",
           :rows="outputRows",
+          :error="tableData.error",
+          :error-message="tableData.errorMessage"
         )
 </template>
 
@@ -297,6 +299,8 @@
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
+        this.$set(this.tableData, 'error', data.error)
+        this.$set(this.tableData, 'errorMessage', data.error_message)
       },
       async customTestQuery () {
         // TODO: make sure this.dbId and this.lastDbId match
