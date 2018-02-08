@@ -1,7 +1,8 @@
-\c postgres;
-DROP DATABASE IF EXISTS libra_university;
-CREATE DATABASE libra_university OWNER nilesbrandon;
-\c libra_university;
+-- DROP DATABASE IF EXISTS libra_university;
+-- CREATE DATABASE libra_university OWNER yinyang;
+-- \c libra_university;
+
+-- make sure to drop if need be, make sure to create with PROPER OWNER, and make sure connected with yinyang user \conninfo
 
 
 CREATE TYPE season AS ENUM ('spring', 'summer', 'fall');

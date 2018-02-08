@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 
-from .models import User, Database, CompanyExercise, SuccessfulCompanyAttempt
+from .models import User, Database, CompanyExercise, SuccessfulCompanyAttempt, Global
 
 
 admin.site.register(Database)
 admin.site.register(CompanyExercise)
 admin.site.register(SuccessfulCompanyAttempt)
+admin.site.register(Global)
 
 
 @admin.register(User)
