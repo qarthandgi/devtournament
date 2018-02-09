@@ -94,7 +94,7 @@
         },
         showingUserTable: true,
         shiftChangeVisibility: false,
-        nextExerciseVisibility: true,
+        nextExerciseVisibility: false,
         mode: 'view',
         sessionInfo: () => { return {} },
         dbId: -1,
@@ -312,7 +312,7 @@
       },
       testKey (evt) {
         if (evt.keyCode === 13 && (evt.metaKey || evt.ctrlKey)) {
-          bus.$emit('execute-all', {type: 'all'})
+          bus.$emit('execute-sql', {type: 'all'})
           this.executeQuery()
         } else if (evt.keyCode === 13 && evt.altKey) {
           bus.$emit('get-sql-selection')
@@ -348,6 +348,8 @@
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
+        this.$set(this.tableData, 'error', data.error)
+        this.$set(this.tableData, 'errorMessage', data.error_message)
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
       },
@@ -361,6 +363,8 @@
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
+        this.$set(this.tableData, 'error', data.error)
+        this.$set(this.tableData, 'errorMessage', data.error_message)
         if (data.match) {
           this.nextExerciseVisibility = true
           this.confetti()
@@ -385,6 +389,8 @@
         })
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
+        this.$set(this.tableData, 'error', data.error)
+        this.$set(this.tableData, 'errorMessage', data.error_message)
         this.lastDbId = data.db_id
         this.duplicateColumns = data.duplicates
         if (data.match) {

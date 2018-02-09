@@ -298,7 +298,9 @@ def custom_test_query(request):
       'rows': data['rows'],
       'headers': data['headers'],
       'db_id': db_id,
-      'duplicates': data['duplicates']
+      'duplicates': data['duplicates'],
+      'error': data['error'],
+      'error_message': data['error_message']
     }
 
     return Response(data=resp, status=200)
@@ -322,6 +324,8 @@ def company_test_query(request):
       'headers': data['headers'],
       'db_id': db_id,
       'match': match,
+      'error': data['error'],
+      'error_message': data['error_message']
     }
 
     if match:
@@ -379,7 +383,9 @@ def test_query(request):
       'db_id': db_id,
       'duplicates': data['duplicates'],
       'match': match,
-      'invitation_status': inv.status
+      'invitation_status': inv.status,
+      'error': data['error'],
+      'error_message': data['error_message']
     }
 
     return Response(data=resp, status=200)
