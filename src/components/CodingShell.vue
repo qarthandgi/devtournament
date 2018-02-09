@@ -32,6 +32,7 @@
           @update="updateInput",
           @selection-update="updateSqlSelection",
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
+          :company="$route.meta.hasOwnProperty('type') && $route.meta.type === 'company'",
           :sql="sessionInfo.working_query",
 
         )
@@ -44,6 +45,20 @@
           :error="tableData.error",
           :error-message="tableData.errorMessage"
         )
+    next-exercise(
+      :show="false",
+      @close-modal="nextExerciseModalVisibility = false",
+      :current-session-id="sessionInfo.id"
+    )
+    .code__next(:class="{hidden: !nextExerciseVisibility}", @click="goToNextExercise")
+      .top.code__next__message
+        span Next
+      .code__next__arrow
+        i.fas.fa-chevron-right
+      .bottom.code__next__message
+        span Exercise
+      .code__next__close(@click.stop="closeNext")
+        i.far.fa-times-circle
 </template>
 
 <script>
@@ -53,6 +68,7 @@
   import CodingStatus from '@/units/CodingStatus'
   import CodingInfo from '@/components/CodingInfo'
   import InfoAction from '@/units/InfoAction'
+  import NextExercise from '@/components/NextExercise'
 
   import {mapState, mapMutations} from 'vuex'
   import {sandboxInit, tableData} from '@/utils/objects'
@@ -65,7 +81,8 @@
       CodingOutput,
       CodingStatus,
       CodingInfo,
-      InfoAction
+      InfoAction,
+      NextExercise
     },
     data () {
       return {
@@ -77,6 +94,7 @@
         },
         showingUserTable: true,
         shiftChangeVisibility: false,
+        nextExerciseVisibility: true,
         mode: 'view',
         sessionInfo: () => { return {} },
         dbId: -1,
@@ -93,7 +111,8 @@
           name: '',
           database: -1,
           objective: ''
-        }
+        },
+        nextExerciseModalVisibility: false
       }
     },
     computed: {
@@ -199,6 +218,23 @@
         'changeInvitationStatus': 'pg/changeInvitationStatus',
         'changeExerciseCompletion': 'pg/changeExerciseCompletion'
       }),
+      goToNextExercise () {
+        // bus.$emit('pg/completed/exercise')
+        bus.$emit('pg/completed/exercise')
+        const idx = this.exercises.findIndex(x => x.id === this.sessionInfo.id)
+        let newId = -1
+        if (idx === this.exercises.length - 1) {
+          newId = this.exercises[0].id
+        } else {
+          newId = this.exercises[idx + 1].id
+        }
+        this.$router.push({name: 'postgres-exercise', params: {id: newId}})
+        this.closeNext()
+      },
+      closeNext () {
+        this.nextExerciseVisibility = false
+        console.log('CLOSING')
+      },
       newExerciseData (obj) {
         this.$set(this, 'newExercise', obj)
       },
@@ -326,7 +362,9 @@
         this.$set(this.tableData, 'headers', data.headers)
         this.$set(this.tableData, 'rows', data.rows)
         if (data.match) {
+          this.nextExerciseVisibility = true
           this.confetti()
+          this.nextExerciseModalVisibility = true
           this.changeExerciseCompletion({
             exerciseId: data.exercise.id,
             lastSuccessfulCompletion: data.exercise.last_successful_completion
@@ -370,6 +408,10 @@
 </script>
 
 <style lang="sass" scoped>
+  @import '../assets/sass/vars'
+
+  $next-trans: all 180ms linear
+
   .v-enter, .v-leave-to
     transform: translateY(-100%)
   .v-enter-active
@@ -423,4 +465,71 @@
         flex-shrink: 0
         height: 35%
         /*flex-grow: 0*/
+    &__next
+      width: 145px
+      height: 145px
+      position: fixed
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      background-color: rgba(160,160,160,0.4)
+      border: 3px $success-green solid
+      border-radius: 50%
+      cursor: pointer
+      transition: all 30ms linear
+      // box-shadow: 1px 2px 8px 1px rgba(0,200,0,0.75), inset 1px 1px 8px 1px rgba(0,0,0,0.12)
+      &.hidden
+        display: none
+      &:hover
+        border: 3px $dev-blue solid
+        transition: $next-trans
+        // box-shadow: -2px -2px 14px 0px rgba(111,159,174,0.35), inset 1px 1px 8px 1px rgba(111,159,174, 0.55)
+      &:active
+        transition: all 5ms linear
+        box-shadow: inset 1px 1px 8px 1px rgba(85,85,85, 0.45)
+      &__close
+        position: absolute
+        top: -10px
+        right: -10px
+        font-size: 18px
+        opacity: 0.5
+        color: gray
+        transition: all 40ms linear
+        &:hover
+          color: rgba(50,50,50,0.9)
+          opacity: 0.9
+        &:active
+          transition: all 10ms linear
+          color: black
+      &:hover [class$='close']
+        opacity: 0.7
+        transition: $next-trans
+      &__arrow
+        text-align: center
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        font-size: 28px
+        color: $success-green
+        transition: $next-trans
+      &:hover [class$='arrow']
+        color: $dev-blue
+        transition: $next-trans
+      &__message
+        color: $success-green
+        +averia-font()
+        font-size: 24px
+        transition: $next-trans
+        position: absolute
+        left: 50%
+        transform: translateX(-50%)
+        &.top
+          top: 16%
+        &.bottom
+          top: 60%
+      &:hover [class$='message']
+        color: $dev-blue
+        transition: $next-trans
+
 </style>

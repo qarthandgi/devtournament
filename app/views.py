@@ -112,10 +112,12 @@ def to_premium(request):
 
     subscription = stripe.Subscription.retrieve(user.stripe_subscription_id)
     modified_subscription = stripe.Subscription.modify(user.stripe_subscription_id,
-                               items=[{
-                                 'id': subscription['items']['data'][0].id,
-                                 'plan': 'premium-subscription'
-                               }])
+                                                       items=[{
+                                                         'id': subscription['items']['data'][0].id,
+                                                         'plan': 'premium-subscription'
+                                                       }],
+                                                       prorate=False
+                                                       )
     pprint(modified_subscription)
     user.stripe_current_period_start = modified_subscription['current_period_start']
     user.stripe_current_period_end = modified_subscription['current_period_end']

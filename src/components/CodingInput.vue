@@ -5,11 +5,11 @@
     .input__editor
       editor(
         :content="l_sql",
-        :sync="custom",
+        :sync="custom || company",
         :width="'100%'",
         :height="'100%'",
         :lang="'sql'",
-        @editor-update="$emit('update', $event)",
+        @editor-update="update($event)",
         @selection-update="$emit('selection-update', $event)"
       )
     .input__overlay(v-if="overlayVisibility && custom")
@@ -38,6 +38,7 @@
     },
     props: {
       custom: {required: false, default: false},
+      company: {required: false, default: false},
       sql: {required: false, default: ''}
     },
     data () {
@@ -52,6 +53,10 @@
       }
     },
     methods: {
+      update (event) {
+        this.l_sql = event
+        this.$emit('update', event)
+      },
       selectOption (show) {
         this.l_sql = show ? this.sql : ''
         this.originalQueryVisibility = show
@@ -63,9 +68,13 @@
       console.log(query)
     },
     mounted () {
+      console.log('MOUNTED')
       if (this.custom) {
         this.overlayVisibility = true
       }
+      bus.$on('pg/completed/exercise', () => {
+        this.$set(this, 'l_sql', '')
+      })
       bus.$on('pg/showInvitationQuery', (obj) => {
         console.log(obj.query)
         this.l_sql = obj.query

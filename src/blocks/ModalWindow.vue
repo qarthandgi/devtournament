@@ -1,6 +1,6 @@
 <template lang="pug">
   transition(name="change-this-to-garage-to-enable")
-    .modal
+    .modal(:style="{width}")
       .top-panel(:class="{success: successPanels}")
       .bottom-panel(:class="{success: successPanels}")
       slot
@@ -9,7 +9,8 @@
 <script>
   export default {
     props: {
-      successPanels: {required: false, default: false}
+      successPanels: {required: false, default: false},
+      width: {required: false, default: null}
     }
   }
 </script>

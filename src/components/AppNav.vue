@@ -47,7 +47,7 @@
     position: fixed
     width: 100%
     height: 30px
-    background-color: rgba(192,192,192,0.3)
+    background-color: rgba(0, 0, 0, 0.44)
     &__con
       position: relative
       margin: 0 auto
