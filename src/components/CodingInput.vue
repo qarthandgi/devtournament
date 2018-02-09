@@ -76,7 +76,6 @@
         this.$set(this, 'l_sql', '')
       })
       bus.$on('pg/showInvitationQuery', (obj) => {
-        console.log(obj.query)
         this.l_sql = obj.query
         this.showingInvitationQuery = true
         this.invitationType = obj.type
