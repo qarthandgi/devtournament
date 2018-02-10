@@ -13,7 +13,7 @@
             tr
               template(v-for="item in row")
                 td {{ item }}
-      .output__body__message(v-else-if="error", :class="['error']") {{errorMessage}}
+      .output__body__message(v-else-if="error", :class="['error']", v-html="errorMessage")
       .output__body__message(v-else) Create a query, and press Cmd + Enter to execute
 </template>
 
@@ -51,9 +51,10 @@
         height: 100%
         border: 1px red solid
       &__message
-        text-align: center
+        text-align: left
+        line-height: 20px
         position: relative
-        margin-top: 25px
+        margin-top: 30px
         transform: translateY(-50%)
         +averia-font()
         font-size: 14px
