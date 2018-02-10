@@ -51,16 +51,20 @@
         height: 100%
         border: 1px red solid
       &__message
-        text-align: left
-        line-height: 20px
+        text-align: center
         position: relative
-        margin-top: 30px
+        margin-top: 25px
         transform: translateY(-50%)
         +averia-font()
         font-size: 14px
         color: rgba(90,90,90,1)
         &.error
           color: $danger-red
+          text-align: left
+          line-height: 20px
+          position: relative
+          margin-top: 60px
+          white-space: pre
       &__table
         /*border: 1px green solid*/
         width: 100%
