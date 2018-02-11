@@ -34,7 +34,7 @@
           :custom="$route.meta.hasOwnProperty('type') && $route.meta.type === 'custom'",
           :company="$route.meta.hasOwnProperty('type') && $route.meta.type === 'company'",
           :sql="sessionInfo.working_query",
-
+          :public-sandbox="$route.meta.hasOwnProperty('type') && $route.meta.type === 'public'"
         )
       .code__io__status
         coding-status
@@ -188,6 +188,9 @@
             this.sessionInfo = sandboxInit(db.full_name)
             this.shiftChangeVisibility = false
             this.sessionType = 'sandbox'
+            if (val.meta.type && val.meta.type === 'public') {
+              this.setPublicSandbox(val.params.publicId)
+            }
           } else if (mode === 'exercise') {
             if (id === 'new') {
               this.mode = 'edit'
@@ -218,6 +221,13 @@
         'changeInvitationStatus': 'pg/changeInvitationStatus',
         'changeExerciseCompletion': 'pg/changeExerciseCompletion'
       }),
+      async setPublicSandbox (publicId) {
+        console.log('IN PUBLIC SANDBOX: ' + publicId)
+        const {data} = await this.$axios.post('get-public/', {
+          id: publicId
+        })
+        bus.$emit('pg/received/publicSandbox', {query: data.query})
+      },
       goToNextExercise () {
         // bus.$emit('pg/completed/exercise')
         bus.$emit('pg/completed/exercise')

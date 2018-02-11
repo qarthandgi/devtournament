@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 from .models import User, Database, CompanyExercise, UserExercise, Invitation, IN_PROGRESS, SUCCESSFULLY_COMPLETED
-from .models import SuccessfulCompanyAttempt, Global, SubscriptionChange
+from .models import SuccessfulCompanyAttempt, Global, SubscriptionChange, PublicSandbox
 from .serializers import CompanyExerciseSerializer, CustomExerciseSerializer, InvitationSerializer, InvitationForExerciseSerializer
 
 from pprint import pprint
@@ -389,6 +389,34 @@ def test_query(request):
     }
 
     return Response(data=resp, status=200)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated,))
+def create_public(request):
+    query = request.data['sql']
+
+    ps = PublicSandbox(query=query, author=request.user)
+    ps.save()
+
+    return Response(data={'id': ps.id})
+
+
+@api_view(['POST'])
+def get_public(request):
+    ps_id = request.data['id']
+    author = ''
+    error = False
+    try:
+        ps = PublicSandbox.objects.get(pk=ps_id)
+        query = ps.query
+        author = ps.author.email
+    except Exception as e:
+        query = ''
+        error = True
+
+    return Response(data={'query': query, 'error': error})
+
 
 
 @api_view(['POST'])

@@ -5,7 +5,7 @@
     .input__editor
       editor(
         :content="l_sql",
-        :sync="custom || company",
+        :sync="custom || company || publicSandbox",
         :width="'100%'",
         :height="'100%'",
         :lang="'sql'",
@@ -39,7 +39,8 @@
     props: {
       custom: {required: false, default: false},
       company: {required: false, default: false},
-      sql: {required: false, default: ''}
+      sql: {required: false, default: ''},
+      publicSandbox: {required: false, default: false}
     },
     data () {
       return {
@@ -55,6 +56,7 @@
     methods: {
       update (event) {
         this.l_sql = event
+        bus.$emit('pg/updated/CodingInput')
         this.$emit('update', event)
       },
       selectOption (show) {
@@ -74,6 +76,9 @@
       }
       bus.$on('pg/completed/exercise', () => {
         this.$set(this, 'l_sql', '')
+      })
+      bus.$on('pg/received/publicSandbox', (obj) => {
+        this.$set(this, 'l_sql', obj.query)
       })
       bus.$on('pg/showInvitationQuery', (obj) => {
         this.l_sql = obj.query

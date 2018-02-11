@@ -43,7 +43,7 @@ const router = new Router({
       component: HomePage
     },
     {
-      path: '/postgres',
+      path: '/postgresql',
       component: PostgresShell,
       children: [
         {
@@ -57,6 +57,12 @@ const router = new Router({
             }
             return {verified: verified}
           }
+        },
+        {
+          path: 'sandbox/:id/public/:publicId',
+          name: 'postgres-sandbox-public',
+          component: CodingShell,
+          meta: {mode: 'sandbox', type: 'public'}
         },
         {
           path: 'sandbox/:id',

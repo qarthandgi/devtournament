@@ -32,6 +32,23 @@
         .info__details__item__content
           span(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
+      .info__details__item.idi-public
+        .info__details__item__label PUBLIC LINK
+        .info__details__item__content
+          .info__details__item__content__public-button(v-if="publicButtonVisibility", @click="createPublic")
+            span.unhovered Create Public Link
+            span.hovered
+              template(v-if="loggedIn && isPremium")
+                span Create Public Link
+              template(v-else-if="loggedIn && !isPremium")
+                span(style="color: #c1981c;")
+                  i.fas.fa-lock-alt
+                span &nbsp; Upgrade to Premium
+              template(v-else)
+                span(style="color: #c1981c;")
+                  i.fas.fa-lock-alt
+                span &nbsp; Login or Register
+          input.info__details__item__content__public-link(v-else, :value="publicUrl")
       .info__details__item.idi-requirements(v-if="mode === 'edit' || custom || invitation || sessionType === 'company'")
         .info__details__item__label OUTPUT REQUIREMENTS
         .info__details__item__content
@@ -65,6 +82,7 @@
   import InviteClip from '@/units/InviteClip'
 
   import {mapState} from 'vuex'
+  import {bus} from '@/utils/bus'
 
   export default {
     components: {
@@ -96,12 +114,16 @@
         },
         definedHeaders: [],
         definedColumns: [],
-        outputColumnsVisibility: false
+        outputColumnsVisibility: false,
+        publicUrl: '',
+        publicButtonVisibility: true
       }
     },
     computed: {
       ...mapState({
-        databases: state => state.pg.databases
+        databases: state => state.pg.databases,
+        loggedIn: state => state.user.loggedIn,
+        isPremium: state => state.user.user.subscription === 'premium'
       }),
       toBottomClass () {
         return this.sessionType === 'custom-create'
@@ -158,6 +180,21 @@
       }
     },
     methods: {
+      async createPublic () {
+        if (this.loggedIn && this.isPremium) {
+          const {data} = await this.$axios.post('create-public/', {
+            sql: this.sql
+          })
+          const sharedId = data.id
+          const url = 'https://devtournament.com/postgresql/sandbox/' + this.$route.params.id.toString() + '/public/' + sharedId.toString()
+          this.publicUrl = url
+          this.publicButtonVisibility = false
+        } else if (this.loggedIn && !this.isPremium) {
+          bus.$emit('activate-auth-window')
+        } else {
+          bus.$emit('activate-auth-window')
+        }
+      },
       createExercise () {
         if (this.invalidCreation) {
           return false
@@ -179,6 +216,12 @@
     },
     mounted () {
       this.selectDb(this.databases[0])
+      bus.$on('pg/received/publicSandbox', (obj) => {
+        this.authorForPublic = true
+      })
+      bus.$on('pg/updated/CodingInput', () => {
+        this.publicButtonVisibility = true
+      })
     }
   }
 </script>
@@ -225,6 +268,39 @@
           border-radius: 5px
           /*overflow: hidden*/
           /*border: 1px red solid*/
+          &__public-button
+            width: 155px
+            border-radius: 5px
+            padding: 7px
+            height: 17px
+            border: 1px $dev-blue solid
+            color: $dev-blue
+            font-size: 14px
+            text-align: center
+            transition: all 140ms linear
+            cursor: pointer
+            position: relative
+            overflow: hidden
+            &:hover
+              color: white
+              border: 1px white solid
+              transition: all 140ms linear
+            .hovered
+              display: none
+            &:hover .unhovered
+              display: none
+            &:hover .hovered
+              display: block
+          &__public-link
+            width: 90%
+            height: 25px
+            background-color: transparent
+            outline: none
+            border: 1px $dev-blue solid
+            color: $dev-blue
+            +averia-font()
+            font-size: 14px
+            padding-left: 3px
           &__toggle
             color: $dev-blue
             font-size: 12px

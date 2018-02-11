@@ -195,6 +195,11 @@ class Exercise(models.Model):
         abstract = True
 
 
+class PublicSandbox(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    query = models.TextField()
+
+
 class CompanyExercise(Exercise):
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default=NOVICE)
     new = models.BooleanField(default=False)
@@ -210,13 +215,9 @@ class CompanyExercise(Exercise):
         non_premium_exercises = CompanyExercise.objects.filter(enabled=True, needed_subscription=BASIC) | \
             CompanyExercise.objects.filter(enabled=True, needed_subscription=NONE)
         non_premium_exercises = non_premium_exercises.count()
-        print('OK START DEBUGGING')
-        print(non_premium_exercises)
         premium_exercises = CompanyExercise.objects.filter(enabled=True).count()
-        print(premium_exercises)
         prop1 = Global.objects.get(name='non_premium_exercises')
         pprint(prop1)
-        print(prop1.name)
         prop1.int_value = non_premium_exercises
         prop1.save()
         prop2 = Global.objects.get(name='premium_exercises')

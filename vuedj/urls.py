@@ -32,6 +32,9 @@ urlpatterns = [
     url(r'^to-premium/', views.to_premium),
     url(r'^downgrade-plan/', views.downgrade_plan),
 
+    url(r'^create-public/', views.create_public),
+    url(r'^get-public/', views.get_public),
+
     url(r'^sandbox-test-query/', views.sandbox_test_query),
     url(r'^company-test-query/', views.company_test_query),
     url(r'^custom-test-query/', views.custom_test_query),
