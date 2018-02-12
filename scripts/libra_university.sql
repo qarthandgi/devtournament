@@ -32,7 +32,7 @@ CREATE TABLE department (
 );
 
 
-CREATE TYPE rank AS ENUM ('teaching assistant', 'instructor', 'assistant professor', 'associate professor', 'professor');
+CREATE TYPE rank AS ENUM ('instructor', 'assistant professor', 'associate professor', 'professor');
 CREATE TABLE faculty (
   id            serial PRIMARY KEY,
   profile_id    INTEGER UNIQUE REFERENCES profile (id),
@@ -66,16 +66,17 @@ CREATE TABLE student (
   scholarship   NUMERIC(8, 2),
   department_id INTEGER REFERENCES department (id),
   degree_type   degree_type,
-  start_semester  INTEGER REFERENCES semester (id)
+  start_semester_id  INTEGER REFERENCES semester (id)
 );
 
 CREATE TYPE issue_action AS
-  ENUM ('fired', 'suspended without pay', 'suspended with pay', 'reprimand', 'fine', 'warning', 'no description given');
+  ENUM ('fired', 'suspended without pay', 'suspended with pay', 'reprimanded', 'monetary fine', 'warning', 'no action taken');
 CREATE TABLE issue (
   id            serial PRIMARY KEY,
   offender_id   INTEGER REFERENCES profile (id),
   offendee_id   INTEGER REFERENCES profile (id),
-  issue_description VARCHAR(1000) DEFAULT 'no description given'
+  issue_description VARCHAR(1000) DEFAULT 'no description given',
+  issue_action  issue_action
 );
 
 CREATE TYPE course_type AS ENUM ('core', 'elective');
@@ -1972,7 +1973,7 @@ insert into course (id, department_id, number, name, credits, type) values (68, 
 
 -- CS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (201, 'Hannah', 'Townes', 'h.townes@libra.edu', 'male', '2000-10-19', 36949);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (1, 201, 3.23, 6000.00, 1, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (1, 201, 3.23, 6000.00, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2003,7 +2004,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- CS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (203, 'Virgie', 'Woodwin', 'v.woodwin@libra.edu', 'male', '1962-02-08', 37284);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (2, 203, 3.28, null, 1, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (2, 203, 3.28, null, 1, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2034,7 +2035,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- CS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (153, 'Kaylyn', 'MacClenan', 'k.macclenan@libra.edu', 'female', '1980-07-08', 35906);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (3, 153, 3.51, 8000.00, 1, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (3, 153, 3.51, 8000.00, 1, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2065,7 +2066,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- CS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (108, 'Lloyd', 'Cranmer', 'l.cranmer@libra.edu', 'male', '2001-10-21', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (4, 108, 3.31, 1400.00, 1, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (4, 108, 3.31, 1400.00, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2096,7 +2097,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- CS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (105, 'Jacqui', 'Densey', 'j.densey@libra.edu', 'female', '1968-11-02', 37632);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (5, 105, 3.71, null, 1, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (5, 105, 3.71, null, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2127,7 +2128,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MUS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (267, 'Marla', 'Gorke', 'm.gorke@libra.edu', 'female', '2008-01-22', 35940);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (6, 267, 3.83, 800.00, 2, 'Associate', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (6, 267, 3.83, 800.00, 2, 'Associate', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2158,7 +2159,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MUS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (158, 'Kendra', 'Folan', 'k.folan@libra.edu', 'female', '1980-09-20', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (7, 158, 3.83, null, 2, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (7, 158, 3.83, null, 2, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2189,7 +2190,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MUS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (139, 'Hermann', 'Alejandre', 'h.alejandre@libra.edu', 'male', '1968-02-07', 36061);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (8, 139, 3.22, null, 2, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (8, 139, 3.22, null, 2, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2220,7 +2221,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MUS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (344, 'Billy', 'Altree', 'b.altree@libra.edu', 'female', '1987-01-25', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (9, 344, 3.92, 9000.00, 2, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (9, 344, 3.92, 9000.00, 2, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2235,7 +2236,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MUS Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (91, 'Claudius', 'Volke', 'c.volke@libra.edu', 'male', '1994-12-15', 36134);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (10, 91, 3.22, null, 2, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (10, 91, 3.22, null, 2, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2266,7 +2267,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (20, 'Levin', 'Ewens', 'l.ewens@libra.edu', 'male', '1997-09-21', 37419);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (11, 20, 3.10, 2000.00, 3, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (11, 20, 3.10, 2000.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2297,7 +2298,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (401, 'Mirelle', 'Yewdall', 'm.yewdall@libra.edu', 'female', '1999-02-17', 37407);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (12, 401, 3.22, 2900.00, 3, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (12, 401, 3.22, 2900.00, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2328,7 +2329,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (540, 'Roddie', 'McElory', 'r.mcelory@libra.edu', 'male', '1944-01-07', 36169);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (13, 540, 3.22, 2900.00, 3, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (13, 540, 3.22, 2900.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2359,7 +2360,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (766, 'Marris', 'Belliss', 'm.belliss@libra.edu', 'female', '1996-06-21', 38010);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (14, 766, 3.10, null, 3, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (14, 766, 3.10, null, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2390,7 +2391,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (262, 'Tiffanie', 'MacAnellye', 't.macanellye@libra.edu', 'female', '1961-09-18', 37018);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (15, 262, 3.85, null, 3, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (15, 262, 3.85, null, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2421,7 +2422,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (307, 'Eileen', 'Howgill', 'e.howgill@libra.edu', 'female', '1975-06-13', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (16, 307, 3.85, null, 4, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (16, 307, 3.85, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2452,7 +2453,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (624, 'Germana', 'Bourcq', 'g.bourcq@libra.edu', null, '1956-11-08', 37435);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (17, 624, 3.54, null, 4, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (17, 624, 3.54, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2483,7 +2484,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (415, 'Diego', 'Archard', 'd.archard@libra.edu', 'male', '1955-10-10', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (18, 415, 3.42, null, 4, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (18, 415, 3.42, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2514,7 +2515,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (568, 'Farly', 'Egan', 'f.egan@libra.edu', 'male', '1995-01-12', 37619);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (19, 568, 3.58, null, 4, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (19, 568, 3.58, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2545,7 +2546,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (393, 'Rory', 'Bush', 'r.bush@libra.edu', 'male', '1950-01-12', 36553);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (20, 393, 3.92, null, 4, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (20, 393, 3.92, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2576,7 +2577,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (674, 'Ulrich', 'Achurch', 'u.achurch@libra.edu', 'male', '1999-09-04', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (21, 674, 2.92, null, 5, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (21, 674, 2.92, null, 5, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2607,7 +2608,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (248, 'Mathian', 'Hargate', 'm.hargate@libra.edu', 'male', '1932-12-06', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (22, 248, 3.92, null, 5, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (22, 248, 3.92, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2638,7 +2639,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (835, 'Miguelita', 'Gillibrand', 'm.gillibrand@libra.edu', 'female', '1997-04-09', null);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (23, 835, 3.64, null, 5, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (23, 835, 3.64, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2669,7 +2670,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1962-09-14', 37122);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (24, 490, 3.42, 7300.00, 5, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (24, 490, 3.42, 7300.00, 5, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2700,7 +2701,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- ECON Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (43, 'Eryn', 'Paddemore', 'e.paddemore@libra.edu', 'female', '1966-03-25', 36309);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (25, 43, 3.84, null, 5, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (25, 43, 3.84, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2731,7 +2732,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- LING Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (147, 'Sascha', 'South', 's.south@libra.edu', 'male', '1939-04-12', 36774);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (26, 147, 3.44, 8900.00, 3, 'Bachelor of Science', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (26, 147, 3.44, 8900.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
@@ -2762,7 +2763,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 -- MATH Student
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1959-03-05', 35877);
-insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester) values (27, 347, 3.72, null, 4, 'Bachelor of Arts', 1);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (27, 347, 3.72, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1

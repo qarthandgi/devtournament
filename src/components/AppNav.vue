@@ -43,7 +43,7 @@
 <style lang="sass" scoped>
   @import '../assets/sass/vars'
   .nav
-    z-index: 10
+    z-index: 40
     position: fixed
     width: 100%
     height: 30px

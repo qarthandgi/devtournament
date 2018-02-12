@@ -1,5 +1,5 @@
 <template lang="pug">
-  transition(name="change-this-to-garage-to-enable")
+  transition(name="garage")
     .modal(:style="{width}")
       .top-panel(:class="{success: successPanels}")
       .bottom-panel(:class="{success: successPanels}")

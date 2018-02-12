@@ -5,6 +5,7 @@
     router-view(v-if="dataLoaded")
     page-titles
     login-register(:show="authVisibility", @toggle-auth="toggleAuth")
+    welcome-info-modal
 </template>
 
 <script>
@@ -12,6 +13,7 @@
   import AppNav from '@/components/AppNav'
   import LoginRegister from '@/components/LoginRegister'
   import PageTitles from '@/components/PageTitles'
+  import WelcomeInfoModal from '@/components/WelcomeInfoModal'
 
   import {store} from '@/store/index'
   import {bus} from '@/utils/bus'
@@ -21,7 +23,8 @@
     components: {
       AppNav,
       LoginRegister,
-      PageTitles
+      PageTitles,
+      WelcomeInfoModal
     },
     data () {
       return {

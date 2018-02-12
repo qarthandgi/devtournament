@@ -9,7 +9,8 @@ function initialState () {
     invitations: [],
     exercises: [],
     premiumExercises: 0,
-    nonPremiumExercises: 0
+    nonPremiumExercises: 0,
+    showWelcome: false
   }
 }
 
@@ -27,6 +28,9 @@ export default {
     }
   },
   mutations: {
+    setShowWelcome (state, payload) {
+      state.showWelcome = payload.state
+    },
     setData (state, payload) {
       Vue.set(state, 'databases', (payload.databases || []).sort((a, b) => a.id - b.id))
       Vue.set(state, 'customExercises', (payload.custom_exercises || []).sort((a, b) => a.added - b.added))

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import axios from 'axios'
+import VueCookies from 'vue-cookies'
 // import Hello from '@/components/Hello'
 // import Login from '@/components/Login'
 import PasswordReset from '@/components/PasswordReset'
@@ -45,6 +46,7 @@ const router = new Router({
     {
       path: '/postgresql',
       component: PostgresShell,
+      name: 'postgres-base',
       children: [
         {
           path: '',
@@ -130,9 +132,15 @@ router.beforeEach(async (to, from, next) => {
   const LAYOUT_ONE = [
     'postgres-home'
   ]
-  if (to.matched.some(x => x.name === 'postgres')) {
+  console.log(to.matched)
+  if (to.matched.some(x => x.name === 'postgres-base')) {
     if (store.state.app.subject !== 'postgres') {
       store.commit('app/setSubject', {subject: 'postgres'})
+    }
+    if (VueCookies.isKey('bh')) {
+    } else {
+      VueCookies.set('bh', 1, Infinity, '/')
+      store.commit('pg/setShowWelcome', {state: true})
     }
   }
   if (premiumNeeded.includes(to.name) && !isPremium()) {
