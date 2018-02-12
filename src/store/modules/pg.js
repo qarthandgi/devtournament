@@ -28,6 +28,9 @@ export default {
     }
   },
   mutations: {
+    addCustomExercise (state, payload) {
+      state.customExercises.push(payload)
+    },
     setShowWelcome (state, payload) {
       state.showWelcome = payload.state
     },
@@ -38,7 +41,6 @@ export default {
       Vue.set(state, 'exercises', (payload.exercises || []).sort((a, b) => a.position - b.position))
       state.premiumExercises = payload.premium_exercises
       state.nonPremiumExercises = payload.non_premium_exercises
-      console.log(state)
       state.loaded = true
     },
     // replaceInvite will be the top level invitations, replaceInvitation will be those inside customExercises
@@ -73,8 +75,6 @@ export default {
     loadPostgres ({state, commit, rootState}) {
       return new Promise(async (resolve, reject) => {
         let {data} = await axios.get('load-postgres/')
-        console.log('ABOUT TO SET DATA')
-        console.log(data)
         commit('setData', data)
         resolve(true)
       })

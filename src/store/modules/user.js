@@ -81,7 +81,6 @@ export default {
         })
         if (response.status === 200) {
           const {data} = response
-          console.log(data)
           VueCookies.set('tokenKey', data.key, '5d', '/')
           commit('setTokenKey', data)
           dispatch('getUser')
@@ -89,16 +88,13 @@ export default {
           const resp = await axios.get('user-logged-in/')
           resolve({success: true, firstTime: resp.data.first_time})
         } else {
-          console.log('response code ' + response.status)
-          console.log('wrong credentials')
-          resolve({success: false})
+          resolve({success: false, data: response.data})
         }
       })
     },
     logout ({commit, dispatch}, payload) {
       return new Promise(async (resolve, reject) => {
-        const response = await axios.post('rest-auth/logout/')
-        console.log(response)
+        await axios.post('rest-auth/logout/')
         VueCookies.remove('tokenKey', '/')
         commit('clearData')
         router.push({name: 'postgres-home'})
@@ -122,12 +118,9 @@ export default {
         })
         const {data} = response
         if (response.status === 201) {
-          console.log('registered')
-          resolve(true)
+          resolve({success: true})
         } else {
-          console.log('response code ' + response.status)
-          console.log(data)
-          resolve(false)
+          resolve({success: false, data})
         }
       })
     }

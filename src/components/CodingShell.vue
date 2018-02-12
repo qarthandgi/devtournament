@@ -219,7 +219,8 @@
     methods: {
       ...mapMutations({
         'changeInvitationStatus': 'pg/changeInvitationStatus',
-        'changeExerciseCompletion': 'pg/changeExerciseCompletion'
+        'changeExerciseCompletion': 'pg/changeExerciseCompletion',
+        'addCustomExercise': 'pg/addCustomExercise'
       }),
       async setPublicSandbox (publicId) {
         console.log('IN PUBLIC SANDBOX: ' + publicId)
@@ -243,7 +244,6 @@
       },
       closeNext () {
         this.nextExerciseVisibility = false
-        console.log('CLOSING')
       },
       newExerciseData (obj) {
         this.$set(this, 'newExercise', obj)
@@ -293,7 +293,10 @@
             ...exercise,
             sql: this.sql
           })
+          console.log('create exercise')
           console.log(data)
+          this.addCustomExercise(data.exercise)
+          this.$router.push({name: 'postgres-custom', params: {id: data.exercise.id}})
         }
       },
       setDb (id) {

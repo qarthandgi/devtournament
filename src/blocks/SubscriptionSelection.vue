@@ -53,6 +53,14 @@
               img(:src="checkSource")
           .ss__table__body__row__item.description
             span Be invited to custom exercises that you can complete and prove your skills to the creator
+        .ss__table__body__row
+          .ss__table__body__row__item.name
+            span Public Links
+          .ss__table__body__row__item.qualify
+            span.check(v-show="premiumSelected")
+              img(:src="checkSource")
+          .ss__table__body__row__item.description
+            span Share your queries in our sandbox environments with anyone that you provide the public link to
     .ss__footer(v-if="false")
       .ss__footer__button(v-if="oppositeSelected", @click="changeSubscription")
         span Convert to&nbsp;
@@ -76,8 +84,8 @@
             .form-row
               label(for="card-element")
               div#card-element(ref="card-element")
-              div#card-errors(role="alert")
-            button Upgrade to Premium&nbsp;
+              div#card-errors(role="alert") {{ stripeErrorMessage }}
+            button(:disabled="premiumButtonDisabled") Upgrade to Premium&nbsp;
               span.fas.fa-angle-right
 </template>
 
@@ -93,7 +101,9 @@
     data () {
       return {
         animatedNumber: 0,
-        card: null
+        card: null,
+        stripeErrorMessage: '',
+        premiumButtonDisabled: false
       }
     },
     computed: {
@@ -156,6 +166,10 @@
         this.setSlatedForDowngrade({slatedForDowngrade: true})
       },
       async submitStripe (event) {
+        if (this.premiumButtonDisabled === true) {
+          return
+        }
+        this.premiumButtonDisabled = true
         event.preventDefault()
 
         const {source, error} = await this.$stripe.createSource(this.card)
@@ -169,7 +183,7 @@
           })
           this.changeSubscription({subscription: 'premium'})
           this.setSubscriptionEnd({subscriptionEnd: data['current_period_end']})
-          console.log('succeeded')
+          this.premiumButtonDisabled = false
         }
       },
       chooseSubscription (val) {
@@ -198,6 +212,12 @@
       }
       this.card = this.$elements.create('card', {style})
       this.card.mount(this.$refs['card-element'])
+
+      this.card.addEventListener('change', ({error}) => {
+        if (error) {
+          this.stripeErrorMessage = error.message
+        }
+      })
     },
     beforeDestroy () {
       this.card.destroy()
@@ -361,12 +381,19 @@
           label
             font-size: 12px
             text-align: left
+          #card-errors
+            position: absolute
+            bottom: -25px
+            left: 130px
+            text-align: right
+            color: $danger-red
+            font-size: 15px
         button
           width: 160px
           border: 1px #c1981c solid
           cursor: pointer
           background-color: transparent
-          height: 100%
+          height: 40px
           +averia-font()
           font-size: 14px
           text-align: center
@@ -375,5 +402,11 @@
           right: 0
           &:hover
             background-color: transparentize(#c1981c, 0.9)
+          &[disabled='disabled']
+            color: gray
+            border: 1px gray solid
+            cursor: not-allowed
+            &:hover
+              background-color: transparent
 
 </style>

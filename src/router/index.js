@@ -24,13 +24,10 @@ const router = new Router({
       path: '/rest-auth/registration/account-confirm-email/:key/',
       name: 'verify-email',
       async beforeEnter (to, from, next) {
-        console.log(to.params.key)
-        const resp = await axios.post('rest-auth/registration/verify-email/', {
+        await axios.post('rest-auth/registration/verify-email/', {
           key: to.params.key
         })
-        console.log('THIS IS RESPONSE')
-        console.log(resp)
-        // next()
+        // TODO: entering incorrect verify key
         store.commit('user/setFinishVerification', {finishVerification: true})
         router.replace({name: 'postgres-home'})
         // if (resp.data.status === 200) {
@@ -132,7 +129,6 @@ router.beforeEach(async (to, from, next) => {
   const LAYOUT_ONE = [
     'postgres-home'
   ]
-  console.log(to.matched)
   if (to.matched.some(x => x.name === 'postgres-base')) {
     if (store.state.app.subject !== 'postgres') {
       store.commit('app/setSubject', {subject: 'postgres'})
@@ -144,7 +140,6 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   if (premiumNeeded.includes(to.name) && !isPremium()) {
-    console.log('I AM IF')
     next(false)
   } else if (await denyCompanyExercise(to)) {
     router.push({name: 'postgres-home'})

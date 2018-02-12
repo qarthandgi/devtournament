@@ -70,7 +70,6 @@
       console.log(query)
     },
     mounted () {
-      console.log('MOUNTED')
       if (this.custom) {
         this.overlayVisibility = true
       }

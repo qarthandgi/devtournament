@@ -11,6 +11,8 @@
       @blur="keyPressed"
     )
     label(:for="id", v-if="!hideLabel") {{name}}
+    .input-c__error
+      span {{error[0]}}
 </template>
 
 <script>
@@ -22,7 +24,8 @@
       reuseKey: {required: false, default: null},
       hideLabel: {required: false, default: false},
       placeholder: {required: false, default: ''},
-      fontSize: {required: false}
+      fontSize: {required: false},
+      error: {required: false, default: ''}
     },
     data () {
       return {
@@ -73,4 +76,12 @@
       bottom: -18px
       +text-normal-white(0.75)
       font-size: 13px
+    &__error
+      position: absolute
+      left: 70px
+      right: -150px
+      bottom: -18px
+      font-size: 13px
+      color: $danger-red
+      text-align: left
 </style>

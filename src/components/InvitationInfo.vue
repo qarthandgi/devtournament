@@ -62,9 +62,7 @@
         removeInvitation: 'pg/removeInvitation'
       }),
       showQuery (type) {
-        console.log('in method')
         if (type === 'last') {
-          console.log('in last')
           bus.$emit('pg/showInvitationQuery', {query: this.invitation.last_query, type: 'last', email: this.invitation.invitee_s})
         } else if (type === 'successful') {
           bus.$emit('pg/showInvitationQuery', {query: this.invitation.successful_query, type: 'successful', email: this.invitation.invitee_s})
@@ -100,7 +98,6 @@
           invitationId: this.invitation.id,
           customExerciseId: this.customExerciseId
         })
-        console.log(response)
         this.replaceInvitation({invitation: response.data, customExerciseId: this.customExerciseId})
       }
     }

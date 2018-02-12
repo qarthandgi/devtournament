@@ -84,6 +84,7 @@ axios.interceptors.request.use(function (config) {
 
 axios.defaults.validateStatus = function (status) {
   return (status >= 200 && status < 300) || ([400, 401].indexOf(status) > -1)
+  // return (status >= 200 && status < 300)
 }
 
 Vue.use(VueCookies)

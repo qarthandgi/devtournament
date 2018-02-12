@@ -946,7 +946,6 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (894, 'Yard', 'Denacamp', 'y.denacamp@libra.edu', 'male', '1936-02-03', 37937);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (895, 'Kristian', 'Gildersleaves', 'k.gildersleaves@libra.edu', 'male', '1982-10-27', 37966);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (896, 'Ulrick', 'Watchorn', 'u.watchorn@libra.edu', 'male', '1930-03-28', 35711);
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (897, 'Bendick', 'Shurey', 'b.shurey@libra.edu', 'male', '1970-07-04', 37960);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (898, 'Jilli', 'Howat', 'j.howat@libra.edu', 'female', '1971-07-18', 36270);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (899, 'Elizabeth', 'Pelosi', 'e.pelosi@libra.edu', null, '1971-08-24', null);
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (900, 'Rozina', 'Mazzilli', 'r.mazzilli@libra.edu', null, '1936-12-17', 35391);
@@ -2767,27 +2766,53 @@ insert into student (id, profile_id, gpa, scholarship, department_id, degree_typ
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
-    (313, 204, 27, 82.55, 1), -- MATH 102 - Calculus I
-    (314, 110, 27, 91.23, 3), -- LA 102 - Success at Libra University
+    (432, 204, 27, 82.55, 1), -- MATH 102 - Calculus I
+    (433, 110, 27, 91.23, 2), -- LA 102 - Success at Libra University
     -- SPRING 2014 - Semester 2
-    (315, 208, 27, 94.56, 0), -- MATH 212 - Calculus II
-    (316, 126, 27, 82.48, 0), -- LA 212 - Ancient Religions and Philosophies
+    (434, 208, 27, 94.56, 0), -- MATH 212 - Calculus II
+    (435, 126, 27, 82.48, 0), -- LA 212 - Ancient Religions and Philosophies
     -- FALL 2014 - Semester 3
-    (317, 213, 27, 91.24, 0), -- MATH 242 - Discrete Mathematics
-    (318, 123, 27, 95.32, 0), -- LA 145 - Nations and Nationalism
+    (436, 213, 27, 91.24, 0), -- MATH 242 - Discrete Mathematics
+    (437, 123, 27, 95.32, 0), -- LA 145 - Nations and Nationalism
     -- SPRING 2015 - Semester 4
-    (319, 217, 27, 80.13, 0), -- MATH 292 - Calculus III
-    (320, 135, 27, 70.87, 1), -- LA 248 - Palestinian-Israeli Relations
+    (438, 217, 27, 80.13, 1), -- MATH 292 - Calculus III
+    (439, 135, 27, 70.87, 0), -- LA 248 - Palestinian-Israeli Relations
     -- FALL 2015 - Semester 5
-    (321, 222, 27, 79.83, 4), -- MATH 320 - Computational Linear Algebra
-    (322, 140, 27, 82.54, 1), -- LA 323 - International Human Rights
+    (440, 222, 27, 79.83, 3), -- MATH 320 - Computational Linear Algebra
+    (441, 140, 27, 82.54, 1), -- LA 323 - International Human Rights
     -- SPRING 2016 - Semester 6
-    (323, 226, 27, 82.83, 3), -- MATH 422 - Differential Equations I
-    (324, 244, 27, 84.10, 2), -- MATH 445 - Distributed Algorithms
+    (442, 226, 27, 82.83, 3), -- MATH 422 - Differential Equations I
+    (443, 244, 27, 84.10, 2), -- MATH 445 - Distributed Algorithms
     -- FALL 2016 - Semester 7
-    (325, 231, 27, 90.91, 2), -- MATH 489 - Abstract Algebra I
-    (326, 241, 27, 91.48, 1), -- MATH 382 - Analysis I
-    (327, 158, 27, 92.30, 2), -- LA 311 - Theory of Knowledge
+    (444, 231, 27, 90.91, 2), -- MATH 489 - Abstract Algebra I
+    (445, 241, 27, 91.48, 1), -- MATH 382 - Analysis I
+    (446, 158, 27, 92.30, 2), -- LA 311 - Theory of Knowledge
     -- SPRING 2017 - Semester 8
-    (328, 254, 27, 94.23, 0), -- MATH 532 - Geometric Combinatorics
-    (329, 236, 27, 99.66, 0); -- MATH 341 - Integral Equations
+    (447, 254, 27, 94.23, 0), -- MATH 532 - Geometric Combinatorics
+    (448, 236, 27, 99.66, 0); -- MATH 341 - Integral Equations
+
+-- MUS Student
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (897, 'Bendick', 'Shurey', 'b.shurey@libra.edu', 'male', '1970-07-04', 37960);
+insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (28, 897, 3.83, null, 2, 'Associate', 1);
+insert into class_seat (id, class_id, student_id, grade, classes_missed)
+  values
+    -- FALL 2013 - Semester 1
+    (449, 61, 28, 83.54, 1), -- MUS 102 - Musicianship
+    (450, 130, 28, 98.38, 2), -- LA 234 - History of Modern East Asia
+    -- SPRING 2014 - Semester 2
+    (451, 65, 28, 90.10, 0), -- MUS 108 - Music History I
+    (452, 134, 28, 92.48, 1), -- LA 248 - Palestinian-Israeli Relations
+    -- FALL 2014 - Semester 3
+    (453, 70, 28, 82.34, 1), -- MUS 121 - Theory I
+    -- SPRING 2015 - Semester 4
+    (454, 74, 28, 88.85, 2), -- MUS 149 - Performance Ensemble 1
+    -- FALL 2015 - Semester 5
+    (455, 79, 28, 100.00, 2), -- MUS - Theory II
+    (456, 148, 28, 98.10, 1), -- LA 428 - Gender and Power in History
+    -- SPRING 2016 - Semester 6
+    (457, 83, 28, 72.50, 2), -- MUS 210 - Electronic Music & Composition
+    (458, 152, 28, 78.94, 1), -- LA 378 - Ethical Theories
+    -- FALL 2016 - Semester 7
+    (459, 88, 28, 89.23, 4), -- MUS 322 - Advanced Theory Topics in Global Music
+    -- SPRING 2017 - Semester 8
+    (460, 94, 28, 96.32, 2) -- MUS 184 - Arranging for Vocals

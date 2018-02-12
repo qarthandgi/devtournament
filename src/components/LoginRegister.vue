@@ -16,7 +16,8 @@
             name="email",
             @update="updateLogin('username', $event)",
             @enter="updateLogin('username', $event, true)",
-            :reuse-key="'login-email-input'"
+            :reuse-key="'login-email-input'",
+            :error="errors.email"
           )
           input-field(
             id="login-password-input",
@@ -24,16 +25,19 @@
             :password="true",
             @update="updateLogin('password', $event)",
             @enter="updateLogin('password', $event, true)",
-            :reuse-key="'login-password-input'"
+            :reuse-key="'login-password-input'",
+            :error="errors.password"
           )
           .headings
+            .headings__error {{ errors.non_field_errors && errors.non_field_errors[0] }}
             .headings__sub-title.select(style="margin-top: 35px;", @click=`sendLogin`) Login
           //img(src="../assets/img/LoginRegister/right-arrow.png", class="login-arrow", @click="sendLogin(user)")
         .headings(style="margin-top: 50px;")
           .headings__title REGISTER
           //.headings__sub-title Click to register a new account.
           .headings__sub-title.select(style="margin-top: 30px;", @click="changeNotLoggedInState(1)") Register for a new account&nbsp;&nbsp;
-            span.fas.fa-angle-right
+            span
+              i.fas.fa-angle-right
       template(v-else-if="notLoggedInState === 1")
         .headings(style='margin-top:1px;')
           .headings__title REGISTER
@@ -43,14 +47,16 @@
             name="email",
             @update=`updateRegister('email', $event)`,
             :reuse-key="'register-email-input'",
-            @click="sendRegister"
+            @click="sendRegister",
+            :error="errors.email"
           )
           input-field(
             id="register-username-input",
             name="username",
             @update=`updateRegister('username', $event)`,
             :reuse-key="'register-username-input'",
-            @click="sendRegister"
+            @click="sendRegister",
+            :error="errors.username"
           )
           input-field(
             style="margin-top:46px",
@@ -59,7 +65,8 @@
             :password="true",
             @update=`updateRegister('password1', $event)`,
             :reuse-key="'register-password1-input'",
-            @click="sendRegister"
+            @click="sendRegister",
+            :error="errors.password1"
           )
           input-field(
             id="register-password2-input",
@@ -67,9 +74,11 @@
             :password="true",
             @update=`updateRegister('password2', $event)`,
             :reuse-key="'register-password2-input'",
-            @click="sendRegister"
+            @click="sendRegister",
+            :error="errors.password2"
           )
           .headings
+            .headings__error {{ errors.non_field_errors && errors.non_field_errors[0] }}
             .headings__sub-title.select(style="margin-top: 50px;", @click="sendRegister") Register
             .headings__sub-title.footer(@click=`changeNotLoggedInState(0)`)
               span.fas.fa-angle-left
@@ -143,7 +152,8 @@
         successPanels: false, // used to set border panels to green on successful login or successful registration
         l_selectedSubscription: '',
         verifiedState: false,
-        interim: false
+        interim: false,
+        errors: () => { return {} }
       }
     },
     watch: {
@@ -202,6 +212,9 @@
       },
       changeNotLoggedInState (state) {
         this.notLoggedInState = state
+        if (this.errors && this.errors.non_field_errors) {
+          this.$set(this, 'errors', {})
+        }
       },
       changeToState3 () {
         this.changeNotLoggedInState(3)
@@ -212,23 +225,22 @@
       async sendLogin () {
         this.interim = true
         const resp = await this.login(this.returningUser)
-        console.log('OK NOW HERE')
-        console.log(resp)
         if (resp.success) {
           console.log('TODO: make success message')
           this.successPanels = true
           this.changeToState3()
           this.interim = false
         } else {
-          console.log('TODO: in component and wrong credentials')
+          this.$set(this, 'errors', resp.data)
         }
       },
       async sendRegister () {
-        const success = await this.register(this.newUser)
-        if (success) {
+        const obj = await this.register(this.newUser)
+        if (obj.success) {
           console.log('TODO: make successful registration')
           this.changeNotLoggedInState(2)
         } else {
+          this.$set(this, 'errors', obj.data)
           console.log('TODO: registration unsuccessful')
         }
       },
@@ -247,9 +259,6 @@
     },
     mounted () {
       this.selectedSubscription = this.user.subscription
-    },
-    updated () {
-      console.log('updated')
     }
   }
 </script>
@@ -270,6 +279,9 @@
   .headings
     margin-bottom: 19px
     +averia-font()
+    &__error
+      color: $danger-red
+      font-size: 13px
     .headings__title
       +text-normal-white(1.0)
       font-size: 20px

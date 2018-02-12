@@ -418,7 +418,6 @@ def get_public(request):
     return Response(data={'query': query, 'error': error})
 
 
-
 @api_view(['POST'])
 @permission_classes((IsAuthenticated,))
 def create_exercise(request):
@@ -433,6 +432,7 @@ def create_exercise(request):
     expected_headers = pickle.dumps(data['headers'])
     expected_rows = pickle.dumps(data['rows'])
 
+    exercise = None
     if request.user.is_superuser and request.user.email == 'adminCREATE@dev.com':
         ce = CompanyExercise(
           name=name,
@@ -456,8 +456,10 @@ def create_exercise(request):
           column_descriptions=request.data['columnDescriptions']
         )
         ue.save()
+        serializer = CustomExerciseSerializer(ue)
+        exercise = serializer.data
 
-    return Response(status=200)
+    return Response(status=200, data={'exercise': exercise})
 
 
 @api_view(['POST'])

@@ -32,7 +32,7 @@
         .info__details__item__content
           span(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
-      .info__details__item.idi-public
+      .info__details__item.idi-public(v-if="sessionType === 'sandbox'")
         .info__details__item__label PUBLIC LINK
         .info__details__item__content
           .info__details__item__content__public-button(v-if="publicButtonVisibility", @click="createPublic")
