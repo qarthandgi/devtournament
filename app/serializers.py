@@ -22,14 +22,9 @@ class CompanyExerciseSerializer(serializers.ModelSerializer):
     def get_last_successful_completion(self, exercise):
         user = self.context['request'].user
         if user.is_anonymous:
-            print('user anonymous')
             return False
         try:
-            print('in try')
-            print(user.email)
-            print(exercise)
             success_attempt = SuccessfulCompanyAttempt.objects.get(user=user, exercise=exercise)
-            print(success_attempt.time)
             return success_attempt.time
         except SuccessfulCompanyAttempt.DoesNotExist:
             return False

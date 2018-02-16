@@ -6,12 +6,16 @@
           img(src=`../assets/img/AppNav/home_arrow_compressed.png`, @click="navigateUp")
       .nav__con__quote “If you have dreams it is your responsibility to make them happen.” - Bel Pesce
       .nav__con__user(style="cursor: pointer;", @click="$emit('toggle-auth')")
-        .nav__con__user__logged_in(v-if="loggedIn") Logged In {{userAndId}}
-        .nav__con__user__logged_out(v-else) LOGIN | REGISTER
+        .nav__con__user__logged-in(v-if="loggedIn")
+          span.logged-in__user {{user.username}}&nbsp;&nbsp;|&nbsp;&nbsp;
+          span.logged-in__settings
+            i.far.fa-cog
+          span.logged-in__log-out(@click.stop="logoutUser") &nbsp;&nbsp;|&nbsp;&nbsp;Log Out
+        .nav__con__user__logged-out(v-else) LOGIN | REGISTER
 </template>
 
 <script>
-  import {mapState, mapGetters} from 'vuex'
+  import {mapState, mapGetters, mapActions} from 'vuex'
   export default {
     data () {
       return {
@@ -29,6 +33,13 @@
       })
     },
     methods: {
+      ...mapActions({
+        logout: 'user/logout'
+      }),
+      logoutUser () {
+        this.logout()
+        this.$snotify.info('We\'ve logged out you out, see you again soon!', 'Logged Out', {timeout: 2500})
+      },
       navigateUp () {
         if (this.layoutState === 1) {
           this.$router.push({name: `home`})
@@ -77,6 +88,16 @@
           font-size: 12px
           text-align: right
           +text-normal-white(1.0)
+      &__user
+        &__logged-in
+          span.logged-in__user
+            display: inline-block
+            color: $dev-blue
+            font-size: 14px
+          span.logged-in__settings:hover
+            color: $dev-blue
+          span.logged-in__log-out:hover
+            color: $sahara-sand
       &__page-up
         overflow: hidden
         img

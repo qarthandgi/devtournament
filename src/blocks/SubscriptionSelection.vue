@@ -79,14 +79,23 @@
             span.fas.fa-angle-right
     transition(name="descend")
       .ss__card(v-show="user.subscription === 'basic' && premiumSelected")
-          form(ref="payment-form", @submit="submitStripe($event)")
-            img(src=`../assets/img/stripe_compressed.png`, @click="stripeWebsite", class="stripe-img")
-            .form-row
-              label(for="card-element")
-              div#card-element(ref="card-element")
-              div#card-errors(role="alert") {{ stripeErrorMessage }}
-            button(:disabled="premiumButtonDisabled") Upgrade to Premium&nbsp;
-              span.fas.fa-angle-right
+        form(ref="payment-form", @submit="submitStripe($event)")
+          img(src=`../assets/img/stripe_compressed.png`, @click="stripeWebsite", class="stripe-img")
+          .accept-terms
+            span
+              input(type="checkbox", v-model="termsAccepted")
+            span I accept the&nbsp;
+            a(href="/static/pdf/tos&pp.pdf", target="_blank")
+              span Terms of Service and Privacy Policy
+            span , and the&nbsp;
+            a(href="/static/pdf/subscription_terms.pdf", target="_blank")
+              span Subscription Terms
+          .form-row
+            label(for="card-element")
+            div#card-element(ref="card-element")
+            div#card-errors(role="alert") {{ stripeErrorMessage }}
+          button(:disabled="premiumButtonDisabled") Upgrade to Premium&nbsp;
+            span.fas.fa-angle-right
 </template>
 
 <script>
@@ -103,7 +112,8 @@
         animatedNumber: 0,
         card: null,
         stripeErrorMessage: '',
-        premiumButtonDisabled: false
+        termsAccepted: false,
+        paymentProcessing: false
       }
     },
     computed: {
@@ -112,6 +122,9 @@
         nonPremiumExercises: state => state.pg.nonPremiumExercises,
         user: state => state.user.user
       }),
+      premiumButtonDisabled () {
+        return this.paymentProcessing || !this.termsAccepted
+      },
       oppositeSelected () {
         return this.user.subscription !== this.value
       },
@@ -157,7 +170,8 @@
       ...mapMutations({
         'changeSubscription': 'user/changeSubscription',
         'setSubscriptionEnd': 'user/setSubscriptionEnd',
-        'setSlatedForDowngrade': 'user/setSlatedForDowngrade'
+        'setSlatedForDowngrade': 'user/setSlatedForDowngrade',
+        'setLayoutState': 'app/setLayoutState'
       }),
       async downgradeToBasic () {
         console.log('downgrading')
@@ -169,7 +183,8 @@
         if (this.premiumButtonDisabled === true) {
           return
         }
-        this.premiumButtonDisabled = true
+        this.loadingOverlay({state: true})
+        this.paymentProcessing = true
         event.preventDefault()
 
         const {source, error} = await this.$stripe.createSource(this.card)
@@ -183,8 +198,9 @@
           })
           this.changeSubscription({subscription: 'premium'})
           this.setSubscriptionEnd({subscriptionEnd: data['current_period_end']})
-          this.premiumButtonDisabled = false
+          this.paymentProcessing = false
         }
+        this.loadingOverlay({state: false})
       },
       chooseSubscription (val) {
         this.$emit('input', val)
@@ -216,6 +232,8 @@
       this.card.addEventListener('change', ({error}) => {
         if (error) {
           this.stripeErrorMessage = error.message
+        } else {
+          this.stripeErrorMessage = ''
         }
       })
     },
@@ -370,13 +388,20 @@
         display: flex
         flex-flow: row nowrap
         color: white
+        .accept-terms
+          position: absolute
+          bottom: -55px
+          right: 0
+          text-align: right
+          font-size: 12px
+          a
+            color: $dev-blue
         .stripe-img
           position: absolute
           bottom: -35px
           opacity: 0.6
           cursor: pointer
         .form-row
-          //border: 1px blue solid
           width: 71%
           label
             font-size: 12px

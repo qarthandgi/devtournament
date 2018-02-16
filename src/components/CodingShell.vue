@@ -70,6 +70,7 @@
   import InfoAction from '@/units/InfoAction'
   import NextExercise from '@/components/NextExercise'
 
+  import {SnotifyPosition} from 'vue-snotify'
   import {mapState, mapMutations} from 'vuex'
   import {sandboxInit, tableData} from '@/utils/objects'
   import {bus} from '@/utils/bus'
@@ -120,7 +121,8 @@
         databases: state => state.pg.databases,
         customExercises: state => state.pg.customExercises,
         invitations: state => state.pg.invitations,
-        exercises: state => state.pg.exercises
+        exercises: state => state.pg.exercises,
+        howToVisibility: state => state.pg.showHowTo
       }),
       invalidCreation () {
         if (this.sessionType !== 'custom-create') {
@@ -276,6 +278,9 @@
       setCompanyExercise (id) {
         const eIdx = this.exercises.findIndex(x => x.id === id)
         if (eIdx !== -1) {
+          this.showingUserTable = true
+          this.$set(this.tableData, 'headers', [])
+          this.$set(this.tableData, 'rows', [])
           const dbIdx = this.databases.findIndex(x => x.id === this.exercises[eIdx].db)
           this.dbId = this.databases[dbIdx].id
           this.$set(this, 'sessionInfo', {...this.exercises[eIdx]})
@@ -295,8 +300,12 @@
           })
           console.log('create exercise')
           console.log(data)
-          this.addCustomExercise(data.exercise)
-          this.$router.push({name: 'postgres-custom', params: {id: data.exercise.id}})
+          if (data.exercise === null) {
+            this.$router.push({name: 'postgres-home'})
+          } else {
+            this.addCustomExercise(data.exercise)
+            this.$router.push({name: 'postgres-custom', params: {id: data.exercise.id}})
+          }
         }
       },
       setDb (id) {
@@ -415,6 +424,23 @@
             status: data.invitation_status
           })
         }
+      },
+      howToAlert () {
+        this.$snotify.confirm('Execute: Cmd + Enter or Control + Enter', 'Got it?', {
+          closeOnClick: true,
+          html: `<span style="color:#001248;">
+                  <b>Execute Entire Query:</b><br>
+                  <code>Cmd + Enter / Ctrl + Enter</code><br><br>
+                  <b>Execute Selection Only:</b><br>
+                  <code>Option + Enter</code><br><br>
+                  <b>Expected Results (exercises only)</b><br>
+                  Double Tap <code>Shift</code></span>`,
+          showProgressBar: false,
+          position: SnotifyPosition.centerCenter,
+          buttons: [
+            {text: 'Got it!', action: () => console.log('clicked yes'), bold: true}
+          ]
+        })
       }
     },
     created () {
@@ -422,6 +448,9 @@
     },
     beforeDestroy () {
       window.removeEventListener('keydown', this.testKey)
+    },
+    mounted () {
+      bus.$on('showHowTo', this.howToAlert)
     }
   }
 </script>

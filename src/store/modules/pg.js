@@ -10,7 +10,8 @@ function initialState () {
     exercises: [],
     premiumExercises: 0,
     nonPremiumExercises: 0,
-    showWelcome: false
+    showWelcome: false,
+    showHowTo: false
   }
 }
 
@@ -30,6 +31,9 @@ export default {
   mutations: {
     addCustomExercise (state, payload) {
       state.customExercises.push(payload)
+    },
+    setShowHowTo (state, payload) {
+      state.showHowTo = payload.state
     },
     setShowWelcome (state, payload) {
       state.showWelcome = payload.state

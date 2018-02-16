@@ -133,7 +133,9 @@
       }),
       activateAuthWindow () {
         console.log('activating')
-        bus.$emit('activate-auth-window')
+        if (this.create) {
+          bus.$emit('activate-auth-window', true)
+        }
       },
       async rsvpInvitation (accepted) {
         const response = await this.$axios.post('rsvp-invitation', {

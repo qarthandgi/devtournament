@@ -115,7 +115,7 @@
         .headings__sub-title You're currently on the {{user.subscription.toUpperCase()}} subscription
       .body(style="margin-top:30px;margin-bottom:70px;")
         subscription-selection(v-model="selectedSubscription", @change="changeSubscription", @reset="resetSubscription")
-      .headings
+      .headings(v-if="false")
         .headings__title LOGOUT
         .headings__sub-title.select(@click="logout", style="margin-top: 20px;") End your session
 
@@ -277,7 +277,8 @@
     &:hover
       color: $warning-yellow
   .headings
-    margin-bottom: 19px
+    margin-top: 1px
+    margin-bottom: 20px
     +averia-font()
     &__error
       color: $danger-red

@@ -6,10 +6,12 @@
     page-titles
     login-register(:show="authVisibility", @toggle-auth="toggleAuth")
     welcome-info-modal
+    vue-snotify
 </template>
 
 <script>
   import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
+
   import AppNav from '@/components/AppNav'
   import LoginRegister from '@/components/LoginRegister'
   import PageTitles from '@/components/PageTitles'
@@ -61,7 +63,8 @@
       ...mapState({
         layoutState: state => state.app.layoutState,
         loggedIn: state => state.user.loggedIn,
-        finishVerification: state => state.user.finishVerification
+        finishVerification: state => state.user.finishVerification,
+        loadingOverlay: state => state.app.loadingOverlay
       }),
       ...mapGetters({
         fullName: 'fullName'
@@ -72,8 +75,13 @@
         const loaded = await this.loadPostgres()
         if (loaded === true) { this.dataLoaded = true }
       },
-      toggleAuth () {
-        this.authVisibility = !this.authVisibility
+      toggleAuth (signupAlert = false) {
+        if (signupAlert) {
+          this.$snotify.warning('Login or Register for the full suite of features from #DevTournament!', 'Register for more!', {timeout: 7000, titleMaxLength: 22})
+          this.authVisibility = !this.authVisibility
+        } else {
+          this.authVisibility = !this.authVisibility
+        }
       },
       ...mapActions({
         getName: 'getName',

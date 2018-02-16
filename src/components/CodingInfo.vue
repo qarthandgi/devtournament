@@ -18,8 +18,14 @@
       .info__details__item.idi-db
         .info__details__item__label DATABASE
         .info__details__item__content(:class="{edit: mode === 'edit'}", style="overflow: hidden")
-          span(v-if="mode === 'view' && sessionInfo.hasOwnProperty('database')") {{ sessionInfo.database }}
-          span(v-else-if="mode === 'view' && sessionInfo.hasOwnProperty('db')") {{ databases.find(x => x.id === sessionInfo.db)['full_name'] }}
+          span(v-if="mode === 'view' && sessionInfo.hasOwnProperty('database')")
+            span {{ sessionInfo.database }}
+            a(href="/static/pdf/lu_erd_compressed.pdf", target="_blank")
+              span.er-diagram View ER Diagram
+          span(v-else-if="mode === 'view' && sessionInfo.hasOwnProperty('db')")
+            span {{ databases.find(x => x.id === sessionInfo.db)['full_name'] }}
+            a(href="/static/pdf/lu_erd_compressed.pdf", target="_blank")
+              span.er-diagram View ER Diagram
           template(v-else)
             .info__details__item__content__db(
               v-for="db in databases",
@@ -268,6 +274,15 @@
           border-radius: 5px
           /*overflow: hidden*/
           /*border: 1px red solid*/
+          .er-diagram
+            +averia-font()
+            color: $dark-border
+            font-size: 14px
+            display: inline-block
+            margin-left: 18px
+            background-color: $dev-blue
+            padding: 2px 6px
+            border-radius: 4px
           &__public-button
             width: 155px
             border-radius: 5px

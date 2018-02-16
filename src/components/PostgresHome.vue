@@ -70,6 +70,16 @@
         .pg__row__section__category Advanced
         .pg__row__section__content
           span hey
+    .pg__legal
+      .pg__legal__text
+        .pg__legal__text__message #DevTournament
+        a(href="mailto:support@devtournament.com")
+          .pg__legal__text__message.smaller support@devtournament.com
+        a(href="/static/pdf/tos&pp.pdf", target="_blank")
+          span.pg__legal__text__message.smaller Terms of Service & Privacy Policy
+        span &nbsp;&nbsp;|&nbsp;&nbsp;
+        a(href="/static/pdf/subscription_terms.pdf", target="_blank")
+          span.pg__legal__text__message.smaller Subscription Terms
 </template>
 
 <script>
@@ -117,6 +127,27 @@
 
 <style lang="sass" scoped>
   @import '../assets/sass/vars'
+  .pg
+    &__legal
+      background-color: $dark-border
+      height: 70px
+      width: 100%
+      border-top-right-radius: 15px
+      border-top-left-radius: 15px
+      &__text
+        text-align: center
+        color: $dev-blue
+        +averia-font()
+        padding-top: 5px
+        font-size: 14px
+        a
+          color: $dev-blue
+        &__message
+          margin-bottom: 2px
+          &:nth-child(1)
+            margin-bottom: 6px
+          &.smaller
+            font-size: 13px
   .pg__row
     width: 100%
     height: auto

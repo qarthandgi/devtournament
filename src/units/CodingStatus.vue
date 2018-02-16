@@ -2,10 +2,14 @@
   .status
     .status__option(:class="{executing: executeAll}")
       .status__option__indicator(:class="{executing: executeAll}")
-      .status__option__text Execute All
+      .status__option__text
+        span Execute All (Cmd + Enter
+        span(style="font-style:italic;") &nbsp;or&nbsp;
+        span Ctrl + Enter)
     .status__option(:class="{executing: executeSelection}")
       .status__option__indicator(:class="{executing: executeSelection}")
-      .status__option__text Execute Selection
+      .status__option__text
+        span Execute Selection (Option + Enter)
 </template>
 
 <script>
@@ -58,7 +62,6 @@
       margin: 0px 25px
       display: flex
       align-items: center
-      cursor: pointer
       &.executing
         color: $dev-blue
       &__indicator

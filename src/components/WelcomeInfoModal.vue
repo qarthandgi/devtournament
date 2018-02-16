@@ -35,8 +35,8 @@
         'setShowWelcome': 'pg/setShowWelcome'
       }),
       closeWelcome () {
-        this.modalVisibility = false
         this.setShowWelcome({state: false})
+        this.modalVisibility = false
       }
     }
   }

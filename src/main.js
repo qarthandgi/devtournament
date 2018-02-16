@@ -11,6 +11,7 @@ import VueLodash from 'vue-lodash'
 import VueConfetti from 'vue-confetti'
 import 'vue2-toast/lib/toast.css'
 import Toast from 'vue2-toast'
+import Snotify, {SnotifyPosition} from 'vue-snotify'
 
 import {store} from './store/index'
 import {stripe as stripeProd} from '@/private'
@@ -96,6 +97,13 @@ Vue.use(Toast, {
   duration: 3200,
   wordWrap: false,
   width: 'auto'
+})
+
+Vue.use(Snotify, {
+  toast: {
+    timeout: 4000,
+    position: SnotifyPosition.rightCenter
+  }
 })
 
 Vue.prototype.$log = function (...args) {

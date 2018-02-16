@@ -37,7 +37,6 @@ export function denyCompanyExercise (to) {
       } else {
         deny = false
       }
-      console.log(deny)
       return deny
     }
 

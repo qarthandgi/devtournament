@@ -1,7 +1,8 @@
 function initialState () {
   return {
     layoutState: 0,
-    subject: ''
+    subject: '',
+    loadingOverlay: false
   }
 }
 
@@ -16,6 +17,9 @@ export default {
     },
     setSubject (state, payload) {
       state.subject = payload.subject
+    },
+    setLoadingOverlay (state, payload) {
+      state.loadingOverlay = payload.state
     }
   }
 }

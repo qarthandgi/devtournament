@@ -6967,6 +6967,10 @@ vue-loader@^13.3.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-loading-overlay@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-loading-overlay/-/vue-loading-overlay-2.0.1.tgz#31ed3cc477144949d6271b389dcb18a9ab31596a"
+
 vue-lodash@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/vue-lodash/-/vue-lodash-1.0.4.tgz#99f4f2f5832ce0168c4d45618789288a638562cd"
@@ -6974,6 +6978,10 @@ vue-lodash@^1.0.4:
 vue-router@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
+
+vue-snotify@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/vue-snotify/-/vue-snotify-3.0.4.tgz#eeabf5370eaa83d349de3c253503b4ffc7ee4f88"
 
 vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
   version "3.0.3"

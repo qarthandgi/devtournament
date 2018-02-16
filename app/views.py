@@ -118,7 +118,6 @@ def to_premium(request):
                                                        }],
                                                        prorate=False
                                                        )
-    pprint(modified_subscription)
     user.stripe_current_period_start = modified_subscription['current_period_start']
     user.stripe_current_period_end = modified_subscription['current_period_end']
     user.subscription = 'premium'
@@ -187,7 +186,6 @@ def user_logged_in(request):
         customer = stripe.Customer.create(
           email=u.email
         )
-        pprint(customer)
         u.stripe_customer_id = customer.id
 
         subscription = stripe.Subscription.create(
@@ -274,7 +272,6 @@ def sandbox_test_query(request):
     sql = request.data['sql']
     db = Database.objects.get(pk=db_id)
     data = execute_sql(db, sql)
-    print('# ROWS: ' + str(len(data['rows'])))
 
     resp = {
       'rows': check_datatypes(data['rows']),

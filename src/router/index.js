@@ -14,6 +14,7 @@ import InvitationInfo from '@/components/InvitationInfo'
 
 import {store} from '../store/index'
 import {isPremium, denyCompanyExercise} from '@/utils/routerUtils'
+import {bus} from '@/utils/bus'
 
 Vue.use(Router)
 
@@ -139,10 +140,21 @@ router.beforeEach(async (to, from, next) => {
       store.commit('pg/setShowWelcome', {state: true})
     }
   }
+  if (to.matched.some(x => x.meta && (x.meta.mode === 'exercise' || x.meta.mode === 'sandbox'))) {
+    console.log('OK IN HERE')
+    if (VueCookies.isKey('bhc')) {
+    } else {
+      VueCookies.set('bhc', 1, Infinity, '/')
+      setTimeout(() => {
+        bus.$emit('showHowTo')
+      }, 2000)
+    }
+  }
   if (premiumNeeded.includes(to.name) && !isPremium()) {
     next(false)
   } else if (await denyCompanyExercise(to)) {
     router.push({name: 'postgres-home'})
+    bus.$emit('activate-auth-window', true)
     next(false)
   } else if (to.name === `home`) {
     store.commit('app/setLayoutState', {state: 0})
