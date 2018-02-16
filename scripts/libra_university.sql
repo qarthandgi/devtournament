@@ -69,15 +69,15 @@ CREATE TABLE student (
   start_semester_id  INTEGER REFERENCES semester (id)
 );
 
-CREATE TYPE issue_action AS
-  ENUM ('fired', 'suspended without pay', 'suspended with pay', 'reprimanded', 'monetary fine', 'warning', 'no action taken');
-CREATE TABLE issue (
-  id            serial PRIMARY KEY,
-  offender_id   INTEGER REFERENCES profile (id),
-  offendee_id   INTEGER REFERENCES profile (id),
-  issue_description VARCHAR(1000) DEFAULT 'no description given',
-  issue_action  issue_action
-);
+-- CREATE TYPE issue_action AS
+--   ENUM ('fired', 'suspended without pay', 'suspended with pay', 'reprimanded', 'monetary fine', 'warning', 'no action taken');
+-- CREATE TABLE issue (
+--   id            serial PRIMARY KEY,
+--   offender_id   INTEGER REFERENCES profile (id),
+--   offendee_id   INTEGER REFERENCES profile (id),
+--   issue_description VARCHAR(1000) DEFAULT 'no description given',
+--   issue_action  issue_action
+-- );
 
 CREATE TYPE course_type AS ENUM ('core', 'elective');
 CREATE TABLE course (
@@ -2013,27 +2013,27 @@ insert into student (id, profile_id, gpa, scholarship, department_id, degree_typ
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- SPRING 2014 - Semester 1
-    (461, 118, 30, 80.42, 0), -- LA 103 - Effective Communication
-    (462, 111, 30, 90.99, 2), -- LA 102 - Success at Libra University
+    (476, 118, 30, 80.42, 0), -- LA 103 - Effective Communication
+    (477, 111, 30, 90.99, 2), -- LA 102 - Success at Libra University
     -- FALL 2014 - Semester 2
-    (463, 205, 30, 93.42, 1), -- MATH 102 - Calculus I
-    (464, 131, 30, 80.94, 3), -- LA 234 - History of Modern East Asia
+    (478, 205, 30, 93.42, 1), -- MATH 102 - Calculus I
+    (479, 131, 30, 80.94, 3), -- LA 234 - History of Modern East Asia
     -- SPRING 2015 - Semester 3
-    (465, 209, 30, 89.23, 2), -- MATH 212 - Calculus II
-    (466, 161, 30, 79.55, 0), -- LA 344 - History of Rhetoric
+    (480, 209, 30, 89.23, 2), -- MATH 212 - Calculus II
+    (481, 161, 30, 79.55, 0), -- LA 344 - History of Rhetoric
     -- FALL 2015 - Semester 4
-    (467, 214, 30, 80.33, 4), -- MATH 242 - Discrete Mathematics I
-    (468, 157, 30, 82.85, 1), -- LA 311 - Theory of Knowledge
+    (482, 214, 30, 80.33, 4), -- MATH 242 - Discrete Mathematics I
+    (483, 157, 30, 82.85, 1), -- LA 311 - Theory of Knowledge
     -- SPRING 2016 - Semester 5
-    (469, 218, 30, 83.11, 3), -- MATH 292 - Calculus III
-    (470, 252, 30, 81.22, 1), -- MATH 532 - Geometric Combinatorics
+    (484, 218, 30, 83.11, 3), -- MATH 292 - Calculus III
+    (485, 252, 30, 81.22, 1), -- MATH 532 - Geometric Combinatorics
     -- FALL 2016 - Semester 6
-    (471, 223, 30, 89.56, 0), -- MATH 320 - Computational Linear Algebra
-    (472, 241, 30, 90.54, 0), -- MATH 382 - Analysis I
+    (486, 223, 30, 89.56, 0), -- MATH 320 - Computational Linear Algebra
+    (487, 241, 30, 90.54, 0), -- MATH 382 - Analysis I
     -- SPRING 2017 - Semester 7
-    (473, 227, 30, 90.23, 2), -- MATH 422 - Differential Equations I
-    (474, 236, 30, 85.21, 0), -- MATH 341 - Integral Equations
-    (475, 246, 30, 84.83, 1); -- MATH 445 - Distributed Algorithms
+    (488, 227, 30, 90.23, 2), -- MATH 422 - Differential Equations I
+    (489, 236, 30, 85.21, 0), -- MATH 341 - Integral Equations
+    (490, 246, 30, 84.83, 1); -- MATH 445 - Distributed Algorithms
 
 
 -- LING Student
@@ -2042,27 +2042,27 @@ insert into student (id, profile_id, gpa, scholarship, department_id, degree_typ
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
     -- FALL 2013 - Semester 1
-    (415, 169, 31, 93.24, 1), -- LING 102 - Intro to Language & Linguistics
-    (416, 122, 31, 91.04, 2), -- LA 145 - Nations and Nationalism
+    (491, 169, 31, 93.24, 1), -- LING 102 - Intro to Language & Linguistics
+    (492, 122, 31, 91.04, 2), -- LA 145 - Nations and Nationalism
     -- SPRING 2014 - Semester 2
-    (417, 173, 31, 90.54, 0), -- LING 113 - Phonetics & Phonology
-    (418, 160, 31, 95.32, 0), -- LA 344 - History of Rhetoric
+    (493, 173, 31, 90.54, 0), -- LING 113 - Phonetics & Phonology
+    (494, 160, 31, 95.32, 0), -- LA 344 - History of Rhetoric
     -- FALL 2014 - Semester 3
-    (419, 178, 31, 89.65, 1), -- LING 212 - Psychology of Language
-    (420, 131, 31, 88.34, 0), -- LA 234 - History of Modern East Asia
+    (495, 178, 31, 89.65, 1), -- LING 212 - Psychology of Language
+    (496, 131, 31, 88.34, 0), -- LA 234 - History of Modern East Asia
     -- SPRING 2015 - Semester 4
-    (421, 182, 31, 87.23, 1), -- LING 239 - Intro to Machine Translation
-    (422, 143, 31, 80.23, 0), -- LA 412 - Mythology and Folklore
+    (497, 182, 31, 87.23, 1), -- LING 239 - Intro to Machine Translation
+    (498, 143, 31, 80.23, 0), -- LA 412 - Mythology and Folklore
     -- FALL 2015 - Semester 5
-    (423, 187, 31, 83.45, 2), -- LING 248 - Languages of Mesopotamia
-    (424, 311, 31, 85.23, 1), -- LING 383 - Bilingualism
-    (425, 140, 31, 92.03, 0), -- LA 323 - International Human Right
+    (499, 187, 31, 83.45, 2), -- LING 248 - Languages of Mesopotamia
+    (500, 311, 31, 85.23, 1), -- LING 383 - Bilingualism
+    (501, 140, 31, 92.03, 0), -- LA 323 - International Human Right
     -- SPRING 2016 - Semester 6
-    (426, 308, 31, 89.52, 2), -- LING 290 - Sociolinguistics
-    (427, 198, 31, 89.33, 2), -- LING 403 - Linguistics of American Sign Language
+    (502, 308, 31, 89.52, 2), -- LING 290 - Sociolinguistics
+    (503, 198, 31, 89.33, 2), -- LING 403 - Linguistics of American Sign Language
     -- FALL 2016 - Semester 7
-    (428, 193, 31, 82.54, 1), -- LING 323 - Deciphering Ancient Languages
-    (429, 149, 31, 85.66, 0), -- LA 428 - Gender and Power in History
+    (504, 193, 31, 82.54, 1), -- LING 323 - Deciphering Ancient Languages
+    (505, 149, 31, 85.66, 0), -- LA 428 - Gender and Power in History
     -- SPRING 2017 - Semester 8
-    (430, 203, 31, 89.32, 0), -- LING 342 - Introduction to Indo-European
-    (431, 318, 31, 83.54, 0); -- LING 412 - Advanced Syntax
+    (506, 203, 31, 89.32, 0), -- LING 342 - Introduction to Indo-European
+    (507, 318, 31, 83.54, 0); -- LING 412 - Advanced Syntax

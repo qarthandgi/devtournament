@@ -17,6 +17,7 @@ import {store} from './store/index'
 import {stripe as stripeProd} from '@/private'
 
 require('vue2-toast/lib/toast.css')
+require('vue-snotify/styles/material.css')
 
 Vue.prototype.$axios = axios
 if (process.env['NODE_ENV'] === 'production' || process.env['NODE_ENV'] === 'testing') {
