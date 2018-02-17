@@ -1,5 +1,8 @@
 <template lang="pug">
   #app
+    .bg-video
+      video(autoplay, muted, loop, v-if="videoVisibility")
+        source(src="/static/video/face.mp4")
     .bg(:class="{select: layoutState === 1, code: layoutState === 2}")
     app-nav(@toggle-auth="toggleAuth")
     router-view(v-if="dataLoaded")
@@ -31,12 +34,24 @@
     data () {
       return {
         authVisibility: false,
-        dataLoaded: false
+        dataLoaded: false,
+        videoVisibility: false
       }
     },
     watch: {
       loggedIn () {
         this.loadData()
+      },
+      '$route': {
+        handler (val) {
+          if (val.name === 'home') {
+            this.videoVisibility = true
+          } else {
+            this.videoVisibility = false
+          }
+        },
+        immediate: true,
+        deep: true
       },
       finishVerification: {
         handler (val) {

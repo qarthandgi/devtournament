@@ -141,7 +141,6 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   if (to.matched.some(x => x.meta && (x.meta.mode === 'exercise' || x.meta.mode === 'sandbox'))) {
-    console.log('OK IN HERE')
     if (VueCookies.isKey('bhc')) {
     } else {
       VueCookies.set('bhc', 1, Infinity, '/')

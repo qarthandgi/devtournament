@@ -66,10 +66,26 @@
           )
         .pg__row__section__category Intermediate
         .pg__row__section__content
-          span hey
+          large-clip(
+            v-for="(item, $index) in intermediateExercises",
+            :key="item.id",
+            :item="item",
+            :custom="false",
+            :seq="item.position",
+            :company="true",
+            @select="selectExercise(arguments[0], 'company')"
+          )
         .pg__row__section__category Advanced
         .pg__row__section__content
-          span hey
+          large-clip(
+            v-for="(item, $index) in advancedExercises",
+            :key="item.id",
+            :item="item",
+            :custom="false",
+            :seq="item.position",
+            :company="true",
+            @select="selectExercise(arguments[0], 'company')"
+          )
     .pg__legal
       .pg__legal__text
         .pg__legal__text__message #DevTournament
@@ -103,7 +119,9 @@
         'invitations': state => state.pg.invitations
       }),
       ...mapGetters({
-        'noviceExercises': 'pg/getNoviceExercises'
+        'noviceExercises': 'pg/getNoviceExercises',
+        'intermediateExercises': 'pg/getIntermediateExercises',
+        'advancedExercises': 'pg/getAdvancedExercises'
       })
     },
     methods: {

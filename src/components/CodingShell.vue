@@ -438,7 +438,7 @@
           showProgressBar: false,
           position: SnotifyPosition.centerCenter,
           buttons: [
-            {text: 'Got it!', action: () => console.log('clicked yes'), bold: true}
+            {text: 'Got it!', bold: true}
           ]
         })
       }

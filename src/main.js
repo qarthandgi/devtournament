@@ -113,9 +113,11 @@ Vue.prototype.$log = function (...args) {
 }
 
 if (process.env['NODE_ENV'] === 'production') {
+  console.log('in production if of stripe')
   // eslint-disable-next-line
   Vue.prototype.$stripe = Stripe(stripeProd)
 } else {
+  console.log('in non-production else of stripe')
   // eslint-disable-next-line
   Vue.prototype.$stripe = Stripe('pk_test_S3VXP6uRGyjayGm8zfmLJT0a')
 }

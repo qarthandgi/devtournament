@@ -25,7 +25,13 @@ export default {
       return state.customExercises.find(x => x.id === customExerciseId).invitation_set.find(x => x.id === invitationId)
     },
     getNoviceExercises: (state) => {
-      return state.exercises.filter(x => x.difficulty === 'novice')
+      return state.exercises.filter(x => x.difficulty === 'novice').sort((a, b) => a.position - b.position)
+    },
+    getIntermediateExercises: (state) => {
+      return state.exercises.filter(x => x.difficulty === 'intermediate').sort((a, b) => a.position - b.position)
+    },
+    getAdvancedExercises: (state) => {
+      return state.exercises.filter(x => x.difficulty === 'advanced').sort((a, b) => a.position - b.position)
     }
   },
   mutations: {
