@@ -5,7 +5,7 @@
     .input__editor
       editor(
         :content="l_sql",
-        :sync="custom || company || publicSandbox",
+        :sync="publicSandbox",
         :width="'100%'",
         :height="'100%'",
         :lang="'sql'",
@@ -60,7 +60,12 @@
         this.$emit('update', event)
       },
       selectOption (show) {
-        this.l_sql = show ? this.sql : ''
+        if (show) {
+          bus.$emit('set-editor-content', this.sql)
+        } else {
+          bus.$emit('set-editor-content', '')
+        }
+        // this.l_sql = show ? this.sql : ''
         this.originalQueryVisibility = show
         this.overlayVisibility = false
         this.switcherReady = true
@@ -80,7 +85,7 @@
         this.$set(this, 'l_sql', obj.query)
       })
       bus.$on('pg/showInvitationQuery', (obj) => {
-        this.l_sql = obj.query
+        // this.l_sql = obj.query
         this.showingInvitationQuery = true
         this.invitationType = obj.type
         this.invitationEmail = obj.email

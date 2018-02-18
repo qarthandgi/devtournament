@@ -36,7 +36,7 @@
       .info__details__item.idi-objective
         .info__details__item__label OBJECTIVE
         .info__details__item__content
-          span(v-if="mode === 'view'") {{ sessionInfo.objective }}
+          span.info__details__item__content__objective(v-if="mode === 'view'") {{ sessionInfo.objective }}
           textarea(v-else, v-model="newExercise.objective")
       .info__details__item.idi-public(v-if="sessionType === 'sandbox'")
         .info__details__item__label PUBLIC LINK
@@ -135,6 +135,9 @@
         return this.sessionType === 'custom-create'
       },
       checkVisibility () {
+        if (this.custom) {
+          return false
+        }
         return this.sessionType !== 'sandbox' && this.sessionType !== 'custom-create'
       },
       invitations () {
@@ -274,6 +277,8 @@
           border-radius: 5px
           /*overflow: hidden*/
           /*border: 1px red solid*/
+          &__objective
+            white-space: pre-wrap
           .er-diagram
             +averia-font()
             color: $dark-border

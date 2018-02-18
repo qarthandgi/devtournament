@@ -64,12 +64,17 @@ module.exports = {
       getSelection()
       console.log('after get')
     })
+    bus.bus.$on('set-editor-content', (content) => {
+      editor.setValue(content, 1)
+    })
   },
 
   watch: {
     content: function (newContent) {
+      console.log('WE IN WATCH CONTENT')
       const vm = this
       if (vm.sync) {
+        console.log('in the sync though')
         vm.editor.setValue(newContent, 1)
       }
     },
@@ -105,4 +110,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
- */
+*/

@@ -12,7 +12,7 @@
       .inv-info__body__content.l2(style="margin-top: 35px;") View Last Query Submitted
       button.inv-info__body__content__option.dev(@click="showQuery('last')") Last Query
       .inv-info__body__content.l2(style="margin-top: 8px;") View Last Successfully Submitted Query
-      button.inv-info__body__content__option.dev(@click="showQuery('successful')") Last Successfully Query
+      button.inv-info__body__content__option.dev(@click="showQuery('successful')") Last Successful Query
     .inv-info__close(@click="closeInvitation")
       .inv-info__close__content
         span.fas.fa-angle-double-up
@@ -63,9 +63,11 @@
       }),
       showQuery (type) {
         if (type === 'last') {
-          bus.$emit('pg/showInvitationQuery', {query: this.invitation.last_query, type: 'last', email: this.invitation.invitee_s})
+          bus.$emit('pg/showInvitationQuery', {type: 'last', email: this.invitation.invitee_s})
+          bus.$emit('set-editor-content', this.invitation.last_query)
         } else if (type === 'successful') {
-          bus.$emit('pg/showInvitationQuery', {query: this.invitation.successful_query, type: 'successful', email: this.invitation.invitee_s})
+          bus.$emit('pg/showInvitationQuery', {type: 'successful', email: this.invitation.invitee_s})
+          bus.$emit('set-editor-content', this.invitation.successful_query)
         }
       },
       async deleteInvitation () {

@@ -426,7 +426,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (54, 24, 'associate professor', true, true, 1, '2006-11-22', '68000.00'); -- Teacher: ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (118, 'Ferdinand', 'Monnoyer', 'f.monnoyer@libra.edu', 'male', '1980-09-04', 37994); -- Profile: Ferdinand: 18
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (18, 118, 'professor', false, true, 1, '2007-05-01', '98000.00'); -- Teacher: ^^
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (1, 'Kare', 'Struther', 'k.struther@libra.edu', 'female', '2004-10-22', 36356); -- Profile: Kare: 42
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (1, 'Kare', 'Struther', 'k.struther@libra.edu', 'female', '1990-10-22', 36356); -- Profile: Kare: 42
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (42, 1, 'associate professor', false, true, 1, '2000-04-21', '70000.00'); -- Teacher: ^^
 
 insert into course (id, department_id, number, name, credits, type) values (1, 1, 111, 'Intro to Computer Science', 3, 'core');
@@ -543,7 +543,7 @@ insert into course (id, department_id, number, name, credits, type) values (12, 
 
 --   ****** MUSIC COURSES AND CLASSES
 
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (81, 'Beau', 'Brotherwood', 'b.brotherwood@libra.edu', null, '1998-04-03', null); -- Profile: Beau: 16
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (81, 'Beau', 'Brotherwood', 'b.brotherwood@libra.edu', null, '1988-04-03', null); -- Profile: Beau: 16
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (16, 81, 'professor', false, false, '2003-04-11', '102000.00'); -- Teacher: ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (78, 'Verla', 'Northcote', 'v.northcote@libra.edu', 'female', '1947-11-21', 36337); -- Profile: Verla: 78
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (78, 78, 'associate professor', false, true, '2002-09-24', '67000.00'); -- Teacher: ^^
@@ -661,9 +661,9 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (17, 76, 'assistant professor', false, true, '2001-02-04', '53000.00'); -- Teacher ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (104, 'Ronni', 'Sedwick', 'r.sedwick@libra.edu', 'female', '1940-07-15', 37993); -- Profile: Ronni: 26
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (26, 104, 'associate professor', true, true, '2011-04-16', '67000.00'); -- Teacher ^^
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (69, 'Cathrine', 'Swan', 'c.swan@libra.edu', 'female', '1932-04-10', 37742); -- Profile: Cathrine: 7
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (69, 'Cathrine', 'Swan', 'c.swan@libra.edu', 'female', '1952-04-10', 37742); -- Profile: Cathrine: 7
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (7, 69, 'professor', false, true, '2010-03-16', '95000.00'); -- Teacher ^^
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (17, 'Ronda', 'Emmot', 'r.emmot@libra.edu', 'female', '1998-11-30', 37487); -- Profile: Ronda: 76
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (17, 'Ronda', 'Emmot', 'r.emmot@libra.edu', 'female', '1978-11-30', 37487); -- Profile: Ronda: 76
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (76, 17, 'associate professor', false, true, '2008-08-04', '65000.00'); -- Teacher ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (41, 'Martin', 'Lindenberg', 'm.lindenberg@libra.edu', null, '1979-10-04', 37890); -- Profile: Martin: 60
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (60, 41, 'assistant professor', true, true, '2000-07-28', '49000.00'); -- Teacher ^^
@@ -766,9 +766,9 @@ insert into course (id, department_id, number, name, credits, type) values (33, 
 
 --   ****** MATHEMATICS COURSES AND CLASSES
 
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (101, 'Gabriell', 'Stratton', 'g.stratton@libra.edu', null, '1935-09-11', 36077); -- Profile: Gabriell: 84
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (101, 'Gabriell', 'Stratton', 'g.stratton@libra.edu', null, '1939-09-11', 36077); -- Profile: Gabriell: 84
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (84, 101, 'professor', false, true, '2009-11-22', '105000.00'); -- Teacher ^^
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (58, 'Wakefield', 'Ragsdale', 'w.ragsdale@libra.edu', 'male', '2008-03-17', 36406); -- Profile: Wakefield: 80
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (58, 'Wakefield', 'Ragsdale', 'w.ragsdale@libra.edu', 'male', '1983-03-17', 36406); -- Profile: Wakefield: 80
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (80, 58, 'associate professor', true, true, '2000-10-07', '78000.00'); -- Teacher ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (6, 'Lilas', 'Noen', 'l.noen@libra.edu', 'female', '1943-02-02', 38263); -- Profile: Lilas: 77
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (77, 6, 'instructor', false, false, '2004-03-20', '38000.00'); -- Teacher ^^
@@ -886,7 +886,7 @@ insert into profile (id, first_name, last_name, email, gender, birth_date, home_
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (28, 23, 'instructor', false, true, '2008-02-26', '56000.00'); -- Teacher ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (116, 'Cari', 'Langley', 'c.langley@libra.edu', 'female', '1952-02-26', 38285); -- Profile: Cari: 34
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (34, 116, 'professor', false, true, '2005-11-26', '78000.00'); -- Teacher ^^
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (35, 'Tessy', 'Harback', 't.harback@libra.edu', 'female', '2003-01-06', null); -- Profile: Tessy: 89
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (35, 'Tessy', 'Harback', 't.harback@libra.edu', 'female', '1978-01-06', null); -- Profile: Tessy: 89
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (89, 35, 'professor', false, true, '2000-03-02', '95000.00'); -- Teacher ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (16, 'Moina', 'Tattersdill', 'm.tattersdill@libra.edu', 'female', '1983-06-22', 35934); -- Profile: Moina: 81
   insert into faculty (id, profile_id, rank, tenure, active, hire_date, salary) values (81, 16, 'associate professor', false, false, '2002-03-05', '72000.00'); -- Teacher ^^
@@ -999,7 +999,7 @@ insert into course (id, department_id, number, name, credits, type) values (55, 
 
 --   ****** LIBERAL ARTS COURSES AND CLASSES
 
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (96, 'Mercy', 'Spring', 'm.spring@libra.edu', 'female', '2000-10-27', 35674); -- Profile: Mercy: 14
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (96, 'Mercy', 'Spring', 'm.spring@libra.edu', 'female', '1989-10-27', 35674); -- Profile: Mercy: 14
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (14, 96, 'assistant professor', false, true, 6, '2007-08-15', '56000.00'); -- Teacher: ^^
 insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (52, 'Joel', 'Alenichev', 'j.alenichev@libra.edu', 'male', '1947-12-14', 37891); -- Profile: Joel: 24
   insert into faculty (id, profile_id, rank, tenure, active, department_id, hire_date, salary) values (24, 52, 'assistant professor', false, true, 6, '2007-08-25', '47000.00'); -- Teacher: ^^
@@ -1133,7 +1133,7 @@ insert into course (id, department_id, number, name, credits, type) values (68, 
 --   ****** STUDENTS AND THEIR CLASS SEATS
 
 -- CS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (201, 'Hannah', 'Townes', 'h.townes@libra.edu', 'male', '2000-10-19', 36949);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (201, 'Hannah', 'Townes', 'h.townes@libra.edu', 'male', '1991-10-19', 36949);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (1, 201, 3.23, 6000.00, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1164,7 +1164,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (17, 104, 1, 88.29, 0); -- LA 378 - Ethical Theories
 
 -- CS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (203, 'Virgie', 'Woodwin', 'v.woodwin@libra.edu', 'male', '1962-02-08', 37284);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (203, 'Virgie', 'Woodwin', 'v.woodwin@libra.edu', 'male', '1992-02-08', 37284);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (2, 203, 3.28, null, 1, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1195,7 +1195,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (34, 114, 2, 90.95, 2); -- LA 344 - History of Rhetoric
 
 -- CS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (153, 'Kaylyn', 'MacClenan', 'k.macclenan@libra.edu', 'female', '1980-07-08', 35906);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (153, 'Kaylyn', 'MacClenan', 'k.macclenan@libra.edu', 'female', '1993-07-08', 35906);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (3, 153, 3.51, 8000.00, 1, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1226,7 +1226,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (51, 114, 3, 90.95, 2); -- LA 344 - History of Rhetoric
 
 -- CS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (108, 'Lloyd', 'Cranmer', 'l.cranmer@libra.edu', 'male', '2001-10-21', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (108, 'Lloyd', 'Cranmer', 'l.cranmer@libra.edu', 'male', '1992-10-21', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (4, 108, 3.31, 1400.00, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1257,7 +1257,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (68, 104, 4, 97.32, 0); -- LA 378 - Ethical Theories
 
 -- CS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (105, 'Jacqui', 'Densey', 'j.densey@libra.edu', 'female', '1968-11-02', 37632);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (105, 'Jacqui', 'Densey', 'j.densey@libra.edu', 'female', '1994-11-02', 37632);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (5, 105, 3.71, null, 1, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1288,7 +1288,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (85, 104, 5, 97.32, 0); -- LA 378 - Ethical Theories
 
 -- MUS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (267, 'Marla', 'Gorke', 'm.gorke@libra.edu', 'female', '2008-01-22', 35940);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (267, 'Marla', 'Gorke', 'm.gorke@libra.edu', 'female', '1993-01-22', 35940);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (6, 267, 3.83, 800.00, 2, 'Associate', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1319,7 +1319,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (102, 168, 6, 97.32, 0); -- LA 239 - Topics in Archaeology
 
 -- MUS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (158, 'Kendra', 'Folan', 'k.folan@libra.edu', 'female', '1980-09-20', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (158, 'Kendra', 'Folan', 'k.folan@libra.edu', 'female', '1993-09-20', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (7, 158, 3.83, null, 2, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1350,7 +1350,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (119, 109, 7, 90.00, 1); -- MUS 403 - World Music Composition
 
 -- MUS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (139, 'Hermann', 'Alejandre', 'h.alejandre@libra.edu', 'male', '1968-02-07', 36061);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (139, 'Hermann', 'Alejandre', 'h.alejandre@libra.edu', 'male', '1992-02-07', 36061);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (8, 139, 3.22, null, 2, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1381,7 +1381,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (136, 109, 8, 98.23, 1); -- MUS 403 - World Music Composition
 
 -- MUS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (344, 'Billy', 'Altree', 'b.altree@libra.edu', 'female', '1987-01-25', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (344, 'Billy', 'Altree', 'b.altree@libra.edu', 'female', '1992-01-25', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (9, 344, 3.92, 9000.00, 2, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1427,7 +1427,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (159, 109, 10, 96.34, 1); -- MUS 403 - World Music Composition
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (20, 'Levin', 'Ewens', 'l.ewens@libra.edu', 'male', '1997-09-21', 37419);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (20, 'Levin', 'Ewens', 'l.ewens@libra.edu', 'male', '1993-09-21', 37419);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (11, 20, 3.10, 2000.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1458,7 +1458,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (176, 313, 11, 96.34, 1); -- LING 383 - Bilingualism
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (401, 'Mirelle', 'Yewdall', 'm.yewdall@libra.edu', 'female', '1999-02-17', 37407);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (401, 'Mirelle', 'Yewdall', 'm.yewdall@libra.edu', 'female', '1995-02-17', 37407);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (12, 401, 3.22, 2900.00, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1489,7 +1489,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (193, 318, 12, 91.43, 1); -- LING 412 - Advanced Syntax
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (540, 'Roddie', 'McElory', 'r.mcelory@libra.edu', 'male', '1944-01-07', 36169);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (540, 'Roddie', 'McElory', 'r.mcelory@libra.edu', 'male', '1990-01-07', 36169);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (13, 540, 3.22, 2900.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1520,7 +1520,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (210, 318, 13, 90.23, 0); -- LING 412 - Advanced Syntax
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (766, 'Marris', 'Belliss', 'm.belliss@libra.edu', 'female', '1996-06-21', 38010);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (766, 'Marris', 'Belliss', 'm.belliss@libra.edu', 'female', '1980-06-21', 38010);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (14, 766, 3.10, null, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1551,7 +1551,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (227, 313, 14, 89.22, 1); -- LING 383 - Bilingualism
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (262, 'Tiffanie', 'MacAnellye', 't.macanellye@libra.edu', 'female', '1961-09-18', 37018);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (262, 'Tiffanie', 'MacAnellye', 't.macanellye@libra.edu', 'female', '1982-09-18', 37018);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (15, 262, 3.85, null, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1582,7 +1582,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (244, 313, 15, 76.59, 1); -- LING 383 - Bilingualism
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (307, 'Eileen', 'Howgill', 'e.howgill@libra.edu', 'female', '1975-06-13', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (307, 'Eileen', 'Howgill', 'e.howgill@libra.edu', 'female', '1993-06-13', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (16, 307, 3.85, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1613,7 +1613,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (261, 153, 16, 81.03, 0); -- LA 378 - Ethical Theories
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (624, 'Germana', 'Bourcq', 'g.bourcq@libra.edu', null, '1956-11-08', 37435);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (624, 'Germana', 'Bourcq', 'g.bourcq@libra.edu', null, '1992-11-08', 37435);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (17, 624, 3.54, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1644,7 +1644,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (278, 137, 17, 95.23, 0); -- LA 248 - Palestinian-Israeli Relations
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (415, 'Diego', 'Archard', 'd.archard@libra.edu', 'male', '1955-10-10', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (415, 'Diego', 'Archard', 'd.archard@libra.edu', 'male', '1978-10-10', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (18, 415, 3.42, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1675,7 +1675,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (295, 246, 18, 81.93, 1); -- MATH 445 - Distributed Algorithms
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (568, 'Farly', 'Egan', 'f.egan@libra.edu', 'male', '1995-01-12', 37619);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (568, 'Farly', 'Egan', 'f.egan@libra.edu', 'male', '1996-01-12', 37619);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (19, 568, 3.58, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1706,7 +1706,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (312, 246, 19, 95.23, 1); -- MATH 445 - Distributed Algorithms
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (393, 'Rory', 'Bush', 'r.bush@libra.edu', 'male', '1950-01-12', 36553);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (393, 'Rory', 'Bush', 'r.bush@libra.edu', 'male', '1993-01-12', 36553);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (20, 393, 3.92, null, 4, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1737,7 +1737,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (329, 236, 20, 99.85, 1); -- MATH 341 - Integral Equations
 
 -- ECON Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (674, 'Ulrich', 'Achurch', 'u.achurch@libra.edu', 'male', '1999-09-04', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (674, 'Ulrich', 'Hargate', 'u.hargate@libra.edu', 'male', '1992-09-04', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (21, 674, 2.92, null, 5, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1768,7 +1768,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (346, 287, 21, 70.22, 1); -- ECON 412 - Public Finance
 
 -- ECON Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (248, 'Mathian', 'Hargate', 'm.hargate@libra.edu', 'male', '1932-12-06', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (248, 'Mathian', 'Hargate', 'm.hargate@libra.edu', 'male', '1991-12-06', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (22, 248, 3.92, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1799,7 +1799,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (363, 297, 22, 99.08, 1); -- ECON 521 - Asset Pricing
 
 -- ECON Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (835, 'Miguelita', 'Gillibrand', 'm.gillibrand@libra.edu', 'female', '1997-04-09', null);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (835, 'Miguelita', 'Gillibrand', 'm.gillibrand@libra.edu', 'female', '1990-04-09', null);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (23, 835, 3.64, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1830,7 +1830,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (380, 292, 23, 94.66, 1); -- ECON 389 - Advanced Macroeconomic Theory
 
 -- ECON Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1962-09-14', 37122);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (490, 'Keir', 'Cullnean', 'k.cullnean@libra.edu', 'male', '1989-09-14', 37122);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (24, 490, 3.42, 7300.00, 5, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1861,7 +1861,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (397, 292, 24, 90.22, 1); -- ECON 389 - Advanced Macroeconomic Theory
 
 -- ECON Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (43, 'Eryn', 'Paddemore', 'e.paddemore@libra.edu', 'female', '1966-03-25', 36309);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (43, 'Eryn', 'Paddemore', 'e.paddemore@libra.edu', 'female', '1992-03-25', 36309);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (25, 43, 3.84, null, 5, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1892,7 +1892,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (414, 145, 25, 72.42, 1); -- LA 412 - Mythology and Folklore
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (147, 'Sascha', 'South', 's.south@libra.edu', 'male', '1939-04-12', 36774);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (147, 'Sascha', 'South', 's.south@libra.edu', 'male', '1993-04-12', 36774);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (26, 147, 3.44, 8900.00, 3, 'Bachelor of Science', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1923,7 +1923,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (431, 318, 26, 73.19, 0); -- LING 412 - Advanced Syntax
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1959-03-05', 35877);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (347, 'Billy', 'Wiskar', 'b.wiskar@libra.edu', 'female', '1994-03-05', 35877);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (27, 347, 3.72, null, 4, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1954,7 +1954,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (448, 236, 27, 99.66, 0); -- MATH 341 - Integral Equations
 
 -- MUS Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (897, 'Bendick', 'Shurey', 'b.shurey@libra.edu', 'male', '1970-07-04', 37960);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (897, 'Bendick', 'Shurey', 'b.shurey@libra.edu', 'male', '1993-07-04', 37960);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (28, 897, 3.83, null, 2, 'Associate', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -1980,7 +1980,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (460, 94, 28, 90.32, 2); -- MUS 184 - Arranging for Vocals
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (205, 'Elsworth', 'Cottom', 'e.cottom@libra.edu', 'male', '1956-08-27', 37167);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (205, 'Elsworth', 'Cottom', 'e.cottom@libra.edu', 'male', '1992-08-27', 37167);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (29, 205, 2.65, 2600, 4, 'Bachelor of Arts', 2);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -2008,7 +2008,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
     (475, 163, 29, 71.44, 1); -- LA 344 - History of Rhetoric
 
 -- MATH Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (99, 'Kendell', 'Buxy', 'k.buxy@libra.edu', null, '1977-02-19', 36841);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (99, 'Kendell', 'Buxy', 'k.buxy@libra.edu', null, '1992-02-19', 36841);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (30, 99, 2.98, null, 4, 'Bachelor of Science', 2);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
@@ -2037,7 +2037,7 @@ insert into class_seat (id, class_id, student_id, grade, classes_missed)
 
 
 -- LING Student
-insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (283, 'Ramsay', 'McInnerny', 'r.mcinnerny@libra.edu', 'male', '1976-06-15', 35625);
+insert into profile (id, first_name, last_name, email, gender, birth_date, home_zip) values (283, 'Ramsay', 'McInnerny', 'r.mcinnerny@libra.edu', 'male', '1994-06-15', 35625);
 insert into student (id, profile_id, gpa, scholarship, department_id, degree_type, start_semester_id) values (31, 283, 3.74, 900.00, 3, 'Bachelor of Arts', 1);
 insert into class_seat (id, class_id, student_id, grade, classes_missed)
   values
