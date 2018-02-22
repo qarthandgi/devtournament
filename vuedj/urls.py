@@ -23,6 +23,7 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='home'),
+    url(r'^account-confirm-email/(?P<key>[-:\w]+)/$', views.index, name='home'),
     url(r'^user-details/', views.user_details),
     url(r'^user-logged-in/', views.user_logged_in),
     url(r'^change-subscription/', views.change_subscription),
