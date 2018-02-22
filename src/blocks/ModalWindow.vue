@@ -5,6 +5,9 @@
       .bottom-panel(:class="{success: successPanels}")
       slot
       .disabled(v-if="loadingOverlay")
+        .disabled__text
+          span Processing...
+          .disabled__text__small (please do not reload the page)
 </template>
 
 <script>
@@ -47,4 +50,13 @@ A
       height: 100%
       background-color: rgba(90,90,90,0.7)
       cursor: progress
+      text-align: center
+      color: rgba(220,220,220,0.9)
+      +averia-font()
+      &__text
+        position: relative
+        top: 43%
+        font-size: 20px
+        &__small
+          font-size: 16px
 </style>
