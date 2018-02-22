@@ -25,6 +25,7 @@ const router = new Router({
       path: '/rest-auth/registration/account-confirm-email/:key/',
       name: 'verify-email',
       async beforeEnter (to, from, next) {
+        console.log('made it here')
         await axios.post('rest-auth/registration/verify-email/', {
           key: to.params.key
         })
