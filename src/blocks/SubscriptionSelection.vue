@@ -171,7 +171,8 @@
         'changeSubscription': 'user/changeSubscription',
         'setSubscriptionEnd': 'user/setSubscriptionEnd',
         'setSlatedForDowngrade': 'user/setSlatedForDowngrade',
-        'setLayoutState': 'app/setLayoutState'
+        'setLayoutState': 'app/setLayoutState',
+        'setLoadingOverlay': 'app/setLoadingOverlay'
       }),
       async downgradeToBasic () {
         console.log('downgrading')
@@ -183,7 +184,7 @@
         if (this.premiumButtonDisabled === true) {
           return
         }
-        this.loadingOverlay({state: true})
+        this.setLoadingOverlay({state: true})
         this.paymentProcessing = true
         event.preventDefault()
 
@@ -200,7 +201,7 @@
           this.setSubscriptionEnd({subscriptionEnd: data['current_period_end']})
           this.paymentProcessing = false
         }
-        this.loadingOverlay({state: false})
+        this.setLoadingOverlay({state: false})
       },
       chooseSubscription (val) {
         this.$emit('input', val)

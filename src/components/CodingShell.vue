@@ -242,6 +242,7 @@
           newId = this.exercises[idx + 1].id
         }
         this.$router.push({name: 'postgres-exercise', params: {id: newId}})
+        bus.$emit('set-editor-content', '')
         this.closeNext()
       },
       closeNext () {
@@ -376,7 +377,6 @@
         this.duplicateColumns = data.duplicates
       },
       async companyTestQuery () {
-        console.log('COMPANY QUERY')
         this.aQuerySent = true
         const {data} = await this.$axios.post('company-test-query/', {
           sql: this.sql,

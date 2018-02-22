@@ -40,6 +40,9 @@ export default {
       state.tokenKey = payload.key
       state.loggedIn = true
     },
+    setUserLoaded (state) {
+      state.loaded = true
+    },
     setUser (state, payload) {
       state.user.id = payload.pk
       state.user.firstName = payload.first_name

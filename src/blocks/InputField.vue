@@ -33,11 +33,9 @@
     },
     methods: {
       enterPressed (e) {
-        console.log(e.target.value)
         this.$emit('enter', e.target.value)
       },
       keyPressed (e) {
-        console.log('ok', e.target.value)
         this.$emit('update', e.target.value)
       }
     }

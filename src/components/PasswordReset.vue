@@ -24,7 +24,6 @@ export default {
     }),
     async confirmResetPassword () {
       await this.resetPasswordConfirm(this.passReset)
-      console.log('ok done')
     }
   },
   created () {

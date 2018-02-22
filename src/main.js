@@ -127,6 +127,8 @@ if (tokenKey) {
   store.commit('user/setTokenKey', {key: tokenKey})
   store.dispatch('user/getUser')
   store.dispatch('user/getUserDetails')
+} else {
+  store.commit('user/setUserLoaded')
 }
 
 Vue.config.productionTip = process.env['NODE_ENV'] === 'development'

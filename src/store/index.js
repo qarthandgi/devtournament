@@ -97,7 +97,7 @@ export const store = new Vuex.Store({
       })
     },
     async verifyUser ({commit, dispatch}, payload) {
-      const {data} = axios.post('rest-auth/registration/verify-email/')
+      const {data} = await axios.post('rest-auth/registration/verify-email/')
       console.log(data)
     }
     // async registerUser ({commit, dispatch}, {username, email, password1, password2}) {

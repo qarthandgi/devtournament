@@ -43,19 +43,21 @@ export function denyCompanyExercise (to) {
     if (store.state.pg.loaded === true && store.state.user.loaded === true) {
       resolve(proceed())
     } else {
-      store.watch((state, getters) => state.pg.loaded, loaded => {
-        if (loaded === true) {
-          if (store.state.user.loaded === true) {
-            resolve(proceed())
-          } else {
-            store.watch(state => state.user.loaded, userLoaded => {
-              if (userLoaded === true) {
-                resolve(proceed())
-              }
-            })
-          }
+      // store.watch((state, getters) => state.pg.loaded, loaded => {
+      if (store.state.pg.loaded) {
+        // if (loaded === true) {
+        if (store.state.user.loaded === true) {
+          resolve(proceed())
+        } else {
+          store.watch(state => state.user.loaded, userLoaded => {
+            if (userLoaded === true) {
+              resolve(proceed())
+            }
+          })
         }
-      })
+        // }
+      }
+      // })
     }
   })
 }

@@ -92,7 +92,7 @@
       },
       toggleAuth (signupAlert = false) {
         if (signupAlert) {
-          this.$snotify.warning('Login or Register for the full suite of features from #DevTournament!', 'Register for more!', {timeout: 7000, titleMaxLength: 22})
+          // this.$snotify.warning('Login or Register for the full suite of features from #DevTournament!', 'Register for more!', {timeout: 7000, titleMaxLength: 22})
           this.authVisibility = !this.authVisibility
         } else {
           this.authVisibility = !this.authVisibility

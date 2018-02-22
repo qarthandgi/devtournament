@@ -71,10 +71,8 @@ module.exports = {
 
   watch: {
     content: function (newContent) {
-      console.log('WE IN WATCH CONTENT')
       const vm = this
       if (vm.sync) {
-        console.log('in the sync though')
         vm.editor.setValue(newContent, 1)
       }
     },

@@ -152,8 +152,8 @@ router.beforeEach(async (to, from, next) => {
   if (premiumNeeded.includes(to.name) && !isPremium()) {
     next(false)
   } else if (await denyCompanyExercise(to)) {
-    router.push({name: 'postgres-home'})
     bus.$emit('activate-auth-window', true)
+    router.push({name: 'postgres-home'})
     next(false)
   } else if (to.name === `home`) {
     store.commit('app/setLayoutState', {state: 0})

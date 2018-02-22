@@ -132,7 +132,6 @@
         'removeInvite': 'pg/removeInvite'
       }),
       activateAuthWindow () {
-        console.log('activating')
         if (this.create) {
           bus.$emit('activate-auth-window', true)
         }

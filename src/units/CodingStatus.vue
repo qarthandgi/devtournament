@@ -29,8 +29,6 @@
         }, 191)
       },
       setExecuteStatus (obj) {
-        console.log('here')
-        console.log(obj)
         if (obj.type === 'all') {
           this.executeAll = true
         } else if (obj.type === 'selection') {
