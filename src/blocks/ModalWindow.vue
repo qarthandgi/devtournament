@@ -25,7 +25,7 @@
     }
   }
 </script>
-A
+
 <style lang="sass" scoped>
   @import '../assets/sass/vars'
 
