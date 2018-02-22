@@ -20,7 +20,7 @@ from private.private import config
 
 
 # Create your views here.
-def index(request):
+def index(request, *args, **kwargs):
     return render(request, 'index.html')
 
 
