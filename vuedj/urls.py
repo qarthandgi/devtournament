@@ -47,8 +47,8 @@ urlpatterns = [
     url(r'^rsvp-invitation', views.rsvp_invitation),
 
     # url(r'^rest-auth/login/$', LoginViewCustom.as_view(), name='rest_login'),
-    url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^.*/$', views.index, name='home')
 ]
